@@ -1,0 +1,327 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TrakaDev Cardano Payments for WooCommerce\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-30 04:34+0000\n"
+"PO-Revision-Date: 2021-06-06 03:23+0000\n"
+"Last-Translator: \n"
+"Language-Team: Español\n"
+"Language: es_ES\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.5.2; wp-5.7.2\n"
+"X-Domain: tk-ada-pay-plugin"
+
+#: TKAP_SaveAddress.php:79
+msgid " Adresses Generated and Saved in Database."
+msgstr "Direcciones Generadas y Guardadas en la Base de Datos."
+
+#: TKAP_plugin.php:280
+msgid " TESTNET ADDRESS"
+msgstr "DIRECCIÓN DE TESTNET"
+
+#: TKAP_plugin.php:352
+msgid ""
+"24 hours have passed and your order was canceled, the payment address is no "
+"longer valid."
+msgstr ""
+"20 horas han pasado y tu orden ha sido cancelada, la dirección de pago ya no "
+"es valida."
+
+#: TKAP_Gateway.php:356
+msgid "ADA exchange rate is calculated at the time the order is made"
+msgstr ""
+"EL tipo de cambio de ADA es calculado al omento de que se crea la orden."
+
+#: TKAP_Gateway.php:353
+msgid "ADA Price"
+msgstr "Precio de ADA"
+
+#: TKAP_Gateway.php:354 TKAP_plugin.php:269
+msgid "ADA Total"
+msgstr "Total en ADA"
+
+#: TKAP_plugin.php:283
+msgid "Address"
+msgstr "Dirección"
+
+#: TKAP_Gateway.php:267
+msgid "Address Generated"
+msgstr "Dirección Generada"
+
+#: TKAP_Gateway.php:268
+msgid "Address Unused"
+msgstr "Dirección sin usar"
+
+#: TKAP_plugin.php:266
+msgid "Amount Copied!"
+msgstr "Monto Copiado!"
+
+#: TKAP_plugin.php:205
+msgid "BE AWARE THIS IS A TESTNET PAY ADDRESS"
+msgstr "CUIDADO ESTA ES UNA DIRECCIÓN DE PAGO DE TESTNET"
+
+#: TKAP_plugin.php:317
+msgid "BE AWARE THIS IS A TESTNET PAY ADDRESS "
+msgstr "CUIDADO ESTA ES UNA DIRECCIÓN DE PAGO DE TESTNET"
+
+#: TKAP_Gateway.php:116
+msgid "Blockfrost API Key for Mainnet"
+msgstr "Blockfrost API Key para Mainnet"
+
+#: TKAP_Gateway.php:122
+msgid "Blockfrost API Key for Testnet."
+msgstr "Blockfrost API Key para Testnet."
+
+#: TKAP_Gateway.php:94
+msgid "Confirmations"
+msgstr "Confirmaciones"
+
+#: TKAP_Gateway.php:96
+msgid "Confirmations needed to accept a trasaction as valid."
+msgstr "Confirmaciones necesarias para aceptar un pago como valido."
+
+#: TKAP_Gateway.php:358
+msgid "Contact the admin to provide you with a payment address."
+msgstr ""
+"Contacta al administrador para que le proporcione una dirección de pago."
+
+#: TKAP_plugin.php:270
+msgid "Copy Amount"
+msgstr "Copiar Monto"
+
+#: TKAP_plugin.php:270
+msgid "Copy Payment Address"
+msgstr "Copiar Dirección de Pago"
+
+#: TKAP_Gateway.php:128 TKAP_Gateway.php:352
+msgid "Currency"
+msgstr "Moneda"
+
+#: TKAP_Gateway.php:130
+msgid "Currency used in case default currency is not supported."
+msgstr "Si la moneda no es soportada usar esta en remplazo."
+
+#: TKAP_Gateway.php:75
+msgid "Description"
+msgstr "Descripción"
+
+#: TKAP_Gateway.php:82
+msgid "Enable Test Mode"
+msgstr "Activar Modo de Prueba"
+
+#: TKAP_Gateway.php:62
+msgid "Enable TrakaDev ADA Gateway"
+msgstr "Activar TrakaDev ADA Gateway"
+
+#: TKAP_Gateway.php:61
+msgid "Enable/Disable"
+msgstr "Habilitar/Deshabilitar"
+
+#: TKAP_Gateway.php:251
+msgid "Error in DataBase"
+msgstr "Error en la base de datos"
+
+#: TKAP_SaveAddress.php:44
+msgid "Error no request sent :("
+msgstr "Error no se mando ninguna petición :("
+
+#: TKAP_plugin.php:200
+msgid "ERROR PLEASE CONTACT ADMIN TO PROCCED WITH THE ORDER"
+msgstr "ERROR PORFAVOR CONTACTA AL ADMINISTRADOR PARA CONTINUAR CON EL PEDIDO"
+
+#: TKAP_plugin.php:313
+msgid "ERROR PLEASE CONTACT THE ADMIN TO PROCCED WITH THE ORDER"
+msgstr ""
+"ERROR POR FAVOR CONTACTAR AL ADMINISTRADOR PARA CONTINUAR CON EL PEDIDO"
+
+#: TKAP_Gateway.php:308
+msgid "Error: Invalid Character in BLOCKFROST API KEY for MAINNET."
+msgstr "Error: Carácter Invalido en la API KEY de BLOCKFROST para MAINNET."
+
+#: TKAP_Gateway.php:317
+msgid "Error: Invalid Character in BLOCKFROST API KEY for TESTNET."
+msgstr "Error: Carácter Invalido en la API KEY de BLOCKFROST para TESTNET."
+
+#: TKAP_Gateway.php:303
+msgid "Error: Invalid Character in Publick Key."
+msgstr "Error: Carácter Invalido en la Llave Publica."
+
+#: TKAP_Gateway.php:312
+msgid ""
+"Error: You need a BLOCKFROST API KEY for MAINNET to validate transactions."
+msgstr ""
+"Error: Necesitas una API KEY de BLOCKFROST para MAINNET para validar pagos."
+
+#: TKAP_Gateway.php:321
+msgid ""
+"Error: You need a BLOCKFROST API KEY for TESTNET to validate transactions."
+msgstr ""
+"Error: Necesitas una API KEY de BLOCKFROST para TESTNET para validar pagos."
+
+#: TKAP_Gateway.php:299
+msgid "Error: You require a Master Public Key to generate  payment addresses."
+msgstr "Error: Requieres una Llave Publica para generar direcciones de pago."
+
+#: TKAP_plugin.php:46
+msgid "Every 10 Minutes"
+msgstr "Cada 10 Minutos"
+
+#: TKAP_Gateway.php:38 TKAP_Gateway.php:253 TKAP_Gateway.php:263
+msgid "Generate Payment Address"
+msgstr "Genera Direcciones de Pago."
+
+#: TKAP_Gateway.php:256
+msgid "How Many Payment Addresses do you want to generate?"
+msgstr "¿Cuántas direcciones de pago quieres generar?"
+
+#. URI of the plugin
+#. Author URI of the plugin
+msgid "https://jorgeluisjaimesanchez.com"
+msgstr "https://jorgeluisjaimesanchez.com"
+
+#: TKAP_plugin.php:367
+msgid "Instruction for payment will be send soon!"
+msgstr "Las instrucciones para realizar el pago se enviaran pronto."
+
+#: TKAP_plugin.php:369
+msgid ""
+"Instruction for payment will be send soon!\n"
+msgstr "Las instrucciones para realizar el pago se enviaran pronto."
+
+#: TKAP_Gateway.php:269
+msgid "Network"
+msgstr "Red"
+
+#: TKAP_Gateway.php:65
+msgid "no"
+msgstr "no"
+
+#: TKAP_Gateway.php:212
+msgid "No orders done yet with this gateway"
+msgstr "No se han hecho pedidos con este método de pago"
+
+#: TKAP_Gateway.php:147
+msgid "Orders done with TrakaDev ADA Gateway"
+msgstr "Pedidos hechos con EL método de pago TrakaDev ADA"
+
+#: TKAP_Gateway.php:43
+msgid "Orders Paid with this plugin"
+msgstr "Pedidos Pagados con este plugin"
+
+#: TKAP_Gateway.php:78
+msgid ""
+"Pay using Cardano ADA via our super-cool payment gateway. You have 24 hrs to "
+"pay or the order will be cancelled."
+msgstr ""
+"Paga usando Cardano ADA con nuestro super-cool método de pago. Tienes 24 "
+"horas para pagar o el pedido será cancelado."
+
+#: TKAP_Gateway.php:71
+msgid "Pay with Cardano ADA"
+msgstr "Paga con Cardano ADA"
+
+#: TKAP_plugin.php:257 TKAP_plugin.php:344
+msgid "Payment Address"
+msgstr "Dirección de Pago"
+
+#: TKAP_plugin.php:253
+msgid "Payment Address Copied!"
+msgstr "Dirección de Pago Copiada!"
+
+#: TKAP_plugin.php:277
+msgid "Payment Instructions "
+msgstr "Instrucciones de Pago"
+
+#: TKAP_Gateway.php:118
+msgid "Place the API KEY to use BlockFrost to verify transactions on Mainnet."
+msgstr ""
+"Proporciona la API KEY para usar BlockFrost para verificar pagos en Mainnet."
+
+#: TKAP_Gateway.php:124
+msgid "Place the API KEY to use BlockFrost to verify transactions on Testnet."
+msgstr ""
+"Proporciona la API KEY para usar BlockFrost para verificar pagos en Testnet."
+
+#: TKAP_Gateway.php:84
+msgid "Place the payment gateway in test mode to use TESTNET."
+msgstr "Activa el modo de prueba para usar TESTNET."
+
+#: TKAP_Gateway.php:91
+msgid "Place the Public Adress Key to generate Payment Addresses."
+msgstr "Proporciona la Llave Publica para generar Direcciones de Pago."
+
+#: TKAP_Gateway.php:89
+msgid "Public Adress Key for Cardano"
+msgstr "Llave Publica para Cardano"
+
+#. Description of the plugin
+msgid "Recive payments using Cardano ADA"
+msgstr "Recibe pagos usando Cardano ADA"
+
+#: TKAP_plugin.php:190
+msgid ""
+"Remember that you have 24 hours to pay for your order before it's "
+"automatically canceled."
+msgstr ""
+"Recuerda que tienes 24 horas para pagar tu pedido antes de que se cancele "
+"automáticamente. "
+
+#: TKAP_Gateway.php:345
+msgid "TEST MODE"
+msgstr "MODO DE PRUEBA"
+
+#: TKAP_Gateway.php:81
+msgid "Test mode"
+msgstr "Modo de prueba"
+
+#: TKAP_Gateway.php:77
+msgid "This controls the description which the user sees during checkout."
+msgstr "Esto controla la descripción que ve el usuario durante el pago."
+
+#: TKAP_Gateway.php:70
+msgid "This controls the title which the user sees during checkout."
+msgstr "Esto controla el título que ve el usuario al realizar una compra."
+
+#: TKAP_plugin.php:341
+msgid "Tienes para realizar la transacción "
+msgstr "Tienes para realizar el pago"
+
+#: TKAP_Gateway.php:68
+msgid "Title"
+msgstr "Título"
+
+#: TKAP_plugin.php:347
+msgid "Total ADA"
+msgstr "Total en ADA"
+
+#: TKAP_plugin.php:282
+msgid "Total Amount in ADA "
+msgstr "Monto Total en ADA"
+
+#. Name of the plugin
+msgid "TrakaDev ADA Pay Gateway for WooCommerce"
+msgstr "TrakaDev ADA Pay Gateway para WooCommerce"
+
+#. Author of the plugin
+msgid "TrakaDev(Jorge Luis Jaime Sánchez)"
+msgstr "TrakaDev(Jorge Luis Jaime Sánchez)"
+
+#: TKAP_Gateway.php:85
+msgid "yes"
+msgstr "si"
+
+#: TKAP_plugin.php:286
+msgid ""
+"You can verify the payment address and amount if you login and go to my-"
+"account/orders"
+msgstr ""
+"Puedes verificar la dirección de pago y el monto a pagar si inicias sesión y "
+"vas a la sección de mi cuenta y pedidos"
+
+#: TKAP_plugin.php:278
+msgid "You have 24hrs to pay before the order is cancelled"
+msgstr "Tienes 24 horas para pagar antes de que el pedido sea cancelado"
