@@ -275,18 +275,10 @@ function tk_ada_pay_plugin_init_gateway_class()
                     // Email config
                     $email = $order->get_billing_email();
                     $subject = __("Payment Instructions ", 'tk-ada-pay-plugin') . get_bloginfo('name');
-                    $heading = __("You have 24hrs to pay before the order is cancelled", 'tk-ada-pay-plugin');
-                    if ($query_address[0]->testnet) {
-                        $heading .= __(' TESTNET ADDRESS', 'tk-ada-pay-plugin');
-                    }
-                    $email_message = "<h2>" . __('Total Amount in ADA ', 'tk-ada-pay-plugin') . $total_ada . "</h2>";
-                    $email_message .= "<h3>" . __("Address", 'tk-ada-pay-plugin') . "</h3>";
-                    $email_message .= "<p>$payment_address</p>";
-                    $email_message .= '<div><img src="cid:qrimg"> </div>';
-                    $email_message .= "<p>" . __('You can verify the payment address and amount if you login and go to my-account/orders', 'tk-ada-pay-plugin') . "</p>";
                     $file_name = $payment_address . ".png";
+                    $testnet_bool = $query_address[0]->testnet;
                     // Email Sent                   
-                    send_email_woocommerce_style($email, $subject, $heading, $email_message, $url_img, $file_name);
+                    send_email_woocommerce_style($email, $subject, $testnet_bool,  $total_ada, $payment_address,$url_img, $file_name,);                    
                     return $thank_you_title . "<br>" . $message . '<br><br>';
                 }
             }

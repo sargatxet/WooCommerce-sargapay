@@ -9,8 +9,8 @@ class TKAP_WC_Gateway extends WC_Payment_Gateway
         $this->id = 'tk-ada-pay-plugin';
         $this->icon = plugin_dir_url(__FILE__) . '/assets/img/ada_logo.png';
         $this->has_fields = true;
-        $this->method_title = 'TrakaDev ADA Gateway';
-        $this->method_description = 'Allow customers to pay using Cardano ADA';
+        $this->method_title = 'Sargatxet ADA Gateway';
+        $this->method_description = __('Allow customers to pay using Cardano ADA', 'tk-ada-pay-plugin'); //traducir
         $this->supports = array(
             'products'
         );
@@ -32,12 +32,52 @@ class TKAP_WC_Gateway extends WC_Payment_Gateway
     }
     public function generate_screen_button_html($key, $value)
     {
+        if (true) {
 ?>
-        <tr valign="top">
-            <td colspan="2" class="forminp forminp-<?php echo sanitize_title($value['type']) ?>">
-                <a href="<?php echo admin_url('admin.php?page=wc-settings&tab=checkout&section=tk-ada-pay-plugin&screen=other'); ?>" class="button"><?php _e('Generate Payment Address', 'tk-ada-pay-plugin'); ?></a>
-            </td>
-        </tr>
+            <!-- Banner Config Panel TODO: text and check for license -->
+            <style>
+                .ad-container {
+                    display: flex;
+                    align-items: center;
+                    height: 10vh;
+                    background: #ffd;
+                    justify-content: space-around;
+                    padding: 10px;
+                    margin-bottom: 25px;
+                    background-image: linear-gradient(135deg, #3C8CE7 10%, #00EAFF 100%);
+                    color: white;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                }
+
+                .img-contianer {
+                    width: 30%;
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                }
+
+                .img-subtitle {
+                    text-align: center;
+                    font-weight: bold;
+                }
+
+                .banner-logo {
+                    height: auto;
+                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+                }
+            </style>
+            <tr valign="top">
+                <td colspan="2" class="forminp forminp-<?php echo sanitize_title($value['type']) ?>">
+                    <div class="ad-container">
+                        <div>Version Pro Sin anuncios</div>
+                        <div>PRECIO Y LINK</div>
+                        <div class="img-contianer"> <img class="banner-logo" src="<?php echo plugin_dir_url(__FILE__) . '/assets/img/banner.jpg';  ?>" alt="Sargatxet Logo" /> <span class="img-subtitle">Delega en el pool de Cardano Sargatxet</span></div>
+                    </div>
+                </td>
+            </tr>
+        <?php } ?>
         <tr valign="top">
             <td colspan="2" class="forminp forminp-<?php echo sanitize_title($value['type']) ?>">
                 <a href="<?php echo admin_url('admin.php?page=wc-settings&tab=checkout&section=tk-ada-pay-plugin&screen=orders'); ?>" class="button"><?php _e('Orders Paid with this plugin', 'tk-ada-pay-plugin'); ?></a>
@@ -210,80 +250,6 @@ class TKAP_WC_Gateway extends WC_Payment_Gateway
                     </table>
 <?php               } else {
                     echo '<p>' . __('No orders done yet with this gateway', 'tk-ada-pay-plugin') . '</p>';
-                }
-            } else {
-                global $wpdb;
-                $table = $wpdb->prefix . 'wc_tkap_address';
-                $error = 0;
-                $query_result_mainnet = $wpdb->get_results("SELECT * FROM $table WHERE testnet=0");
-                if ($wpdb->last_error) {
-                    //LOG Error
-                    $error = 1;
-                    write_log($wpdb->last_error);
-                } else {
-                    $count_mainnet = count($query_result_mainnet);
-                }
-                $query_unused_mainnet = $wpdb->get_results("SELECT * FROM $table WHERE testnet=0 AND status='unused'");
-                if ($wpdb->last_error) {
-                    //LOG Error
-                    $error = 1;
-                    write_log($wpdb->last_error);
-                } else {
-                    $count_unused_mainnet = count($query_unused_mainnet);
-                }
-                $query_result_testnet = $wpdb->get_results("SELECT * FROM $table WHERE testnet=1");
-                if ($wpdb->last_error) {
-                    //LOG Error
-                    $error = 1;
-                    write_log($wpdb->last_error);
-                } else {
-                    $count_testnet = count($query_result_testnet);
-                }
-                $query_unused_testnet = $wpdb->get_results("SELECT * FROM $table WHERE testnet=1 AND status='unused'");
-                if ($wpdb->last_error) {
-                    //LOG Error
-                    $error = 1;
-                    write_log($wpdb->last_error);
-                } else {
-                    $count_unused_testnet = count($query_unused_testnet);
-                }
-                if ($error === 1) {
-                    echo '<p>' . __("Error in DataBase", "tk-ada-pay-plugin") . '</p>';
-                } else {
-                    echo '<h2><a href="' . admin_url('admin.php?page=wc-settings&tab=checkout&section=tk-ada-pay-plugin') . '">' . $this->method_title . '</a> > ' . __('Generate Payment Address', 'tk-ada-pay-plugin') . '</h2>';
-                    $hide_save_button = true; // Remove the submit button.  
-                    echo '<div>
-                        <label for="num_address">' . __('How Many Payment Addresses do you want to generate?', 'tk-ada-pay-plugin') . '</label>
-                        <select name="num_address" id="num_address">
-                            <option value=100>100</option>
-                            <option value=200>200</option>
-                            <option value=300>300</option>
-                            <option value=400>400</option>
-                        </select></div>';
-                    echo '<div><button id="genButton" class="button-primary">' . __('Generate Payment Address', 'tk-ada-pay-plugin') . '</button></div>';
-                    echo '<table class="form-table">';
-                    echo '<thead>';
-                    echo '<tr>';
-                    echo '<td><strong>' . __('Address Generated', 'tk-ada-pay-plugin') . '</strong></td>';
-                    echo '<td><strong>' . __('Address Unused', 'tk-ada-pay-plugin') . '</strong></td>';
-                    echo '<td><strong>' . __('Network', 'tk-ada-pay-plugin') . '</strong></td>';
-                    echo '</tr>';
-                    echo '</thead>';
-                    echo '<tbody>';
-                    echo
-                    '<tr>
-                        <td>' . $count_mainnet . '</td>
-                        <td>' . $count_unused_mainnet . '</td>
-                        <td>Mainnet</td>
-                    </tr>';
-                    echo
-                    '<tr>
-                        <td>' . $count_testnet . '</td>
-                        <td>' . $count_unused_testnet . '</td>
-                        <td>Testnet</td>
-                    </tr>';
-                    echo '</tbody>';
-                    echo '</table>';
                 }
             }
         }
