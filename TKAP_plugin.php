@@ -1,10 +1,10 @@
 <?php
 /*
- * Plugin Name: TrakaDev ADA Pay Gateway for WooCommerce
- * Plugin URI: https://jorgeluisjaimesanchez.com
+ * Plugin Name: Sargatxet ADA Pay Gateway for WooCommerce
+ * Plugin URI: https://sargatxet.com
  * Description: Recive payments using Cardano ADA
- * Author: TrakaDev(Jorge Luis Jaime Sánchez)
- * Author URI: https://jorgeluisjaimesanchez.com
+ * Author: SargaTxet
+ * Author URI: https://sargatxet.com
  * Text Domain: tk-ada-pay-plugin
  * Domain Path: /languages
  * Version: 0.1.0
@@ -187,7 +187,7 @@ function tk_ada_pay_plugin_init_gateway_class()
     {
         if (isset($order)) {
             if ($order->get_payment_method() === "tk-ada-pay-plugin") {
-                $message = '<div style="font-weight:bold; text-align:center; color:white; background:black;">' . __('Remember that you have 24 hours to pay for your order before it\'s automatically canceled.', 'tk-ada-pay-plugin') . '</div>';
+                $message = '<div style="font-weight:bold; text-align:center; color:white; background:black;">' . esc_html(__('Remember that you have 24 hours to pay for your order before it\'s automatically canceled.', 'tk-ada-pay-plugin')) . '</div>';
                 $order_id = $order->get_id();
                 global $wpdb;
                 $table = $wpdb->prefix . "wc_tkap_address";
@@ -197,12 +197,12 @@ function tk_ada_pay_plugin_init_gateway_class()
                     //LOG Error             
                     write_log($wpdb->last_error);
                 } else if (count($query_address) === 0) {
-                    $message = "<p>" . __('ERROR PLEASE CONTACT ADMIN TO PROCCED WITH THE ORDER', 'tk-ada-pay-plugin') . "</p>";
+                    $message = "<p>" . esc_html(__('ERROR PLEASE CONTACT ADMIN TO PROCCED WITH THE ORDER', 'tk-ada-pay-plugin')) . "</p>";
                     write_log("ERROR DB query empty in Thank You Page ");
                     return $thank_you_title . "<br>" . $message . '<br><br>';
                 } else {
                     if ($query_address[0]->testnet) {
-                        $testnet_msg  = __("BE AWARE THIS IS A TESTNET PAY ADDRESS", 'tk-ada-pay-plugin');
+                        $testnet_msg  = esc_html(__("BE AWARE THIS IS A TESTNET PAY ADDRESS", 'tk-ada-pay-plugin'));
                         echo "<p style='background:red; font-weight:bold; color:white; text-align:center;'> $testnet_msg </p>";
                     }
                     // Get order amount in ada
@@ -250,12 +250,12 @@ function tk_ada_pay_plugin_init_gateway_class()
                     "<div id='copy_modal' class='modal_tk_plugin'>
                     <div class='modal_tk_plugin_content'>
                         <span class='close_tk_plugin'>&times;</span>
-                        <p style='text-align:center;'>" . __('Payment Address Copied!', 'tk-ada-pay-plugin') . "</p>
+                        <p style='text-align:center;'>" . esc_html(__('Payment Address Copied!', 'tk-ada-pay-plugin')) . "</p>
                     </div>
                 </div>";
                     echo "<div style='text-align:center; font-weight:bold;'><h4>"
-                        . __('Payment Address', 'tk-ada-pay-plugin') .
-                        "</h4><p id='pay_add_p_field_tk_plugin' style='width:100%; overflow-wrap:anywhere;'>$payment_address</p>"
+                        . esc_html(__('Payment Address', 'tk-ada-pay-plugin')) .
+                        "</h4><p id='pay_add_p_field_tk_plugin' style='width:100%; overflow-wrap:anywhere;'>" . esc_html($payment_address) . "</p>"
                         . $qr->generate($payment_address) .
                         '</div>';
                     // Amount Button     
@@ -263,11 +263,11 @@ function tk_ada_pay_plugin_init_gateway_class()
                     "<div id='copy_modal_amount' class='modal_tk_plugin'>
                     <div class='modal_tk_plugin_content'>
                         <span class='close_tk_plugin'>&times;</span>
-                        <p style='text-align:center;'>" . __('Amount Copied!', 'tk-ada-pay-plugin') . "</p>
+                        <p style='text-align:center;'>" . esc_html(__('Amount Copied!', 'tk-ada-pay-plugin')) . "</p>
                     </div>
                 </div>";
-                    echo '<p style="text-align: center;"><b>' . __('ADA Total', 'tk-ada-pay-plugin') . '</b><br><span id="pay_amount_span_field_tk_plugin">' . $total_ada . '</span></p>' .
-                        "<div style='display:flex; justify-content: space-evenly; margin:15px;'><button class='button' id='pay_add_button_field_tk_plugin'>" . __('Copy Payment Address', 'tk-ada-pay-plugin') . "</button><button class='button' id='pay_amount_button_field_tk_plugin'>" . __('Copy Amount', 'tk-ada-pay-plugin') . "</button></div>";
+                    echo '<p style="text-align: center;"><b>' . esc_html(__('ADA Total', 'tk-ada-pay-plugin')) . '</b><br><span id="pay_amount_span_field_tk_plugin">' . esc_html($total_ada) . '</span></p>' .
+                        "<div style='display:flex; justify-content: space-evenly; margin:15px;'><button class='button' id='pay_add_button_field_tk_plugin'>" . esc_html(__('Copy Payment Address', 'tk-ada-pay-plugin')) . "</button><button class='button' id='pay_amount_button_field_tk_plugin'>" . esc_html(__('Copy Amount', 'tk-ada-pay-plugin')) . "</button></div>";
 
                     // SEND EMAIL  
                     // Create QR PNG FILE
@@ -278,7 +278,7 @@ function tk_ada_pay_plugin_init_gateway_class()
                     $file_name = $payment_address . ".png";
                     $testnet_bool = $query_address[0]->testnet;
                     // Email Sent                   
-                    send_email_woocommerce_style($email, $subject, $testnet_bool,  $total_ada, $payment_address,$url_img, $file_name,);                    
+                    send_email_woocommerce_style($email, $subject, $testnet_bool,  $total_ada, $payment_address, $url_img, $file_name,);
                     return $thank_you_title . "<br>" . $message . '<br><br>';
                 }
             }
@@ -306,7 +306,7 @@ function tk_ada_pay_plugin_init_gateway_class()
                     write_log("Emprty Query result in account page order");
                 } else {
                     if ($query_address[0]->testnet) {
-                        $testnet_msg  = __("BE AWARE THIS IS A TESTNET PAY ADDRESS ", 'tk-ada-pay-plugin');
+                        $testnet_msg  = esc_html(__("BE AWARE THIS IS A TESTNET PAY ADDRESS ", 'tk-ada-pay-plugin'));
                         echo "<p style='background:red; font-weight:bold; color:white; text-align:center;'> $testnet_msg </p>";
                     }
                     // Get order amount in ada
@@ -330,18 +330,18 @@ function tk_ada_pay_plugin_init_gateway_class()
                     $diff_in_seconds = $now_ts - $date_created_ts;
                     $seconds_until_cancel = $twenty_four_hours - $diff_in_seconds;
                     $time_until_cancel = gmdate("H:i:s", $seconds_until_cancel);
-                    $text = __("Tienes para realizar la transacción ", 'tk-ada-pay-plugin');
+                    $text = esc_html(__("Tienes para realizar la transacción ", 'tk-ada-pay-plugin'));
                     $qr = new GenerateQR();
                     echo '<p>' . $text . $time_until_cancel . '</p>';
-                    echo '<p style="text-align: center;"><b>' . __('Payment Address', 'tk-ada-pay-plugin') . '</b><br>' . $payment_address .
+                    echo '<p style="text-align: center;"><b>' . esc_html(__('Payment Address', 'tk-ada-pay-plugin')) . '</b><br>' . $payment_address .
                         $qr->generate($payment_address) .
                         '</p>';
-                    echo '<p style="text-align: center;"><b>' . __('Total ADA', 'tk-ada-pay-plugin') . '</b><br>' . $total_ada . '</p>';
+                    echo '<p style="text-align: center;"><b>' . esc_html(__('Total ADA', 'tk-ada-pay-plugin')) . '</b><br>' . $total_ada . '</p>';
                 }
             } else if (
                 $order->get_status() === "cancelled"
             ) {
-                echo __("24 hours have passed and your order was canceled, the payment address is no longer valid.", 'tk-ada-pay-plugin');
+                echo esc_html(__("24 hours have passed and your order was canceled, the payment address is no longer valid.", 'tk-ada-pay-plugin'));
             }
         }
     }
@@ -356,9 +356,9 @@ function tk_ada_pay_plugin_init_gateway_class()
         if ($email->id == 'customer_on_hold_order') {
             if ($order->get_payment_method() === "tk-ada-pay-plugin") {
                 if ($plain_text === false) {
-                    echo "<p>." . __('Instruction for payment will be send soon!', 'tk-ada-pay-plugin') . "</p>";
+                    echo "<p>." . esc_html(__('Instruction for payment will be send soon!', 'tk-ada-pay-plugin')) . "</p>";
                 } else {
-                    echo __("Instruction for payment will be send soon!\n", 'tk-ada-pay-plugin');
+                    echo esc_html(__("Instruction for payment will be send soon!\n", 'tk-ada-pay-plugin'));
                 }
             }
         }
