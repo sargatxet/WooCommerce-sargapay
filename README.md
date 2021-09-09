@@ -1,2 +1,2 @@
 # tk-ada-pay-plugin
-WooComerce plugin for ADA payments
+WooComerce plugin for ADA payments.
