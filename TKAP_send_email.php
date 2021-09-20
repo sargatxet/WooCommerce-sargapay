@@ -11,12 +11,12 @@ function send_email_woocommerce_style($email, $subject, $testnet_bool, $total, $
   // Define headers html emails
   $headers[] = 'From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>';
   // Mensaje del Pool Sarga
-  $ad  = "<p style='font-weight: bold; text-align: center;'>Tienes Cardano ADA ponlo a trabajar en el pool de staking <a href='#' target='_blank'>Sargatex</a></p>";
+  $ad  = "<p style='font-weight: bold; text-align: center;'>Tienes Cardano ADA ponlo a trabajar en el pool de staking <a href='https://adapools.org/pool/e811a4b2f8ef3ec84143e3026d706564bc1cc98dc199a305e0fbb8e3' target='_blank'>SARGATXET</a></p>";
   $ad .= "<table style='text-align:center; margin-left: auto; margin-right: auto;'>
             <tr style='text-align:center;'>
               <th><a href='https://twitter.com/sargatxetT'>Twitter</a></th>
               <th><a href='https://adapools.org/pool/e811a4b2f8ef3ec84143e3026d706564bc1cc98dc199a305e0fbb8e3'>Adapools</a></th>
-              <th><a href=''https://t.co/6G6xPySGmN?amp=1'>Discord</a></th>
+              <th><a href='https://discord.gg/X6Ruku9q42'>Discord</a></th>
             </tr>  
           </table>";
   $ad .= "<p style='font-weight: bold; text-align: center;'>Power by Sargatex</p>";
