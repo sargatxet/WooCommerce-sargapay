@@ -19,7 +19,7 @@ function send_email_woocommerce_style($email, $subject, $testnet_bool, $total, $
               <th><a href='https://discord.gg/X6Ruku9q42'>Discord</a></th>
             </tr>  
           </table>";
-  $ad .= "<p style='font-weight: bold; text-align: center;'>Power by Sargatex</p>";
+  $ad .= "<p style='font-weight: bold; text-align: center;'>Power by Sargatxet</p>";
   // Add Embed ID
   if (file_exists($path)) {
     $phpmailerInitAction = function (&$phpmailer) use ($path, $name) {
