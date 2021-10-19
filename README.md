@@ -8,7 +8,6 @@ Descarga el archivo zip y usa el panel de administración de Wordpress para inst
 
 ## ¿Cómo obtener la xpub? [extended public key]
 
-```
 Yoroi
 
 Ve a configuración y en la opción de billetera en la sección de exportar billetera se encuentra el botón de exportar, se abrirá una ventana emergente debajo del QR se encuentra la xpub.
@@ -24,7 +23,6 @@ Dedalus
 Selecciona la opción de More y seleciona la opción de Settings en la sección de Wallet Public Key click en el ojo para revelar la xpub.
 Formato de xpub acct_xvk
 
-```
 
 ## ¿Cómo Configurar?
 
