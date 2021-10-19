@@ -1,6 +1,6 @@
 # WOOCOMMERCE SARGAPAY
  
-WooComerce plugin para pagar usando Cardano ADA.
+WooCommerce plugin para pagar usando Cardano ADA.
  
 ## Instalación
  
