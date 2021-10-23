@@ -33,18 +33,18 @@ function send_email_woocommerce_style($email, $subject, $testnet_bool, $total, $
     $attachment = array();
   }
 
-  $subject = __("Payment Instructions ", 'tk-ada-pay-plugin') . get_bloginfo('name');
-  $heading = __("Payment Instructions ", 'tk-ada-pay-plugin');
-  $message =  "<h2 style='overflow-wrap:anywhere;'>" . __("You have 24hrs to pay before the order is cancelled", 'tk-ada-pay-plugin') . "<h2>";
-  $message .= "</h2><h2>" . esc_html(__('Total Amount in ADA ', 'tk-ada-pay-plugin')) . $total . "</h2>";
+  $subject = __("Payment Instructions ", 'sargapay-plugin') . get_bloginfo('name');
+  $heading = __("Payment Instructions ", 'sargapay-plugin');
+  $message =  "<h2 style='overflow-wrap:anywhere;'>" . __("You have 24hrs to pay before the order is cancelled", 'sargapay-plugin') . "<h2>";
+  $message .= "</h2><h2>" . esc_html(__('Total Amount in ADA ', 'sargapay-plugin')) . $total . "</h2>";
   if ($testnet_bool) {
-    $message .= "<h3>" . esc_html(__(' TESTNET ADDRESS', 'tk-ada-pay-plugin')) . "</h3>";
+    $message .= "<h3>" . esc_html(__(' TESTNET ADDRESS', 'sargapay-plugin')) . "</h3>";
   } else {
-    $message .= "<h3>" . esc_html(__("Address", 'tk-ada-pay-plugin')) . "</h3>";
+    $message .= "<h3>" . esc_html(__("Address", 'sargapay-plugin')) . "</h3>";
   }
   $message .= '<div><img src="cid:qrimg" style="margin-left: auto; margin-right: auto;"></div>';
   $message .= "<p style='font-weight: bold;'>". adrress_break($address)."</p>";
-  $message .= "<p>" . esc_html(__('You can verify the payment address and amount if you login and go to my-account/orders', 'tk-ada-pay-plugin')) . "</p>";
+  $message .= "<p>" . esc_html(__('You can verify the payment address and amount if you login and go to my-account/orders', 'sargapay-plugin')) . "</p>";
   $message .= $ad;
   // Get woocommerce mailer from instance
   $mailer = WC()->mailer();

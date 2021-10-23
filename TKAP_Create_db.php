@@ -1,8 +1,8 @@
 <?php
-function TKAP_create_address_table()
+function SARGAPAY_create_address_table()
 {
     global $wpdb;
-    $tableName = $wpdb->prefix . 'wc_tkap_address';
+    $tableName = $wpdb->prefix . 'wc_sarga_address';
 
     $query = "CREATE TABLE IF NOT EXISTS `$tableName`
         (

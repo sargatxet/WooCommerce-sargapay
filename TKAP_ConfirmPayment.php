@@ -6,7 +6,7 @@ class ConfirmPayment
     function check_all_pendding_orders()
     {
         global $wpdb;
-        $table = $wpdb->prefix . 'wc_tkap_address';
+        $table = $wpdb->prefix . 'wc_sarga_address';
         $orders = $wpdb->get_results("SELECT id, pay_address, order_id, order_amount, testnet FROM $table WHERE status='on-hold' OR status = 'validation'");
         if ($wpdb->last_error) {
             //LOG Error
@@ -43,7 +43,7 @@ class ConfirmPayment
                     if ($confirmation_obj->error === 0) {
                         //update confirmation  
                         if ($confirmation_obj->confirmations > 0) {
-                            if ($confirmation_obj->confirmations > WC()->payment_gateways->payment_gateways()['tk-ada-pay-plugin']->confirmations) {
+                            if ($confirmation_obj->confirmations > WC()->payment_gateways->payment_gateways()['sargapay-plugin']->confirmations) {
                                 $data = ['status' => 'paid', 'last_checked' => $now_ts];
                                 $order->update_status('completed');
                             } else {
@@ -103,11 +103,11 @@ class ConfirmPayment
         // GET ALL TRANSACTIONS OF THE ADDRESS
         if ($network == 1) {
             $url_network = 'https://cardano-mainnet.blockfrost.io/api/v0/';
-            $api_key = WC()->payment_gateways->payment_gateways()['tk-ada-pay-plugin']->blockfrost_key;
+            $api_key = WC()->payment_gateways->payment_gateways()['sargapay-plugin']->blockfrost_key;
             $stake_key = substr($payment_address, 53, -6);
         } else {
             $url_network = 'https://cardano-testnet.blockfrost.io/api/v0/';
-            $api_key = WC()->payment_gateways->payment_gateways()['tk-ada-pay-plugin']->blockfrost_test_key;
+            $api_key = WC()->payment_gateways->payment_gateways()['sargapay-plugin']->blockfrost_test_key;
             $stake_key = substr($payment_address, 58, -6);
         }
         $result = new stdClass;

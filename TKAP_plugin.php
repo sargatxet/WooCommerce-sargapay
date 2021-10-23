@@ -1,49 +1,49 @@
 <?php
 /*
  * Plugin Name: Sargatxet ADA Pay Gateway for WooCommerce
- * Plugin URI: https://sargatxet.com
+ * Plugin URI: https://cardano.sargatxet.cloud/
  * Description: Recive payments using Cardano ADA
  * Author: SargaTxet
- * Author URI: https://sargatxet.com
- * Text Domain: tk-ada-pay-plugin
+ * Author URI: https://cardano.sargatxet.cloud/
+ * Text Domain: sargapay-plugin
  * Domain Path: /languages
  * Version: 0.1.0
- * License: GNU General Public License v3.0
- * License URI: http://www.gnu.org/licenses/gpl-3.0.html
+ * License: MIT
+ * License URI: https://github.com/sargatxet/WooCommerce-sargapay/blob/main/LICENSE
  */
 
 
-register_activation_hook(__FILE__, 'TKAP_activate');
-register_deactivation_hook(__FILE__, 'TKAP_deactivate');
-add_action('plugins_loaded', 'tk_ada_pay_plugin_init_gateway_class');
+register_activation_hook(__FILE__, 'SARGAPAY_activate');
+register_deactivation_hook(__FILE__, 'SARGAPAY_deactivate');
+add_action('plugins_loaded', 'sargapay_plugin_init_gateway_class');
 
 
-add_filter('cron_schedules', 'TKAP_cron_hook');
-add_action('TKAP_cron_hook', 'check_confirmations_cardano');
+add_filter('cron_schedules', 'SARGAPAY_cron_hook');
+add_action('SARGAPAY_cron_hook', 'check_confirmations_cardano');
 
 
 // Actions after plugin is activated
-function TKAP_activate()
+function SARGAPAY_activate()
 {
     // Check if woocommerce is active.
     if (!class_exists('WC_Payment_Gateway')) {
         return;
     }
     //Register verification 
-    if (!wp_next_scheduled('TKAP_cron_hook')) {
-        wp_schedule_event(time(), 'every_ten_minutes', 'TKAP_cron_hook');
+    if (!wp_next_scheduled('SARGAPAY_cron_hook')) {
+        wp_schedule_event(time(), 'every_ten_minutes', 'SARGAPAY_cron_hook');
     }
     // Create DB for Addresses, if it doesn't exist.
     require_once(plugin_basename("TKAP_Create_db.php"));
-    TKAP_create_address_table();
+    SARGAPAY_create_address_table();
 }
 
 // Register 10 min interval for cronjobs
-function TKAP_cron_hook($schedules)
+function SARGAPAY_cron_hook($schedules)
 {
     $schedules['every_ten_minutes'] = array(
         'interval'  => 60 * 10,
-        'display'   => __('Every 10 Minutes', 'tk-ada-pay-plugin')
+        'display'   => __('Every 10 Minutes', 'sargapay-plugin')
     );
     return $schedules;
 }
@@ -58,15 +58,15 @@ function check_confirmations_cardano()
 /* Deactivate Actions
  * Cronjobs
  */
-function TKAP_deactivate()
+function SARGAPAY_deactivate()
 {
     // REMOVE CRONJOB to verify paymanets
-    wp_clear_scheduled_hook('TKAP_cron_hook');
+    wp_clear_scheduled_hook('SARGAPAY_cron_hook');
 }
 
 
 // PLugin Init
-function tk_ada_pay_plugin_init_gateway_class()
+function sargapay_plugin_init_gateway_class()
 {
     if (!class_exists('WC_Payment_Gateway')) {
         deactivate_plugins(plugin_basename(__FILE__));
@@ -80,13 +80,13 @@ function tk_ada_pay_plugin_init_gateway_class()
     require_once(plugin_basename('TKAP_Gateway.php'));
 
     // Init Plugin Class
-    add_filter('woocommerce_payment_gateways', 'tk_ada_pay_plugin_add_gateway_class');
+    add_filter('woocommerce_payment_gateways', 'sargapay_plugin_add_gateway_class');
 
     // Add Type Module to Javascript tags
     add_filter('script_loader_tag', 'add_type_attribute', 10, 3);
 
     // Load Transalations
-    add_action('init', 'TKAP_load_textdomain');
+    add_action('init', 'SARGAPAY_load_textdomain');
 
     // Add QR and Payment Address to thank you page
     add_filter('woocommerce_thankyou_order_received_text', 'plugin_thank_you_text', 20, 2);
@@ -102,28 +102,28 @@ function tk_ada_pay_plugin_init_gateway_class()
     add_action('wp_ajax_nopriv_save_address', 'save_address');
 
     // Woocommerce Mail QR and Payment Address
-    add_action('woocommerce_email_before_order_table', 'TKAP_add_content_wc_order_email', 20, 4);
+    add_action('woocommerce_email_before_order_table', 'SARGAPAY_add_content_wc_order_email', 20, 4);
 
     // Show cancel time for orders without payment
     add_action('woocommerce_view_order', 'view_order_cancel_notice');
 
     // Filter to add link to settings
-    add_filter('plugin_action_links_tk-ada-pay-plugin/TKAP_plugin.php', 'TKAP_settings_link');
+    add_filter('plugin_action_links_sargapay-plugin/TKAP_plugin.php', 'SARGAPAY_settings_link');
 
     // Add Payment Method to Woocommerce
-    function tk_ada_pay_plugin_add_gateway_class($gateways)
+    function sargapay_plugin_add_gateway_class($gateways)
     {
         $gateways[] = 'TKAP_WC_Gateway';
         return $gateways;
     }
 
     // Add Settings Link to Installed Plugins Page
-    function TKAP_settings_link($links)
+    function SARGAPAY_settings_link($links)
     {
         // Build and escape the URL.
         $url = esc_url(add_query_arg(
             array('page' =>
-            'wc-settings', 'tab' => 'checkout', 'section' => 'tk-ada-pay-plugin'),
+            'wc-settings', 'tab' => 'checkout', 'section' => 'sargapay-plugin'),
             get_admin_url() . 'admin.php'
         ));
         // Create the link.
@@ -176,9 +176,9 @@ function tk_ada_pay_plugin_init_gateway_class()
     /**
      * Load plugin textdomain.
      */
-    function TKAP_load_textdomain()
+    function SARGAPAY_load_textdomain()
     {
-        load_plugin_textdomain('tk-ada-pay-plugin', false, dirname(plugin_basename(__FILE__)) . '/languages');
+        load_plugin_textdomain('sargapay-plugin', false, dirname(plugin_basename(__FILE__)) . '/languages');
     }
     /** Add QR and Payment address in Thank You Page    
      ** Add Warning header if testmode is on
@@ -186,23 +186,23 @@ function tk_ada_pay_plugin_init_gateway_class()
     function plugin_thank_you_text($thank_you_title, $order)
     {
         if (isset($order)) {
-            if ($order->get_payment_method() === "tk-ada-pay-plugin") {
-                $message = '<div style="font-weight:bold; text-align:center; color:white; background:black;">' . esc_html(__('Remember that you have 24 hours to pay for your order before it\'s automatically canceled.', 'tk-ada-pay-plugin')) . '</div>';
+            if ($order->get_payment_method() === "sargapay-plugin") {
+                $message = '<div style="font-weight:bold; text-align:center; color:white; background:black;">' . esc_html(__('Remember that you have 24 hours to pay for your order before it\'s automatically canceled.', 'sargapay-plugin')) . '</div>';
                 $order_id = $order->get_id();
                 global $wpdb;
-                $table = $wpdb->prefix . "wc_tkap_address";
+                $table = $wpdb->prefix . "wc_sarga_address";
                 $query_address = $wpdb->get_results("SELECT pay_address, order_amount, testnet FROM $table WHERE order_id=$order_id");
                 //ERROR DB
                 if ($wpdb->last_error) {
                     //LOG Error             
                     write_log($wpdb->last_error);
                 } else if (count($query_address) === 0) {
-                    $message = "<p>" . esc_html(__('ERROR PLEASE CONTACT ADMIN TO PROCCED WITH THE ORDER', 'tk-ada-pay-plugin')) . "</p>";
+                    $message = "<p>" . esc_html(__('ERROR PLEASE CONTACT ADMIN TO PROCCED WITH THE ORDER', 'sargapay-plugin')) . "</p>";
                     write_log("ERROR DB query empty in Thank You Page ");
                     return $thank_you_title . "<br>" . $message . '<br><br>';
                 } else {
                     if ($query_address[0]->testnet) {
-                        $testnet_msg  = esc_html(__("BE AWARE THIS IS A TESTNET PAY ADDRESS", 'tk-ada-pay-plugin'));
+                        $testnet_msg  = esc_html(__("BE AWARE THIS IS A TESTNET PAY ADDRESS", 'sargapay-plugin'));
                         echo "<p style='background:red; font-weight:bold; color:white; text-align:center;'> $testnet_msg </p>";
                     }
                     // Get order amount in ada
@@ -250,11 +250,11 @@ function tk_ada_pay_plugin_init_gateway_class()
                     "<div id='copy_modal' class='modal_tk_plugin'>
                     <div class='modal_tk_plugin_content'>
                         <span class='close_tk_plugin'>&times;</span>
-                        <p style='text-align:center;'>" . esc_html(__('Payment Address Copied!', 'tk-ada-pay-plugin')) . "</p>
+                        <p style='text-align:center;'>" . esc_html(__('Payment Address Copied!', 'sargapay-plugin')) . "</p>
                     </div>
                 </div>";
                     echo "<div style='text-align:center; font-weight:bold;'><h4>"
-                        . esc_html(__('Payment Address', 'tk-ada-pay-plugin')) .
+                        . esc_html(__('Payment Address', 'sargapay-plugin')) .
                         "</h4><p id='pay_add_p_field_tk_plugin' style='width:100%; overflow-wrap:anywhere;'>" . esc_html($payment_address) . "</p>"
                         . $qr->generate($payment_address) .
                         '</div>';
@@ -263,18 +263,18 @@ function tk_ada_pay_plugin_init_gateway_class()
                     "<div id='copy_modal_amount' class='modal_tk_plugin'>
                     <div class='modal_tk_plugin_content'>
                         <span class='close_tk_plugin'>&times;</span>
-                        <p style='text-align:center;'>" . esc_html(__('Amount Copied!', 'tk-ada-pay-plugin')) . "</p>
+                        <p style='text-align:center;'>" . esc_html(__('Amount Copied!', 'sargapay-plugin')) . "</p>
                     </div>
                 </div>";
-                    echo '<p style="text-align: center;"><b>' . esc_html(__('ADA Total', 'tk-ada-pay-plugin')) . '</b><br><span id="pay_amount_span_field_tk_plugin">' . esc_html($total_ada) . '</span></p>' .
-                        "<div style='display:flex; justify-content: space-evenly; margin:15px;'><button class='button' id='pay_add_button_field_tk_plugin'>" . esc_html(__('Copy Payment Address', 'tk-ada-pay-plugin')) . "</button><button class='button' id='pay_amount_button_field_tk_plugin'>" . esc_html(__('Copy Amount', 'tk-ada-pay-plugin')) . "</button></div>";
+                    echo '<p style="text-align: center;"><b>' . esc_html(__('ADA Total', 'sargapay-plugin')) . '</b><br><span id="pay_amount_span_field_tk_plugin">' . esc_html($total_ada) . '</span></p>' .
+                        "<div style='display:flex; justify-content: space-evenly; margin:15px;'><button class='button' id='pay_add_button_field_tk_plugin'>" . esc_html(__('Copy Payment Address', 'sargapay-plugin')) . "</button><button class='button' id='pay_amount_button_field_tk_plugin'>" . esc_html(__('Copy Amount', 'sargapay-plugin')) . "</button></div>";
 
                     // SEND EMAIL  
                     // Create QR PNG FILE
                     $url_img = $qr->QR_URL($payment_address);
                     // Email config
                     $email = $order->get_billing_email();
-                    $subject = __("Payment Instructions ", 'tk-ada-pay-plugin') . get_bloginfo('name');
+                    $subject = __("Payment Instructions ", 'sargapay-plugin') . get_bloginfo('name');
                     $file_name = $payment_address . ".png";
                     $testnet_bool = $query_address[0]->testnet;
                     // Email Sent                   
@@ -290,23 +290,23 @@ function tk_ada_pay_plugin_init_gateway_class()
     {
         //add pending status and show confirmations
         $order = wc_get_order($order_id);
-        if ($order->get_payment_method() === "tk-ada-pay-plugin") {
+        if ($order->get_payment_method() === "sargapay-plugin") {
             if (
                 $order->get_status() === "on-hold"
             ) {
                 global $wpdb;
-                $table = $wpdb->prefix . "wc_tkap_address";
+                $table = $wpdb->prefix . "wc_sarga_address";
                 $query_address = $wpdb->get_results("SELECT pay_address, order_amount, testnet FROM $table WHERE order_id=$order_id");
                 //LOG ERROR DB
                 if ($wpdb->last_error) {
                     //LOG Error             
                     write_log($wpdb->last_error);
                 } else if (count($query_address) === 0) {
-                    echo "<p>" . __('ERROR PLEASE CONTACT THE ADMIN TO PROCCED WITH THE ORDER', 'tk-ada-pay-plugin') . "</p>";
+                    echo "<p>" . __('ERROR PLEASE CONTACT THE ADMIN TO PROCCED WITH THE ORDER', 'sargapay-plugin') . "</p>";
                     write_log("Emprty Query result in account page order");
                 } else {
                     if ($query_address[0]->testnet) {
-                        $testnet_msg  = esc_html(__("BE AWARE THIS IS A TESTNET PAY ADDRESS ", 'tk-ada-pay-plugin'));
+                        $testnet_msg  = esc_html(__("BE AWARE THIS IS A TESTNET PAY ADDRESS ", 'sargapay-plugin'));
                         echo "<p style='background:red; font-weight:bold; color:white; text-align:center;'> $testnet_msg </p>";
                     }
                     // Get order amount in ada
@@ -330,18 +330,18 @@ function tk_ada_pay_plugin_init_gateway_class()
                     $diff_in_seconds = $now_ts - $date_created_ts;
                     $seconds_until_cancel = $twenty_four_hours - $diff_in_seconds;
                     $time_until_cancel = gmdate("H:i:s", $seconds_until_cancel);
-                    $text = esc_html(__("Tienes para realizar la transacción ", 'tk-ada-pay-plugin'));
+                    $text = esc_html(__("Tienes para realizar la transacción ", 'sargapay-plugin'));
                     $qr = new GenerateQR();
                     echo '<p>' . $text . $time_until_cancel . '</p>';
-                    echo '<p style="text-align: center;"><b>' . esc_html(__('Payment Address', 'tk-ada-pay-plugin')) . '</b><br>' . $payment_address .
+                    echo '<p style="text-align: center;"><b>' . esc_html(__('Payment Address', 'sargapay-plugin')) . '</b><br>' . $payment_address .
                         $qr->generate($payment_address) .
                         '</p>';
-                    echo '<p style="text-align: center;"><b>' . esc_html(__('Total ADA', 'tk-ada-pay-plugin')) . '</b><br>' . $total_ada . '</p>';
+                    echo '<p style="text-align: center;"><b>' . esc_html(__('Total ADA', 'sargapay-plugin')) . '</b><br>' . $total_ada . '</p>';
                 }
             } else if (
                 $order->get_status() === "cancelled"
             ) {
-                echo esc_html(__("24 hours have passed and your order was canceled, the payment address is no longer valid.", 'tk-ada-pay-plugin'));
+                echo esc_html(__("24 hours have passed and your order was canceled, the payment address is no longer valid.", 'sargapay-plugin'));
             }
         }
     }
@@ -351,14 +351,14 @@ function tk_ada_pay_plugin_init_gateway_class()
         return $protocols;
     });
 
-    function TKAP_add_content_wc_order_email($order, $sent_to_admin, $plain_text, $email)
+    function SARGAPAY_add_content_wc_order_email($order, $sent_to_admin, $plain_text, $email)
     {
         if ($email->id == 'customer_on_hold_order') {
-            if ($order->get_payment_method() === "tk-ada-pay-plugin") {
+            if ($order->get_payment_method() === "sargapay-plugin") {
                 if ($plain_text === false) {
-                    echo "<p>." . esc_html(__('Instruction for payment will be send soon!', 'tk-ada-pay-plugin')) . "</p>";
+                    echo "<p>." . esc_html(__('Instruction for payment will be send soon!', 'sargapay-plugin')) . "</p>";
                 } else {
-                    echo esc_html(__("Instruction for payment will be send soon!\n", 'tk-ada-pay-plugin'));
+                    echo esc_html(__("Instruction for payment will be send soon!\n", 'sargapay-plugin'));
                 }
             }
         }
