@@ -1,6 +1,6 @@
 <?php
 
-class TKAP_WC_Gateway extends WC_Payment_Gateway
+class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
 {
 
     public function __construct()
@@ -42,9 +42,9 @@ class TKAP_WC_Gateway extends WC_Payment_Gateway
                     padding: 25px 0;
                 }
 
-                .banner-container{
+                .banner-container {
                     display: flex;
-                    flex-direction: column;    
+                    flex-direction: column;
                 }
 
                 .banner {
@@ -81,7 +81,7 @@ class TKAP_WC_Gateway extends WC_Payment_Gateway
                     text-decoration: none;
                     color: #fff;
                     font-size: 2vw;
-                    font-weight: bold;                
+                    font-weight: bold;
                 }
 
                 .banner-link:after,
@@ -93,7 +93,8 @@ class TKAP_WC_Gateway extends WC_Payment_Gateway
                 .discord-logo {
                     height: 40px;
                 }
-                .icono-link{
+
+                .icono-link {
                     font-size: 2vw;
                     padding-right: 5px;
                 }
@@ -249,7 +250,7 @@ class TKAP_WC_Gateway extends WC_Payment_Gateway
                                     <?php foreach (wc_get_account_orders_columns() as $column_id => $column_name) : ?>
                                         <td class="woocommerce-orders-table__cell woocommerce-orders-table__cell-<?php echo esc_attr($column_id); ?>" data-title="<?php echo esc_attr($column_name); ?>">
                                             <?php if ('order-number' === $column_id) : ?>
-                                                <a href="<?php echo esc_url($order->get_view_order_url()); ?>">
+                                                <a href="<?php echo esc_url(admin_url('post.php?post=' . $order->get_order_number() . '&action=edit')); ?>">
                                                     <?php echo _x('#', 'hash before order number', 'woocommerce') . $order->get_order_number(); ?>
                                                 </a>
 

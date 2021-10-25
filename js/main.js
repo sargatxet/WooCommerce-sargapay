@@ -20,7 +20,7 @@ window.onload = function() {
         });
     }
     //Generate Check Button 
-    const input = document.getElementById('woocommerce_tk-ada-pay-plugin_mpk');
+    const input = document.getElementById('woocommerce_sargapay-plugin_mpk');
     if (input) {
         let pay_address_mainet = null;
         let pay_address_testnet = null;
@@ -44,7 +44,7 @@ window.onload = function() {
         button.className = "button";
         const tittle = document.querySelector("#mainform > table > tbody > tr:nth-child(2) > th > label");
         if (tittle.textContent.localeCompare("Título")) {
-            button.textContent = 'Probar La Llave Publica';
+            button.textContent = 'Probar La Llave Pública';
         } else {
             button.textContent = "Test Public Key";
         }

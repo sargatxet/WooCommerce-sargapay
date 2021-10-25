@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Sargatxet ADA Pay Gateway for WooCommerce
- * Plugin URI: https://cardano.sargatxet.cloud/
+ * Plugin URI: https://github.com/sargatxet/WooCommerce-sargapay/
  * Description: Recive payments using Cardano ADA
  * Author: SargaTxet
  * Author URI: https://cardano.sargatxet.cloud/
@@ -113,7 +113,7 @@ function sargapay_plugin_init_gateway_class()
     // Add Payment Method to Woocommerce
     function sargapay_plugin_add_gateway_class($gateways)
     {
-        $gateways[] = 'TKAP_WC_Gateway';
+        $gateways[] = 'SARGAPAY_WC_Gateway';
         return $gateways;
     }
 
@@ -202,7 +202,7 @@ function sargapay_plugin_init_gateway_class()
                     return $thank_you_title . "<br>" . $message . '<br><br>';
                 } else {
                     if ($query_address[0]->testnet) {
-                        $testnet_msg  = esc_html(__("BE AWARE THIS IS A TESTNET PAY ADDRESS", 'sargapay-plugin'));
+                        $testnet_msg  = esc_html(__("BE AWARE THIS IS A TESTNET PAYMENT ADDRESS", 'sargapay-plugin'));
                         echo "<p style='background:red; font-weight:bold; color:white; text-align:center;'> $testnet_msg </p>";
                     }
                     // Get order amount in ada
@@ -306,7 +306,7 @@ function sargapay_plugin_init_gateway_class()
                     write_log("Emprty Query result in account page order");
                 } else {
                     if ($query_address[0]->testnet) {
-                        $testnet_msg  = esc_html(__("BE AWARE THIS IS A TESTNET PAY ADDRESS ", 'sargapay-plugin'));
+                        $testnet_msg  = esc_html(__("BE AWARE THIS IS A TESTNET PAYMENT ADDRESS ", 'sargapay-plugin'));
                         echo "<p style='background:red; font-weight:bold; color:white; text-align:center;'> $testnet_msg </p>";
                     }
                     // Get order amount in ada
@@ -356,9 +356,9 @@ function sargapay_plugin_init_gateway_class()
         if ($email->id == 'customer_on_hold_order') {
             if ($order->get_payment_method() === "sargapay-plugin") {
                 if ($plain_text === false) {
-                    echo "<p>." . esc_html(__('Instruction for payment will be send soon!', 'sargapay-plugin')) . "</p>";
+                    echo "<p>." . esc_html(__('Instructions for payment will be send soon!', 'sargapay-plugin')) . "</p>";
                 } else {
-                    echo esc_html(__("Instruction for payment will be send soon!\n", 'sargapay-plugin'));
+                    echo esc_html(__("Instructions for payment will be send soon!\n", 'sargapay-plugin'));
                 }
             }
         }

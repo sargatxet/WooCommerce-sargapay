@@ -23,5 +23,3 @@ function SARGAPAY_create_address_table()
 
     $wpdb->query($query);
 }
-
-//add email sent field 
