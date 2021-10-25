@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sargatxet ADA Pay Gateway for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-25 03:34+0000\n"
+"POT-Creation-Date: 2021-10-25 05:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -54,12 +54,8 @@ msgstr ""
 msgid "Amount Copied!"
 msgstr ""
 
-#: TKAP_plugin.php:205
-msgid "BE AWARE THIS IS A TESTNET PAY ADDRESS"
-msgstr ""
-
 #: TKAP_plugin.php:309
-msgid "BE AWARE THIS IS A TESTNET PAYMENT ADDRESS "
+msgid "BE AWARE THIS IS A TESTNET PAYMENT ADDRESS"
 msgstr ""
 
 #: TKAP_Gateway.php:193

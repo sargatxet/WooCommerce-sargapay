@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: TrakaDev Cardano Payments for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-30 04:34+0000\n"
-"PO-Revision-Date: 2021-10-25 03:57+0000\n"
+"PO-Revision-Date: 2021-10-25 05:45+0000\n"
 "Last-Translator: \n"
 "Language-Team: Español\n"
 "Language: es_ES\n"
@@ -56,13 +56,9 @@ msgstr "Permite a los clientes pagar usando Cardano Ada"
 msgid "Amount Copied!"
 msgstr "Monto Copiado"
 
-#: TKAP_plugin.php:205
-msgid "BE AWARE THIS IS A TESTNET PAY ADDRESS"
-msgstr "CUIDADO ESTA ES UNA DIRECCIÓN DE PAGO DE TESTNET"
-
 #: TKAP_plugin.php:309
-#| msgid "BE AWARE THIS IS A TESTNET PAY ADDRESS "
-msgid "BE AWARE THIS IS A TESTNET PAYMENT ADDRESS "
+#| msgid "BE AWARE THIS IS A TESTNET PAYMENT ADDRESS "
+msgid "BE AWARE THIS IS A TESTNET PAYMENT ADDRESS"
 msgstr "CUIDADO ESTA ES UNA DIRECCIÓN DE PAGO DE TESTNET"
 
 #: TKAP_Gateway.php:193

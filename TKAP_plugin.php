@@ -306,7 +306,7 @@ function sargapay_plugin_init_gateway_class()
                     write_log("Emprty Query result in account page order");
                 } else {
                     if ($query_address[0]->testnet) {
-                        $testnet_msg  = esc_html(__("BE AWARE THIS IS A TESTNET PAYMENT ADDRESS ", 'sargapay-plugin'));
+                        $testnet_msg  = esc_html(__("BE AWARE THIS IS A TESTNET PAYMENT ADDRESS", 'sargapay-plugin'));
                         echo "<p style='background:red; font-weight:bold; color:white; text-align:center;'> $testnet_msg </p>";
                     }
                     // Get order amount in ada
