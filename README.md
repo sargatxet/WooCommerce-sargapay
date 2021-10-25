@@ -41,4 +41,4 @@ Por último tenemos que activar el plugin y verificar la red que vamos usar, si 
  
 ## License
 
-TBA
+https://github.com/sargatxet/WooCommerce-sargapay/blob/main/LICENSE
