@@ -316,6 +316,7 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
                     WC_Admin_Settings::add_error(__('Error: You need a BLOCKFROST API KEY for MAINNET to validate transactions.', 'sargapay-plugin'));
                     $errors = 1;
                 }
+                $errors = $this->check_API_KEY(0, $_POST['woocommerce_sargapay-plugin_blockfrost_key']);
             } else if ($_POST['woocommerce_sargapay-plugin_testmode'] == 1) {
                 if (!preg_match("/^[A-Za-z0-9]+$/", $_POST['woocommerce_sargapay-plugin_blockfrost_test_key'])) {
                     WC_Admin_Settings::add_error(__('Error: Invalid Character in BLOCKFROST API KEY for TESTNET.', 'sargapay-plugin'));
@@ -325,10 +326,44 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
                     WC_Admin_Settings::add_error(__('Error: You need a BLOCKFROST API KEY for TESTNET to validate transactions.', 'sargapay-plugin'));
                     $errors = 1;
                 }
-            }
+                $errors = $this->check_API_KEY($_POST['woocommerce_sargapay-plugin_testmode'], $_POST['woocommerce_sargapay-plugin_blockfrost_test_key']);
+            }            
             return $errors === 0;
         }
         return false;
+    }
+
+    // API KEY CHECK
+    function check_API_KEY($testmode, $apikey)
+    {
+        if ($testmode == 1) {
+            $url = "https://cardano-testnet.blockfrost.io/api/v0/";
+            $network = "TESTNET";
+        } else {
+            $url = "https://cardano-mainnet.blockfrost.io/api/v0/";
+            $network = "MAINNET";
+        }
+        // API KEY TEST
+        $apicall = curl_init();
+        curl_setopt($apicall, CURLOPT_URL, $url);
+        curl_setopt($apicall, CURLOPT_HTTPHEADER, array(
+            'project_id: ' . $apikey,
+        ));
+        curl_setopt($apicall, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($apicall, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        $result = json_decode(curl_exec($apicall), true);
+        if (!$result) {
+            // API CALL CONECTION FAILED
+            WC_Admin_Settings::add_error(__('Error: Connection Failed', 'sargapay-plugin'));
+            return 1;
+        }
+        curl_close($apicall);
+        if (isset($result["status_code"])) {
+            // ERROR API CALL
+            WC_Admin_Settings::add_error($network . " API KEY Code: " . $result["status_code"] . " Error: " . $result["error"] . " Message: " . $result["message"]);
+            return 1;
+        }
+        return 0;
     }
 
     public function payment_fields()
