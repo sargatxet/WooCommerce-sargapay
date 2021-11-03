@@ -165,7 +165,7 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
             ),
             'mpk' => array(
                 'title'       => __('Public Adress Key for Cardano', 'sargapay-plugin'),
-                'type'        => 'text',
+                'type'        => 'password',
                 'description' => __('Place the Public Adress Key to generate Payment Addresses.', 'sargapay-plugin'),
             ),
             'confirmations' => array(
@@ -192,13 +192,13 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
             ),
             'blockfrost_key' => array(
                 'title'       => '<a href="https://blockfrost.io/">' . __('Blockfrost API Key for Mainnet', 'sargapay-plugin') . '</a>',
-                'type'        => 'text',
+                'type'        => 'password',
                 'description' => __('Place the API KEY to use BlockFrost to verify transactions on Mainnet.', 'sargapay-plugin'),
                 'desc_tip'    => true,
             ),
             'blockfrost_test_key' => array(
                 'title'       => '<a href="https://blockfrost.io/">' . __('Blockfrost API Key for Testnet.', 'sargapay-plugin') . '</a>',
-                'type'        => 'text',
+                'type'        => 'password',
                 'description' => __('Place the API KEY to use BlockFrost to verify transactions on Testnet.', 'sargapay-plugin'),
                 'desc_tip'    => true,
             ),
