@@ -1,4 +1,3 @@
-
 <?php
 /*
     SargaPay. Cardano gateway plug-in for Woocommerce. 
