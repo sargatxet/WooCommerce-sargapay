@@ -3,7 +3,7 @@
  * Plugin Name: Sargatxet ADA Pay Gateway for WooCommerce
  * Plugin URI: https://github.com/sargatxet/WooCommerce-sargapay/
  * Description: Recive payments using Cardano ADA
- * Author: SargaTxet
+ * Author: Sargatxet
  * Author URI: https://cardano.sargatxet.cloud/
  * Text Domain: sargapay-plugin
  * Domain Path: /languages

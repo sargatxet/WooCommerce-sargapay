@@ -238,7 +238,7 @@ msgid ""
 msgstr ""
 
 #. Author of the plugin
-msgid "SargaTxet"
+msgid "Sargatxet"
 msgstr ""
 
 #. Name of the plugin

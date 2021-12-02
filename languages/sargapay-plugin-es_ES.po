@@ -255,8 +255,8 @@ msgstr ""
 "automáticamente."
 
 #. Author of the plugin
-msgid "SargaTxet"
-msgstr "SargaTxet"
+msgid "Sargatxet"
+msgstr "Sargatxet"
 
 #. Name of the plugin
 #| msgid "TrakaDev ADA Pay Gateway for WooCommerce"
