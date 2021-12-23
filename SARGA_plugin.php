@@ -296,7 +296,7 @@ function sargapay_plugin_init_gateway_class()
                     $file_name = $payment_address . ".png";
                     $testnet_bool = $query_address[0]->testnet;
                     // Email Sent                   
-                    send_email_woocommerce_style($email, $subject, $testnet_bool,  $total_ada, $payment_address, $url_img, $file_name,);
+                    send_email_woocommerce_style($email, $subject, $testnet_bool, $total_ada, $payment_address, $url_img, $file_name);
                     return $thank_you_title . "<br>" . $message . '<br><br>';
                 }
             }
