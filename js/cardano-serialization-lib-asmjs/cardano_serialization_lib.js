@@ -1,4 +1,3 @@
-
 /*
     SargaPay. Cardano gateway plug-in for Woocommerce. 
     Copyright (C) 2021  Sargatxet Pools
