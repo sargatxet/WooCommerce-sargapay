@@ -1,6 +1,6 @@
 <?php
 /*
- * Plugin Name: Sargatxet ADA Pay Gateway for WooCommerce
+ * Plugin Name: WooCommerce Sargapay
  * Plugin URI: https://github.com/sargatxet/WooCommerce-sargapay/
  * Description: Recive payments using Cardano ADA
  * Author: Sargatxet
@@ -8,6 +8,7 @@
  * Text Domain: sargapay-plugin
  * Domain Path: /languages
  * Version: 0.1.0
+ * Requires PHP: 7.3
  * License: MIT
  * License URI: https://github.com/sargatxet/WooCommerce-sargapay/blob/main/LICENSE
  */
@@ -45,7 +46,10 @@ function SARGAPAY_activate()
 {
     // Check if woocommerce is active.
     if (!class_exists('WC_Payment_Gateway')) {
-        return;
+        die(__('Plugin NOT activated: WooCommerce is required', 'sargapay-plugin'));
+    }
+    if (PHP_VERSION_ID <= 70299) {
+        die(__('Plugin NOT activated: Minimun PHP version required  is 7.3', 'sargapay-plugin'));
     }
     //Register verification 
     if (!wp_next_scheduled('SARGAPAY_cron_hook')) {

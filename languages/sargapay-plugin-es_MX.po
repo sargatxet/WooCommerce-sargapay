@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: TrakaDev Cardano Payments for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-30 04:34+0000\n"
-"PO-Revision-Date: 2021-10-25 05:44+0000\n"
+"PO-Revision-Date: 2021-12-23 06:07+0000\n"
 "Last-Translator: \n"
 "Language-Team: Español de México\n"
 "Language: es_MX\n"
@@ -15,15 +15,15 @@ msgstr ""
 "X-Loco-Version: 2.5.5; wp-5.8.1\n"
 "X-Domain: tk-ada-pay-plugin\n"
 
-#: TKAP_SaveAddress.php:79
+#: SARGA_SaveAddress.php:96
 msgid " Adresses Generated and Saved in Database."
 msgstr " Direcciones Generadas y Guardadas en la Base de Datos."
 
-#: TKAP_send_email.php:41
+#: SARGA_send_email.php:58
 msgid " TESTNET ADDRESS"
 msgstr " DIRECCIÓN DE TESTNET"
 
-#: TKAP_plugin.php:344
+#: SARGA_plugin.php:366
 msgid ""
 "24 hours have passed and your order was canceled, the payment address is no "
 "longer valid."
@@ -31,131 +31,135 @@ msgstr ""
 "20 horas han pasado y tu orden ha sido cancelada, la dirección de pago ya no "
 "es válida."
 
-#: TKAP_Gateway.php:359
+#: SARGA_Gateway.php:413
 msgid "ADA exchange rate is calculated at the time the order is made"
 msgstr ""
 "El tipo de cambio de ADA es calculado al momento de que se crea la orden"
 
-#: TKAP_Gateway.php:356
+#: SARGA_Gateway.php:410
 msgid "ADA Price"
 msgstr "Precio de ADA"
 
-#: TKAP_Gateway.php:357 TKAP_plugin.php:269
+#: SARGA_Gateway.php:411 SARGA_plugin.php:291
 msgid "ADA Total"
 msgstr "Total en ADA"
 
-#: TKAP_send_email.php:43
+#: SARGA_send_email.php:60
 msgid "Address"
 msgstr "Dirección"
 
-#: TKAP_Gateway.php:13
+#: SARGA_Gateway.php:31
 msgid "Allow customers to pay using Cardano ADA"
 msgstr "Permite a los clientes pagar usando Cardano Ada"
 
-#: TKAP_plugin.php:266
+#: SARGA_plugin.php:288
 msgid "Amount Copied!"
 msgstr "Monto Copiado"
 
-#: TKAP_plugin.php:309
+#: SARGA_plugin.php:227 SARGA_plugin.php:331
 #| msgid "BE AWARE THIS IS A TESTNET PAYMENT ADDRESS "
 msgid "BE AWARE THIS IS A TESTNET PAYMENT ADDRESS"
 msgstr "CUIDADO ESTA ES UNA DIRECCIÓN DE PAGO DE TESTNET"
 
-#: TKAP_Gateway.php:193
+#: SARGA_Gateway.php:212
 msgid "Blockfrost API Key for Mainnet"
 msgstr "Blockfrost API Key para Mainnet"
 
-#: TKAP_Gateway.php:199
+#: SARGA_Gateway.php:218
 msgid "Blockfrost API Key for Testnet."
 msgstr "Blockfrost API Key para Testnet."
 
-#: TKAP_Gateway.php:171
+#: SARGA_Gateway.php:190
 msgid "Confirmations"
 msgstr "Confirmaciones"
 
-#: TKAP_Gateway.php:173
+#: SARGA_Gateway.php:192
 msgid "Confirmations needed to accept a trasaction as valid."
 msgstr "Confirmaciones necesarias para aceptar un pago como válido."
 
-#: TKAP_Gateway.php:361
+#: SARGA_Gateway.php:415
 msgid "Contact the admin to provide you with a payment address."
 msgstr ""
 "Contacta al administrador para que le proporcione una dirección de pago."
 
-#: TKAP_plugin.php:270
+#: SARGA_plugin.php:292
 msgid "Copy Amount"
 msgstr "Copiar Monto"
 
-#: TKAP_plugin.php:270
+#: SARGA_plugin.php:292
 msgid "Copy Payment Address"
 msgstr "Copiar Dirección de Pago"
 
-#: TKAP_Gateway.php:205 TKAP_Gateway.php:355
+#: SARGA_Gateway.php:224 SARGA_Gateway.php:409
 msgid "Currency"
 msgstr "Moneda"
 
-#: TKAP_Gateway.php:207
+#: SARGA_Gateway.php:226
 msgid "Currency used in case default currency is not supported."
 msgstr "Si la moneda no es soportada usar esta en reemplazo."
 
-#: TKAP_Gateway.php:152
+#: SARGA_Gateway.php:171
 msgid "Description"
 msgstr "Descripción"
 
-#: TKAP_Gateway.php:139
+#: SARGA_Gateway.php:158
 msgid "Enable Sargapay Gateway"
 msgstr "Habilita Sargapay Gateway"
 
-#: TKAP_Gateway.php:159
+#: SARGA_Gateway.php:178
 msgid "Enable Test Mode"
 msgstr "Activar Modo de Prueba"
 
-#: TKAP_Gateway.php:138
+#: SARGA_Gateway.php:157
 msgid "Enable/Disable"
 msgstr "Habilitar/Deshabilitar"
 
-#: TKAP_SaveAddress.php:44
+#: SARGA_SaveAddress.php:61
 msgid "Error no request sent :("
 msgstr "Error no se mandó ninguna petición :("
 
-#: TKAP_plugin.php:200
+#: SARGA_plugin.php:222
 msgid "ERROR PLEASE CONTACT ADMIN TO PROCCED WITH THE ORDER"
 msgstr "ERROR POR FAVOR CONTACTA AL ADMINISTRADOR PARA CONTINUAR CON EL PEDIDO"
 
-#: TKAP_plugin.php:305
+#: SARGA_plugin.php:327
 msgid "ERROR PLEASE CONTACT THE ADMIN TO PROCCED WITH THE ORDER"
 msgstr ""
 "ERROR POR FAVOR CONTACTAR AL ADMINISTRADOR PARA CONTINUAR CON EL PEDIDO"
 
-#: TKAP_Gateway.php:311
+#: SARGA_Gateway.php:375
+msgid "Error: Connection Failed"
+msgstr "Error: Falló la conexión"
+
+#: SARGA_Gateway.php:330
 msgid "Error: Invalid Character in BLOCKFROST API KEY for MAINNET."
 msgstr "Error: Carácter Invalido en la API KEY de BLOCKFROST para MAINNET."
 
-#: TKAP_Gateway.php:320
+#: SARGA_Gateway.php:340
 msgid "Error: Invalid Character in BLOCKFROST API KEY for TESTNET."
 msgstr "Error: Carácter Invalido en la API KEY de BLOCKFROST para TESTNET."
 
-#: TKAP_Gateway.php:306
+#: SARGA_Gateway.php:325
 msgid "Error: Invalid Character in Publick Key."
 msgstr "Error: Carácter Invalido en la Llave Publica."
 
-#: TKAP_Gateway.php:315
+#: SARGA_Gateway.php:334
 msgid ""
 "Error: You need a BLOCKFROST API KEY for MAINNET to validate transactions."
 msgstr ""
 "Error: Necesitas una API KEY de BLOCKFROST para MAINNET para validar pagos."
 
-#: TKAP_Gateway.php:324
+#: SARGA_Gateway.php:344
 msgid ""
 "Error: You need a BLOCKFROST API KEY for TESTNET to validate transactions."
 msgstr ""
 "Error: Necesitas una API KEY de BLOCKFROST para TESTNET para validar pagos."
 
-#: TKAP_Gateway.php:302
+#: SARGA_Gateway.php:321
 msgid "Error: You require a Master Public Key to generate  payment addresses."
 msgstr "Error: Requieres una Llave Pública para generar direcciones de pago."
 
-#: TKAP_plugin.php:46
+#: SARGA_plugin.php:68
 msgid "Every 10 Minutes"
 msgstr "Cada 10 Minutos"
 
@@ -167,12 +171,12 @@ msgstr "https://cardano.sargatxet.cloud/"
 msgid "https://github.com/sargatxet/WooCommerce-sargapay/"
 msgstr "https://github.com/sargatxet/WooCommerce-sargapay/"
 
-#: TKAP_plugin.php:359
+#: SARGA_plugin.php:381
 #| msgid "Instruction for payment will be send soon!"
 msgid "Instructions for payment will be send soon!"
 msgstr "Las instrucciones para realizar el pago se enviaran pronto!"
 
-#: TKAP_plugin.php:361
+#: SARGA_plugin.php:383
 #| msgid ""
 #| "Instruction for payment will be send soon!\n"
 msgid ""
@@ -180,23 +184,23 @@ msgid ""
 msgstr ""
 "Las instrucciones para realizar el pago se enviaran pronto.\n"
 
-#: TKAP_Gateway.php:142
+#: SARGA_Gateway.php:161
 msgid "no"
 msgstr "no"
 
-#: TKAP_Gateway.php:289
+#: SARGA_Gateway.php:308
 msgid "No orders done yet with this gateway"
 msgstr "No se han hecho pedidos con este método de pago"
 
-#: TKAP_Gateway.php:224
+#: SARGA_Gateway.php:243
 msgid "Orders done with Sargapay Gateway"
 msgstr "Ordenes hechas con Sargapay Gateway"
 
-#: TKAP_Gateway.php:120
+#: SARGA_Gateway.php:139
 msgid "Orders Paid with this plugin"
 msgstr "Pedidos Pagados con este plugin"
 
-#: TKAP_Gateway.php:155
+#: SARGA_Gateway.php:174
 msgid ""
 "Pay using Cardano ADA via our super-cool payment gateway. You have 24 hrs to "
 "pay or the order will be cancelled."
@@ -204,41 +208,49 @@ msgstr ""
 "Paga usando Cardano ADA con nuestro super-cool método de pago. Tienes 24 "
 "horas para pagar o el pedido será cancelado."
 
-#: TKAP_Gateway.php:148
+#: SARGA_Gateway.php:167
 msgid "Pay with Cardano ADA"
 msgstr "Paga con Cardano ADA"
 
-#: TKAP_plugin.php:257 TKAP_plugin.php:336
+#: SARGA_plugin.php:279 SARGA_plugin.php:358
 msgid "Payment Address"
 msgstr "Dirección de Pago"
 
-#: TKAP_plugin.php:253
+#: SARGA_plugin.php:275
 msgid "Payment Address Copied!"
 msgstr "Dirección de Pago Copiada!"
 
-#: TKAP_plugin.php:277 TKAP_send_email.php:36 TKAP_send_email.php:37
+#: SARGA_plugin.php:299 SARGA_send_email.php:53 SARGA_send_email.php:54
 msgid "Payment Instructions "
 msgstr "Instrucciones de Pago "
 
-#: TKAP_Gateway.php:195
+#: SARGA_Gateway.php:214
 msgid "Place the API KEY to use BlockFrost to verify transactions on Mainnet."
 msgstr ""
 "Proporciona la API KEY para usar BlockFrost para verificar pagos en Mainnet."
 
-#: TKAP_Gateway.php:201
+#: SARGA_Gateway.php:220
 msgid "Place the API KEY to use BlockFrost to verify transactions on Testnet."
 msgstr ""
 "Proporciona la API KEY para usar BlockFrost para verificar pagos en Testnet."
 
-#: TKAP_Gateway.php:161
+#: SARGA_Gateway.php:180
 msgid "Place the payment gateway in test mode to use TESTNET."
 msgstr "Activa el modo de prueba para usar TESTNET."
 
-#: TKAP_Gateway.php:168
+#: SARGA_Gateway.php:187
 msgid "Place the Public Adress Key to generate Payment Addresses."
 msgstr "Proporciona la Llave Pública para generar Direcciones de Pago."
 
-#: TKAP_Gateway.php:166
+#: SARGA_plugin.php:52
+msgid "Plugin NOT activated: Minimun PHP version required  is 7.3"
+msgstr "El Plugin no se activo: Versión minima requerida es 7.3"
+
+#: SARGA_plugin.php:49
+msgid "Plugin NOT activated: WooCommerce is required"
+msgstr "El Plugin no se activo: Se necesita WooCommerce"
+
+#: SARGA_Gateway.php:185
 msgid "Public Adress Key for Cardano"
 msgstr "Llave Pública para Cardano"
 
@@ -246,7 +258,7 @@ msgstr "Llave Pública para Cardano"
 msgid "Recive payments using Cardano ADA"
 msgstr "Recibe pagos usando Cardano ADA"
 
-#: TKAP_plugin.php:190
+#: SARGA_plugin.php:212
 msgid ""
 "Remember that you have 24 hours to pay for your order before it's "
 "automatically canceled."
@@ -258,48 +270,47 @@ msgstr ""
 msgid "Sargatxet"
 msgstr "Sargatxet"
 
-#. Name of the plugin
-#| msgid "TrakaDev ADA Pay Gateway for WooCommerce"
-msgid "Sargatxet ADA Pay Gateway for WooCommerce"
-msgstr "Sargatxet ADA Pay Gateway para WooCommerce"
-
-#: TKAP_Gateway.php:348
+#: SARGA_Gateway.php:402
 msgid "TEST MODE"
 msgstr "MODO DE PRUEBA"
 
-#: TKAP_Gateway.php:158
+#: SARGA_Gateway.php:177
 msgid "Test mode"
 msgstr "Modo de prueba"
 
-#: TKAP_Gateway.php:154
+#: SARGA_Gateway.php:173
 msgid "This controls the description which the user sees during checkout."
 msgstr "Controla la descripción que ve el usuario durante el pago."
 
-#: TKAP_Gateway.php:147
+#: SARGA_Gateway.php:166
 msgid "This controls the title which the user sees during checkout."
 msgstr "Controla el título que ve el usuario al realizar una compra."
 
-#: TKAP_plugin.php:333
+#: SARGA_plugin.php:355
 msgid "Tienes para realizar la transacción "
 msgstr "Tienes para realizar el pago "
 
-#: TKAP_Gateway.php:145
+#: SARGA_Gateway.php:164
 msgid "Title"
 msgstr "Título"
 
-#: TKAP_plugin.php:339
+#: SARGA_plugin.php:361
 msgid "Total ADA"
 msgstr "Total en ADA"
 
-#: TKAP_send_email.php:39
+#: SARGA_send_email.php:56
 msgid "Total Amount in ADA "
 msgstr "Monto Total en ADA "
 
-#: TKAP_Gateway.php:162
+#. Name of the plugin
+msgid "WooCommerce Sargapay"
+msgstr "WooCommerce Sargapay"
+
+#: SARGA_Gateway.php:181
 msgid "yes"
 msgstr "si"
 
-#: TKAP_send_email.php:47
+#: SARGA_send_email.php:64
 msgid ""
 "You can verify the payment address and amount if you login and go to my-"
 "account/orders"
@@ -307,6 +318,6 @@ msgstr ""
 "Puedes verificar la dirección de pago y el monto a pagar si inicias sesión y "
 "vas a la sección de mi cuenta y pedidos"
 
-#: TKAP_send_email.php:38
+#: SARGA_send_email.php:55
 msgid "You have 24hrs to pay before the order is cancelled"
 msgstr "Tienes 24 horas para pagar antes de que el pedido sea cancelado"
