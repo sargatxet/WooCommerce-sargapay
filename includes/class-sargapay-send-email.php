@@ -1,0 +1,140 @@
+<?php
+/*
+    SargaPay. Harmony gateway plug-in for Woocommerce. 
+    Copyright (C) 2021  Sargatxet Pools
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+// @email - Email address of the reciever
+// @subject - Subject of the email
+// @heading - Heading to place inside of the woocommerce template
+// @message - Body content (can be HTML)
+// @attachments - Attach Files
+
+
+class Sargapay_Send_Email
+{
+
+  static function send_email($email, $subject, $testnet_bool, $total, $address, $path, $name, $blockchain, $order_id = null)
+  {
+    // Define headers html emails
+    $headers[] = 'From: ' . get_option('blogname') . ' <' . get_option('admin_email') . '>';
+    // Add Embed ID
+    if (file_exists($path)) {
+      $phpmailerInitAction = function (&$phpmailer) use ($path, $name) {
+        $phpmailer->SMTPKeepAlive = true;
+        $phpmailer->AddEmbeddedImage($path, 'qrimg', $name);
+      };
+      add_action('phpmailer_init',  $phpmailerInitAction);
+      // Load QR Img
+      $attachment = array($path);
+    } else {
+      write_log("Error: QR File doesn't Exist");
+      $attachment = array();
+    }
+
+    $subject = __("Payment Instructions ", 'sargapay-plugin') . get_bloginfo('name');
+    $heading = __("Payment Instructions ", 'sargapay-plugin');
+    # Get MSG
+    $message = SELF::get_msg($blockchain, $testnet_bool, $address, $total, $order_id);
+    // Get woocommerce mailer from instance
+    $mailer = WC()->mailer();
+
+    // Wrap message using woocommerce html email template
+    $wrapped_message = $mailer->wrap_message($heading, $message);
+
+    // Create new WC_Email instance
+    $wc_email = new WC_Email;
+
+    // Style the wrapped message with woocommerce inline styles
+    $html_message = $wc_email->style_inline($wrapped_message);
+
+    // Send the email using wordpress mail function
+    add_filter('wp_mail_content_type', array( __CLASS__,'my_custom_email_content_type'));
+    wp_mail($email, $subject, $html_message, $headers, $attachment);
+    // Clean Attachments and header
+    remove_filter('wp_mail_content_type', array( __CLASS__,'my_custom_email_content_type'));
+    if (file_exists($path)) {
+      remove_action('phpmailer_init', $phpmailerInitAction);
+      unlink($path);
+    }
+  }
+
+  static function my_custom_email_content_type()
+  {
+    return 'text/html';
+  }
+
+  static function get_msg($blockchain, $testnet_bool, $address, $total, $order_id)
+  {
+    # 1 Harmony ONE
+    # 2 Cardano ADA
+    $Crypto_Stake = $blockchain === 1 ? "Harmony ONE" : "Cardano ADA";
+    $ad  = "<p style='font-weight: bold; text-align: center;'>Tienes $Crypto_Stake ponlo a trabajar en el pool de staking <a href='https://sargatxet.cloud/' target='_blank'>SARGATXET</a></p>";
+    $ad .= "<table style='text-align:center; margin-left: auto; margin-right: auto;'>
+            <tr style='text-align:center;'>              
+              <th><a href='https://sargatxet.cloud/'>Website</a></th>
+              <th><a href='https://discord.gg/X6Ruku9q42'>Discord</a></th>
+            </tr>  
+          </table>";
+    $ad .= "<p style='font-weight: bold; text-align: center;'>Powered by Sargatxet</p>";
+    $message =  "<h2 style='overflow-wrap:anywhere;'>" . __("You have 24hrs to pay before the order is cancelled", 'sargapay-plugin') . "</h2>";
+    $reminder = "<p>" . esc_html(__('You can verify the payment address and amount if you login and go to my-account/orders', 'sargapay-plugin')) . "</p>";
+    switch ($blockchain) {
+      case 1:
+        $message .= "<h2 style='text-align: center;'>" . esc_html(__('Total Amount in ONE ', 'sargapay-plugin')) . $total . "</h2>";
+        if ($testnet_bool == 1) {
+          $message .= "<h3 style='text-align: center;'>" . esc_html(__('TESTNET ADDRESS', 'sargapay-plugin')) . "</h3>";
+        } else {
+          $message .= "<h3 style='text-align: center;'>" . esc_html(__("Address", 'sargapay-plugin')) . "</h3>";
+        }
+        $message .= '<div><img src="cid:qrimg" style="margin-left: auto; margin-right: auto;"></div>';
+        $message .= "<p style='text-align: center; font-weight: bold;'>" . SELF::adrress_break($address) . "</p>";
+        $message .= "<p style='text-align: center;'>" . esc_html(__('Input Data', 'sargapay-plugin')) . "<br>" . esc_html("0x" . dechex($order_id));
+        $message .= "<br><span style='text-size: 5px;'>" . esc_html(__('Don\'t forget to send the input data in your payment to verify it', 'sargapay-plugin')) . "</span></p>";
+        break;
+      case 2:
+        $message .= "<h2>" . esc_html(__('Total Amount in ADA ', 'sargapay-plugin')) . $total . "</h2>";
+        if ($testnet_bool == 1) {
+          $message .= "<h3>" . esc_html(__(' TESTNET ADDRESS', 'sargapay-plugin')) . "</h3>";
+        } else {
+          $message .= "<h3>" . esc_html(__("Address", 'sargapay-plugin')) . "</h3>";
+        }
+        $message .= '<div><img src="cid:qrimg" style="margin-left: auto; margin-right: auto;"></div>';
+        $message .= "<p style='font-weight: bold;'>" . SELF::adrress_break($address) . "</p>";
+        break;
+    }
+    $message .= $reminder;
+    $message .= $ad;
+    return $message;
+  }
+
+  static function adrress_break($address)
+  {
+    $new_address = '';
+    $address_1 = explode('>', $address);
+    $sizeof = sizeof($address_1);
+    for ($i = 0; $i < $sizeof; ++$i) {
+      $address_2 = explode('<', $address_1[$i]);
+      if (!empty($address_2[0])) {
+        $new_address .= preg_replace('#([^\n\r .]{60})#i', '\\1  ', $address_2[0]);
+      }
+      if (!empty($address_2[1])) {
+        $new_address .= '<' . $address_2[1] . '>';
+      }
+    }
+    return $new_address;
+  }
+}

@@ -1,0 +1,6 @@
+{
+    "require": {
+        "endroid/qr-code": "^4.3",
+        "brick/math": "^0.9.3"
+    }
+}

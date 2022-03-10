@@ -1,0 +1,429 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TrakaDev Cardano Payments for WooCommerce\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-30 04:34+0000\n"
+"PO-Revision-Date: 2022-03-09 22:39+0000\n"
+"Last-Translator: \n"
+"Language-Team: Español de México\n"
+"Language: es_MX\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.6.0; wp-5.9.1\n"
+"X-Domain: tk-ada-pay-plugin\n"
+
+#: includes/class-sargapay-save-address.php:97
+msgid " Adresses Generated and Saved in Database."
+msgstr " Direcciones Generadas y Guardadas en la Base de Datos."
+
+#: includes/class-sargapay-send-email.php:111
+msgid " TESTNET ADDRESS"
+msgstr " DIRECCIÓN DE TESTNET"
+
+#: sargapay-plugin.php:504 sargapay-plugin.php:560
+msgid ""
+"24 hours have passed and your order was canceled, the payment address is no "
+"longer valid."
+msgstr ""
+"20 horas han pasado y tu orden ha sido cancelada, la dirección de pago ya no "
+"es válida."
+
+#: includes/class-sargapay-ada-gateway.php:407
+msgid "ADA exchange rate is calculated at the time the order is made"
+msgstr ""
+"El tipo de cambio de ADA es calculado al momento de que se crea la orden"
+
+#: includes/class-sargapay-ada-gateway.php:404
+msgid "ADA Price"
+msgstr "Precio de ADA"
+
+#: sargapay-plugin.php:313 includes/class-sargapay-ada-gateway.php:405
+msgid "ADA Total"
+msgstr "Total en ADA"
+
+#: includes/class-sargapay-send-email.php:101
+#: includes/class-sargapay-send-email.php:113
+msgid "Address"
+msgstr "Dirección"
+
+#: includes/class-sargapay-ada-gateway.php:32
+msgid "Allow customers to pay using Cardano ADA"
+msgstr "Permite a los clientes pagar usando Cardano Ada"
+
+#: includes/class-sargapay-one-gateway.php:34
+msgid "Allow customers to pay using Harmony ONE"
+msgstr "Permite a los clientes pagar usando Harmony ONE"
+
+#: sargapay-plugin.php:310
+msgid "Amount Copied!"
+msgstr "Monto Copiado"
+
+#: sargapay-plugin.php:249 sargapay-plugin.php:354 sargapay-plugin.php:471
+#: sargapay-plugin.php:526
+#| msgid "BE AWARE THIS IS A TESTNET PAYMENT ADDRESS "
+msgid "BE AWARE THIS IS A TESTNET PAYMENT ADDRESS"
+msgstr "CUIDADO ESTA ES UNA DIRECCIÓN DE PAGO DE TESTNET"
+
+#: includes/class-sargapay-ada-gateway.php:221
+msgid "Blockfrost API Key for Mainnet"
+msgstr "Blockfrost API Key para Mainnet"
+
+#: includes/class-sargapay-ada-gateway.php:227
+msgid "Blockfrost API Key for Testnet."
+msgstr "Blockfrost API Key para Testnet."
+
+#: includes/class-sargapay-ada-gateway.php:199
+#: includes/class-sargapay-one-gateway.php:199
+msgid "Confirmations"
+msgstr "Confirmaciones"
+
+#: includes/class-sargapay-one-gateway.php:201
+msgid "Confirmations needed to accept a transaction as valid."
+msgstr "Confirmaciones necesarias para aceptar una transacción como válida."
+
+#: includes/class-sargapay-ada-gateway.php:201
+msgid "Confirmations needed to accept a trasaction as valid."
+msgstr "Confirmaciones necesarias para aceptar un pago como válido."
+
+#: includes/class-sargapay-ada-gateway.php:409
+#: includes/class-sargapay-one-gateway.php:344
+msgid "Contact the admin to provide you with a payment address."
+msgstr ""
+"Contacta al administrador para que le proporcione una dirección de pago."
+
+#: sargapay-plugin.php:314 sargapay-plugin.php:433
+msgid "Copy Amount"
+msgstr "Copiar Monto"
+
+#: sargapay-plugin.php:434
+msgid "Copy Input Data"
+msgstr "Copiar Input Data"
+
+#: sargapay-plugin.php:314 sargapay-plugin.php:432
+msgid "Copy Payment Address"
+msgstr "Copiar Dirección de Pago"
+
+#: includes/class-sargapay-ada-gateway.php:183
+#: includes/class-sargapay-ada-gateway.php:403
+#: includes/class-sargapay-one-gateway.php:183
+#: includes/class-sargapay-one-gateway.php:338
+msgid "Currency"
+msgstr "Moneda"
+
+#: includes/class-sargapay-ada-gateway.php:185
+#: includes/class-sargapay-one-gateway.php:185
+msgid "Currency used in case default currency is not supported."
+msgstr "Si la moneda no es soportada usar esta en reemplazo."
+
+#: includes/class-sargapay-ada-gateway.php:169
+#: includes/class-sargapay-one-gateway.php:169
+msgid "Description"
+msgstr "Descripción"
+
+#: includes/class-sargapay-send-email.php:106
+msgid "Don't forget to send the input data in your payment to verify it"
+msgstr "No olvides enviar el input data en tu pago para verificarlo"
+
+#: includes/class-sargapay-ada-gateway.php:156
+msgid "Enable Sargapay ADA Gateway"
+msgstr "Activa Sargapay ADA Gateway"
+
+#: includes/class-sargapay-one-gateway.php:156
+msgid "Enable Sargapay Gateway"
+msgstr "Habilita Sargapay Gateway"
+
+#: includes/class-sargapay-ada-gateway.php:176
+#: includes/class-sargapay-one-gateway.php:176
+msgid "Enable Test Mode"
+msgstr "Activar Modo de Prueba"
+
+#: includes/class-sargapay-ada-gateway.php:155
+#: includes/class-sargapay-one-gateway.php:155
+msgid "Enable/Disable"
+msgstr "Habilitar/Deshabilitar"
+
+#: includes/class-sargapay-save-address.php:62
+msgid "Error no request sent :("
+msgstr "Error no se mandó ninguna petición :("
+
+#: sargapay-plugin.php:244
+msgid "ERROR PLEASE CONTACT ADMIN TO PROCCED WITH THE ORDER"
+msgstr "ERROR POR FAVOR CONTACTA AL ADMINISTRADOR PARA CONTINUAR CON EL PEDIDO"
+
+#: sargapay-plugin.php:349 sargapay-plugin.php:467 sargapay-plugin.php:522
+#, fuzzy
+#| msgid "ERROR PLEASE CONTACT THE ADMIN TO PROCCED WITH THE ORDER"
+msgid "ERROR PLEASE CONTACT THE ADMIN TO PROCEED WITH THE ORDER"
+msgstr ""
+"ERROR POR FAVOR CONTACTAR AL ADMINISTRADOR PARA CONTINUAR CON EL PEDIDO"
+
+#: includes/class-sargapay-ada-gateway.php:363
+msgid "Error: Connection Failed"
+msgstr "Error: Falló la conexión"
+
+#: includes/class-sargapay-ada-gateway.php:337
+msgid "Error: Invalid Character in BLOCKFROST API KEY for MAINNET."
+msgstr "Error: Carácter Invalido en la API KEY de BLOCKFROST para MAINNET."
+
+#: includes/class-sargapay-ada-gateway.php:326
+msgid "Error: Invalid Character in BLOCKFROST API KEY for TESTNET."
+msgstr "Error: Carácter Invalido en la API KEY de BLOCKFROST para TESTNET."
+
+#: includes/class-sargapay-ada-gateway.php:320
+msgid "Error: Invalid Character in Publick Key."
+msgstr "Error: Carácter Invalido en la Llave Publica."
+
+#: includes/class-sargapay-ada-gateway.php:341
+msgid ""
+"Error: You need a BLOCKFROST API KEY for MAINNET to validate transactions."
+msgstr ""
+"Error: Necesitas una API KEY de BLOCKFROST para MAINNET para validar pagos."
+
+#: includes/class-sargapay-ada-gateway.php:330
+msgid ""
+"Error: You need a BLOCKFROST API KEY for TESTNET to validate transactions."
+msgstr ""
+"Error: Necesitas una API KEY de BLOCKFROST para TESTNET para validar pagos."
+
+#: includes/class-sargapay-ada-gateway.php:316
+msgid "Error: You require a Master Public Key to generate  payment addresses."
+msgstr "Error: Requieres una Llave Pública para generar direcciones de pago."
+
+#: includes/class-sargapay-one-gateway.php:304
+msgid "Error: You require a payment address."
+msgstr "Error: Necesitas una dirección de pago."
+
+#: sargapay-plugin.php:55
+msgid "Every 10 Minutes"
+msgstr "Cada 10 Minutos"
+
+#. URI of the plugin
+msgid "https://github.com/sargatxet/WooCommerce-sargapay/"
+msgstr "https://github.com/sargatxet/WooCommerce-sargapay/"
+
+#. Author URI of the plugin
+msgid "https://sargatxet.cloud/"
+msgstr "https://sargatxet.cloud/"
+
+#: sargapay-plugin.php:557 includes/class-sargapay-send-email.php:105
+msgid "Input Data"
+msgstr "Input Data"
+
+#: sargapay-plugin.php:574
+#| msgid "Instruction for payment will be send soon!"
+msgid "Instructions for payment will be send soon!"
+msgstr "Las instrucciones para realizar el pago se enviaran pronto!"
+
+#: sargapay-plugin.php:576
+#| msgid ""
+#| "Instruction for payment will be send soon!\n"
+msgid ""
+"Instructions for payment will be send soon!\n"
+msgstr ""
+"Las instrucciones para realizar el pago se enviaran pronto.\n"
+
+#: includes/class-sargapay-ada-gateway.php:159
+#: includes/class-sargapay-one-gateway.php:159
+msgid "no"
+msgstr "no"
+
+#: includes/class-sargapay-ada-gateway.php:305
+#: includes/class-sargapay-one-gateway.php:294
+msgid "No orders done yet with this gateway"
+msgstr "No se han hecho pedidos con este método de pago"
+
+#: includes/class-sargapay-one-gateway.php:342
+msgid "ONE exchange rate is calculated at the time the order is made"
+msgstr ""
+"El tipo de cambio de ONE se calcula en el momento de realizar el pedido."
+
+#: includes/class-sargapay-one-gateway.php:339
+msgid "ONE Price"
+msgstr "Precio de ONE"
+
+#: includes/class-sargapay-one-gateway.php:340
+msgid "ONE Total"
+msgstr "Total ONE"
+
+#: includes/class-sargapay-ada-gateway.php:241
+#: includes/class-sargapay-one-gateway.php:229
+#, fuzzy
+#| msgid "Orders done with Sargapay Gateway"
+msgid "Orders done with Sargapay ONE Gateway"
+msgstr "Ordenes hechas con Sargapay Gateway"
+
+#: includes/class-sargapay-ada-gateway.php:137
+#: includes/class-sargapay-one-gateway.php:137
+msgid "Orders Paid with this plugin"
+msgstr "Pedidos Pagados con este plugin"
+
+#: includes/class-sargapay-ada-gateway.php:172
+#, fuzzy
+#| msgid ""
+#| "Pay using Cardano ADA via our super-cool payment gateway. You have 24 hrs "
+#| "to pay or the order will be cancelled."
+msgid ""
+"Pay using with Cardano ADA via our super-cool payment gateway. You have 24 "
+"hrs to pay or the order will be cancelled."
+msgstr ""
+"Paga usando Cardano ADA con nuestro super-cool método de pago. Tienes 24 "
+"horas para pagar o el pedido será cancelado."
+
+#: includes/class-sargapay-one-gateway.php:172
+msgid ""
+"Pay using with Harmony ONE via our super-cool payment gateway. You have 24 "
+"hrs to pay or the order will be cancelled."
+msgstr ""
+"Pague con Harmony ONE a través de nuestra genial pasarela de pago. Tienes 24 "
+"hrs para pagar o el pedido será cancelado."
+
+#: includes/class-sargapay-ada-gateway.php:165
+#, fuzzy
+#| msgid "Pay with Cardano ADA"
+msgid "Pay With Cardano ADA"
+msgstr "Paga con Cardano ADA"
+
+#: includes/class-sargapay-one-gateway.php:165
+msgid "Pay With Harmony ONE"
+msgstr "Paga con Harmony ONE"
+
+#: sargapay-plugin.php:301 sargapay-plugin.php:408 sargapay-plugin.php:498
+#: sargapay-plugin.php:553 includes/class-sargapay-one-gateway.php:194
+msgid "Payment Address"
+msgstr "Dirección de Pago"
+
+#: sargapay-plugin.php:297 sargapay-plugin.php:403
+msgid "Payment Address Copied!"
+msgstr "Dirección de Pago Copiada!"
+
+#: sargapay-plugin.php:321 sargapay-plugin.php:441
+#: includes/class-sargapay-send-email.php:48
+#: includes/class-sargapay-send-email.php:49
+msgid "Payment Instructions "
+msgstr "Instrucciones de Pago "
+
+#: includes/class-sargapay-ada-gateway.php:223
+msgid "Place the API KEY to use BlockFrost to verify transactions on Mainnet."
+msgstr ""
+"Proporciona la API KEY para usar BlockFrost para verificar pagos en Mainnet."
+
+#: includes/class-sargapay-ada-gateway.php:229
+msgid "Place the API KEY to use BlockFrost to verify transactions on Testnet."
+msgstr ""
+"Proporciona la API KEY para usar BlockFrost para verificar pagos en Testnet."
+
+#: includes/class-sargapay-ada-gateway.php:178
+#: includes/class-sargapay-one-gateway.php:178
+msgid "Place the payment gateway in test mode to use TESTNET."
+msgstr "Activa el modo de prueba para usar TESTNET."
+
+#: includes/class-sargapay-ada-gateway.php:196
+msgid "Place the Public Adress Key to generate Payment Addresses."
+msgstr "Proporciona la Llave Pública para generar Direcciones de Pago."
+
+#: includes/class-sargapay-one-gateway.php:196
+msgid "Place your Addresses to receive payments."
+msgstr "Coloca tus Direcciones para recibir pagos."
+
+#: sargapay-plugin.php:77
+#, fuzzy
+#| msgid "Plugin NOT activated: Minimun PHP version required  is 7.3"
+msgid "Plugin NOT activated: Minimum PHP version required is 7.3"
+msgstr "El Plugin no se activo: Versión minima requerida es 7.3"
+
+#: sargapay-plugin.php:74
+msgid "Plugin NOT activated: WooCommerce is required"
+msgstr "El Plugin no se activo: Se necesita WooCommerce"
+
+#: includes/class-sargapay-ada-gateway.php:194
+msgid "Public Adress Key for Cardano"
+msgstr "Llave Pública para Cardano"
+
+#. Description of the plugin
+msgid "Recive payments using Cardano ADA and Harmony ONE"
+msgstr ""
+
+#: sargapay-plugin.php:233 sargapay-plugin.php:338
+msgid ""
+"Remember that you have 24 hours to pay for your order before it's "
+"automatically canceled."
+msgstr ""
+"Recuerda que tienes 24 horas para pagar tu pedido antes de que se cancele "
+"automáticamente."
+
+#. Name of the plugin
+msgid "Sargapay"
+msgstr "Sargapay"
+
+#. Author of the plugin
+msgid "Sargatxet"
+msgstr "Sargatxet"
+
+#: includes/class-sargapay-ada-gateway.php:396
+#: includes/class-sargapay-one-gateway.php:331
+msgid "TEST MODE"
+msgstr "MODO DE PRUEBA"
+
+#: includes/class-sargapay-ada-gateway.php:175
+#: includes/class-sargapay-one-gateway.php:175
+msgid "Test mode"
+msgstr "Modo de prueba"
+
+#: includes/class-sargapay-send-email.php:99
+msgid "TESTNET ADDRESS"
+msgstr "DIRECCIÓN DE TESTNET"
+
+#: includes/class-sargapay-ada-gateway.php:171
+#: includes/class-sargapay-one-gateway.php:171
+msgid "This controls the description which the user sees during checkout."
+msgstr "Controla la descripción que ve el usuario durante el pago."
+
+#: includes/class-sargapay-ada-gateway.php:164
+#: includes/class-sargapay-one-gateway.php:164
+msgid "This controls the title which the user sees during checkout."
+msgstr "Controla el título que ve el usuario al realizar una compra."
+
+#: sargapay-plugin.php:495 sargapay-plugin.php:550
+msgid "Time Left"
+msgstr "Tiempo restante"
+
+#: includes/class-sargapay-ada-gateway.php:162
+#: includes/class-sargapay-one-gateway.php:162
+msgid "Title"
+msgstr "Título"
+
+#: sargapay-plugin.php:501
+msgid "Total ADA"
+msgstr "Total en ADA"
+
+#: includes/class-sargapay-send-email.php:109
+msgid "Total Amount in ADA "
+msgstr "Monto Total en ADA "
+
+#: includes/class-sargapay-send-email.php:97
+msgid "Total Amount in ONE "
+msgstr "Monto Total en ONE"
+
+#: sargapay-plugin.php:556
+msgid "Total ONE"
+msgstr "Total en ONE"
+
+#: includes/class-sargapay-ada-gateway.php:179
+#: includes/class-sargapay-one-gateway.php:179
+msgid "yes"
+msgstr "si"
+
+#: includes/class-sargapay-send-email.php:94
+msgid ""
+"You can verify the payment address and amount if you login and go to my-"
+"account/orders"
+msgstr ""
+"Puedes verificar la dirección de pago y el monto a pagar si inicias sesión y "
+"vas a la sección de mi cuenta y pedidos"
+
+#: includes/class-sargapay-send-email.php:93
+msgid "You have 24hrs to pay before the order is cancelled"
+msgstr "Tienes 24 horas para pagar antes de que el pedido sea cancelado"
