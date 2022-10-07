@@ -403,7 +403,7 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
             }
             $instrucciones = $this->description;
             $fiat = $data['cardano'][array_key_first($data['cardano'])];
-            $total_ada = round(WC()->cart->get_cart_contents_total() / $fiat, 6);
+            $total_ada = round(WC()->cart->get_cart_total() / $fiat, 6);
             echo "<p>$instrucciones</p>";
             echo "<div style='text-align:center;'>";
             echo "<p>" . __("Currency", 'sargapay-plugin') . " = " . $currency . "</p>";
@@ -446,7 +446,7 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
         $data = json_decode(file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=' . $currency), true);
         if (count($data) == 1) {
             $fiat = $data['cardano'][array_key_first($data['cardano'])];
-            $total_ada = round(WC()->cart->get_cart_contents_total() / $fiat, 6);
+            $total_ada = round(WC()->cart->get_cart_total() / $fiat, 6);
             // Get xpub from settings                
             $mpk = $this->mpk;
             // 0=TESTNET 1=MAINNET
