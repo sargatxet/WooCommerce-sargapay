@@ -59,10 +59,14 @@ msgid "BE AWARE THIS IS A TESTNET PAYMENT ADDRESS"
 msgstr ""
 
 #: SARGA_Gateway.php:212
-msgid "Blockfrost API Key for Mainnet"
+msgid "This only increases the crypto amount owed, the original fiat value will still be displayed to the customer. 3.8 = 3.8% markup, -10.0 = 10.0% markdown"
 msgstr ""
 
 #: SARGA_Gateway.php:218
+msgid "Blockfrost API Key for Mainnet"
+msgstr ""
+
+#: SARGA_Gateway.php:224
 msgid "Blockfrost API Key for Testnet."
 msgstr ""
 

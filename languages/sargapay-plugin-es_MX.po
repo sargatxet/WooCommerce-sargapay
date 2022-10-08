@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: TrakaDev Cardano Payments for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-30 04:34+0000\n"
-"PO-Revision-Date: 2021-12-23 06:07+0000\n"
+"PO-Revision-Date: 2022-10-07 19:00-0500\n"
 "Last-Translator: \n"
 "Language-Team: Español de México\n"
 "Language: es_MX\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Loco https://localise.biz/\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-Loco-Version: 2.5.5; wp-5.8.1\n"
 "X-Domain: tk-ada-pay-plugin\n"
 
@@ -24,17 +24,12 @@ msgid " TESTNET ADDRESS"
 msgstr " DIRECCIÓN DE TESTNET"
 
 #: SARGA_plugin.php:366
-msgid ""
-"24 hours have passed and your order was canceled, the payment address is no "
-"longer valid."
-msgstr ""
-"20 horas han pasado y tu orden ha sido cancelada, la dirección de pago ya no "
-"es válida."
+msgid "24 hours have passed and your order was canceled, the payment address is no longer valid."
+msgstr "20 horas han pasado y tu orden ha sido cancelada, la dirección de pago ya no es válida."
 
 #: SARGA_Gateway.php:413
 msgid "ADA exchange rate is calculated at the time the order is made"
-msgstr ""
-"El tipo de cambio de ADA es calculado al momento de que se crea la orden"
+msgstr "El tipo de cambio de ADA es calculado al momento de que se crea la orden"
 
 #: SARGA_Gateway.php:410
 msgid "ADA Price"
@@ -54,7 +49,7 @@ msgstr "Permite a los clientes pagar usando Cardano Ada"
 
 #: SARGA_plugin.php:288
 msgid "Amount Copied!"
-msgstr "Monto Copiado"
+msgstr "Monto Copiado!"
 
 #: SARGA_plugin.php:227 SARGA_plugin.php:331
 #| msgid "BE AWARE THIS IS A TESTNET PAYMENT ADDRESS "
@@ -79,8 +74,7 @@ msgstr "Confirmaciones necesarias para aceptar un pago como válido."
 
 #: SARGA_Gateway.php:415
 msgid "Contact the admin to provide you with a payment address."
-msgstr ""
-"Contacta al administrador para que le proporcione una dirección de pago."
+msgstr "Contacta al administrador para que le proporcione una dirección de pago."
 
 #: SARGA_plugin.php:292
 msgid "Copy Amount"
@@ -124,12 +118,15 @@ msgstr "ERROR POR FAVOR CONTACTA AL ADMINISTRADOR PARA CONTINUAR CON EL PEDIDO"
 
 #: SARGA_plugin.php:327
 msgid "ERROR PLEASE CONTACT THE ADMIN TO PROCCED WITH THE ORDER"
-msgstr ""
-"ERROR POR FAVOR CONTACTAR AL ADMINISTRADOR PARA CONTINUAR CON EL PEDIDO"
+msgstr "ERROR POR FAVOR CONTACTAR AL ADMINISTRADOR PARA CONTINUAR CON EL PEDIDO"
 
 #: SARGA_Gateway.php:375
 msgid "Error: Connection Failed"
 msgstr "Error: Falló la conexión"
+
+#: SARGA_Gateway.php:212
+msgid "This only increases the crypto amount owed, the original fiat value will still be displayed to the customer. 3.8 = 3.8% markup, -10.0 = 10.0% markdown"
+msgstr "Esto solo aumenta la cantidad de cripto adeudada, el valor fiat original aún se mostrará al cliente. 3,8 = 3,8 % de margen de beneficio, -10,0 = 10,0 % de margen de beneficio"
 
 #: SARGA_Gateway.php:330
 msgid "Error: Invalid Character in BLOCKFROST API KEY for MAINNET."
@@ -144,16 +141,12 @@ msgid "Error: Invalid Character in Publick Key."
 msgstr "Error: Carácter Invalido en la Llave Publica."
 
 #: SARGA_Gateway.php:334
-msgid ""
-"Error: You need a BLOCKFROST API KEY for MAINNET to validate transactions."
-msgstr ""
-"Error: Necesitas una API KEY de BLOCKFROST para MAINNET para validar pagos."
+msgid "Error: You need a BLOCKFROST API KEY for MAINNET to validate transactions."
+msgstr "Error: Necesitas una API KEY de BLOCKFROST para MAINNET para validar pagos."
 
 #: SARGA_Gateway.php:344
-msgid ""
-"Error: You need a BLOCKFROST API KEY for TESTNET to validate transactions."
-msgstr ""
-"Error: Necesitas una API KEY de BLOCKFROST para TESTNET para validar pagos."
+msgid "Error: You need a BLOCKFROST API KEY for TESTNET to validate transactions."
+msgstr "Error: Necesitas una API KEY de BLOCKFROST para TESTNET para validar pagos."
 
 #: SARGA_Gateway.php:321
 msgid "Error: You require a Master Public Key to generate  payment addresses."
@@ -177,12 +170,9 @@ msgid "Instructions for payment will be send soon!"
 msgstr "Las instrucciones para realizar el pago se enviaran pronto!"
 
 #: SARGA_plugin.php:383
-#| msgid ""
-#| "Instruction for payment will be send soon!\n"
-msgid ""
-"Instructions for payment will be send soon!\n"
-msgstr ""
-"Las instrucciones para realizar el pago se enviaran pronto.\n"
+#| msgid "Instruction for payment will be send soon!\n"
+msgid "Instructions for payment will be send soon!\n"
+msgstr "Las instrucciones para realizar el pago se enviaran pronto.\n"
 
 #: SARGA_Gateway.php:161
 msgid "no"
@@ -201,12 +191,8 @@ msgid "Orders Paid with this plugin"
 msgstr "Pedidos Pagados con este plugin"
 
 #: SARGA_Gateway.php:174
-msgid ""
-"Pay using Cardano ADA via our super-cool payment gateway. You have 24 hrs to "
-"pay or the order will be cancelled."
-msgstr ""
-"Paga usando Cardano ADA con nuestro super-cool método de pago. Tienes 24 "
-"horas para pagar o el pedido será cancelado."
+msgid "Pay using Cardano ADA via our super-cool payment gateway. You have 24 hrs to pay or the order will be cancelled."
+msgstr "Paga usando Cardano ADA con nuestro super-cool método de pago. Tienes 24 horas para pagar o el pedido será cancelado."
 
 #: SARGA_Gateway.php:167
 msgid "Pay with Cardano ADA"
@@ -226,13 +212,11 @@ msgstr "Instrucciones de Pago "
 
 #: SARGA_Gateway.php:214
 msgid "Place the API KEY to use BlockFrost to verify transactions on Mainnet."
-msgstr ""
-"Proporciona la API KEY para usar BlockFrost para verificar pagos en Mainnet."
+msgstr "Proporciona la API KEY para usar BlockFrost para verificar pagos en Mainnet."
 
 #: SARGA_Gateway.php:220
 msgid "Place the API KEY to use BlockFrost to verify transactions on Testnet."
-msgstr ""
-"Proporciona la API KEY para usar BlockFrost para verificar pagos en Testnet."
+msgstr "Proporciona la API KEY para usar BlockFrost para verificar pagos en Testnet."
 
 #: SARGA_Gateway.php:180
 msgid "Place the payment gateway in test mode to use TESTNET."
@@ -259,12 +243,8 @@ msgid "Recive payments using Cardano ADA"
 msgstr "Recibe pagos usando Cardano ADA"
 
 #: SARGA_plugin.php:212
-msgid ""
-"Remember that you have 24 hours to pay for your order before it's "
-"automatically canceled."
-msgstr ""
-"Recuerda que tienes 24 horas para pagar tu pedido antes de que se cancele "
-"automáticamente."
+msgid "Remember that you have 24 hours to pay for your order before it's automatically canceled."
+msgstr "Recuerda que tienes 24 horas para pagar tu pedido antes de que se cancele automáticamente."
 
 #. Author of the plugin
 msgid "Sargatxet"
@@ -311,12 +291,8 @@ msgid "yes"
 msgstr "si"
 
 #: SARGA_send_email.php:64
-msgid ""
-"You can verify the payment address and amount if you login and go to my-"
-"account/orders"
-msgstr ""
-"Puedes verificar la dirección de pago y el monto a pagar si inicias sesión y "
-"vas a la sección de mi cuenta y pedidos"
+msgid "You can verify the payment address and amount if you login and go to my-account/orders"
+msgstr "Puedes verificar la dirección de pago y el monto a pagar si inicias sesión y vas a la sección de mi cuenta y pedidos"
 
 #: SARGA_send_email.php:55
 msgid "You have 24hrs to pay before the order is cancelled"
