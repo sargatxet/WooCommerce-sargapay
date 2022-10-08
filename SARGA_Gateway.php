@@ -212,7 +212,7 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
             'markup' => array(
                 'title'       => __('Markup/Markdown %', 'sargapay-plugin'),
                 'type'        => 'float',
-                'description' => __('This only increases the crypto amount owed, the original fiat value will still be displayed to the customer. 3.8 = 3.8% markup, -10.0 = 10.0% markdown)', 'sargapay-plugin'),
+                'description' => __('This only increases the crypto amount owed, the original fiat value will still be displayed to the customer. 3.8 = 3.8% markup, -10.0 = 10.0% markdown', 'sargapay-plugin'),
                 'desc_tip'    => false,
             ),
             'blockfrost_key' => array(
