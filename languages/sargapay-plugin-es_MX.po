@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: TrakaDev Cardano Payments for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-30 04:34+0000\n"
-"PO-Revision-Date: 2022-10-07 19:00-0500\n"
+"PO-Revision-Date: 2022-10-07 19:07-0500\n"
 "Last-Translator: \n"
 "Language-Team: Español de México\n"
 "Language: es_MX\n"
@@ -126,7 +126,7 @@ msgstr "Error: Falló la conexión"
 
 #: SARGA_Gateway.php:212
 msgid "This only increases the crypto amount owed, the original fiat value will still be displayed to the customer. 3.8 = 3.8% markup, -10.0 = 10.0% markdown"
-msgstr "Esto solo aumenta la cantidad de cripto adeudada, el valor fiat original aún se mostrará al cliente. 3,8 = 3,8 % de margen de beneficio, -10,0 = 10,0 % de margen de beneficio"
+msgstr "Esto solo aumenta la cantidad de cripto adeudada, el valor fiat original aún se mostrará al cliente. 3,8 = 3,8 % de margen de beneficio, -10,0 = 10,0 % de margen de rebaja"
 
 #: SARGA_Gateway.php:330
 msgid "Error: Invalid Character in BLOCKFROST API KEY for MAINNET."
