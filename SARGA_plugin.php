@@ -218,6 +218,8 @@ function sargapay_plugin_init_gateway_class()
         wp_localize_script('wp_gen_address', 'wp_ajax_nopriv_get_settings_vars', array(
             'ajax_url' => admin_url('admin-ajax.php')
         ));
+        // <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        wp_enqueue_script('wp_sarga_alerts', "//cdn.jsdelivr.net/npm/sweetalert2@11", array('jquery'));
     }
     // Add Type = Module to js 
     function add_type_attribute($tag, $handle, $src)
