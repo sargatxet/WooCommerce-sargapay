@@ -135,6 +135,14 @@ import {
     Blockfrost,
 } from "https://unpkg.com/lucid-cardano@0.6.6/web/mod.js"
 
+// Load Text from PHP
+let noWalletText = 'Cardano Wallet Not Found!'
+let unknowText = 'Something Went Wrong!'
+if (wp_ajax_nopriv_get_settings_vars) {
+    noWalletText = wp_ajax_nopriv_get_settings_vars.noWallet_txt
+    unknowText = wp_ajax_nopriv_get_settings_vars.unknow_txt
+}
+
 const showLoader = () => {
     const body = document.getElementsByTagName("body")
     body[0].style.overflow = "hidden"
@@ -181,11 +189,10 @@ const walletAPI = async(apikey, network, walllet = "nami") => {
             console.log(txHash)
         } else {
             hideLoader()
-            console.log("Cardano Wallet Not Found!")
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Cardano Wallet Not Found!'
+                text: noWalletText
             })
         }
     } catch (error) {
@@ -203,7 +210,7 @@ const walletAPI = async(apikey, network, walllet = "nami") => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: "Something Went Wrong!"
+                text: unknowText
             })
         }
     }
@@ -223,7 +230,7 @@ const sendAda = async wallet => {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'Something went wrong!'
+                    text: unknowText
                 })
             },
             success: function(response) {
@@ -244,7 +251,7 @@ const sendAda = async wallet => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: "Error Something Went Wrong"
+                text: unknowText
             })
         }
     }
