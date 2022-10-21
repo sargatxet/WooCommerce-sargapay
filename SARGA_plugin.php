@@ -211,14 +211,15 @@ function sargapay_plugin_init_gateway_class()
     // Load JS to Gen Cardano Address when a loged in user visit the site
     function load_wp_gen_address()
     {
-        wp_enqueue_script('wp_gen_address', plugins_url('assets/js/main_index.js', __FILE__), array('jquery'));
+        wp_enqueue_script('wp_gen_address', plugins_url('assets/js/main_index.js', __FILE__), array('jquery', 'wp-i18n'));
         wp_localize_script('wp_gen_address', 'wp_ajax_save_address_vars', array(
             'ajax_url' => admin_url('admin-ajax.php')
         ));
         wp_localize_script('wp_gen_address', 'wp_ajax_nopriv_get_settings_vars', array(
-            'ajax_url' => admin_url('admin-ajax.php')
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'noWallet_txt' => esc_html(__('Cardano Wallet Not Found!', "sargapay-plugin")),
+            'unknown_txt' => esc_html(__('Something Went Wrong!', 'sargapay-plugin'))
         ));
-        // <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         wp_enqueue_script('wp_sarga_alerts', "//cdn.jsdelivr.net/npm/sweetalert2@11", array('jquery'));
     }
     // Add Type = Module to js 
@@ -325,7 +326,7 @@ function sargapay_plugin_init_gateway_class()
                         '</div>';
 
                     # Hot Wallets    
-                    echo    "<h4 style='text-align:center; font-weight:bold;'>". esc_html(__('Pay Now', 'sargapay-plugin')) ."</h4>";
+                    echo    "<h4 style='text-align:center; font-weight:bold;'>" . esc_html(__('Pay Now', 'sargapay-plugin')) . "</h4>";
                     echo    "<div id='loader-container'>
                                 <div class='lds-ellipsis'>
                                     <div></div>
