@@ -275,7 +275,7 @@ function sargapay_plugin_init_gateway_class()
                     $total_ada = $query_address[0]->order_amount;
                     // Get payment address
                     $payment_address = $query_address[0]->pay_address;
-                    $qr = new GenerateQR();
+                    $qr = GenerateQR::getInstance();
                     echo "<style>
                 .modal_tk_plugin {
                     display: none; 
