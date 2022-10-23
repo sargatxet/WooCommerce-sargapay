@@ -218,7 +218,8 @@ function sargapay_plugin_init_gateway_class()
         wp_localize_script('wp_gen_address', 'wp_ajax_nopriv_get_settings_vars', array(
             'ajax_url' => admin_url('admin-ajax.php'),
             'noWallet_txt' => esc_html(__('Cardano Wallet Not Found!', "sargapay-plugin")),
-            'unknown_txt' => esc_html(__('Something Went Wrong!', 'sargapay-plugin'))
+            'unknown_txt' => esc_html(__('Something Went Wrong!', 'sargapay-plugin')),
+            'paid_txt' => esc_html(__('Paid', 'sargapay-plugin'))
         ));
         wp_enqueue_script('wp_sarga_alerts', "//cdn.jsdelivr.net/npm/sweetalert2@11", array('jquery'));
     }
@@ -423,7 +424,7 @@ function sargapay_plugin_init_gateway_class()
                     $seconds_until_cancel = $twenty_four_hours - $diff_in_seconds;
                     $time_until_cancel = gmdate("H:i:s", $seconds_until_cancel);
                     $text = esc_html(__("Tienes para realizar la transacción ", 'sargapay-plugin'));
-                    $qr = new GenerateQR();
+                    $qr = GenerateQR::getInstance();
                     echo '<p>' . $text . $time_until_cancel . '</p>';
                     echo '<p style="text-align: center;"><b>' . esc_html(__('Payment Address', 'sargapay-plugin')) . '</b><br>' . $payment_address .
                         $qr->generate($payment_address) .

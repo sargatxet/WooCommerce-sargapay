@@ -138,9 +138,11 @@ import {
 // Load Text from PHP
 let noWalletText = 'Cardano Wallet Not Found!'
 let unknowText = 'Something Went Wrong!'
+let paidText = 'Paid'
 if (wp_ajax_nopriv_get_settings_vars) {
     noWalletText = wp_ajax_nopriv_get_settings_vars.noWallet_txt
     unknowText = wp_ajax_nopriv_get_settings_vars.unknow_txt
+    paidText = wp_ajax_nopriv_get_settings_vars.paid_txt
 }
 
 const showLoader = () => {
@@ -187,6 +189,14 @@ const walletAPI = async(apikey, network, walllet = "nami") => {
             const txHash = await signedTx.submit()
 
             console.log(txHash)
+            const explorerUrl = network == 1 ? "https://cexplorer.io/tx/" : "https://testnet.cexplorer.io/tx/"
+
+            //Notify Success
+            Swal.fire({
+                icon: 'success',
+                title: paidText,
+                html: `txHash <a href="${explorerUrl}${txHash}" target="__blank">${txHash}</a>`
+            })
         } else {
             hideLoader()
             Swal.fire({
