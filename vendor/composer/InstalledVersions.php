@@ -27,33 +27,33 @@ class InstalledVersions
 private static $installed = array (
   'root' => 
   array (
-    'pretty_version' => '1.0.0+no-version-set',
-    'version' => '1.0.0.0',
+    'pretty_version' => 'dev-main',
+    'version' => 'dev-main',
     'aliases' => 
     array (
     ),
-    'reference' => NULL,
+    'reference' => 'cf58fde76e5759dd574bf32a14ad7400cd36000c',
     'name' => '__root__',
   ),
   'versions' => 
   array (
     '__root__' => 
     array (
-      'pretty_version' => '1.0.0+no-version-set',
-      'version' => '1.0.0.0',
+      'pretty_version' => 'dev-main',
+      'version' => 'dev-main',
       'aliases' => 
       array (
       ),
-      'reference' => NULL,
+      'reference' => 'cf58fde76e5759dd574bf32a14ad7400cd36000c',
     ),
     'bacon/bacon-qr-code' => 
     array (
-      'pretty_version' => '2.0.3',
-      'version' => '2.0.3.0',
+      'pretty_version' => '2.0.7',
+      'version' => '2.0.7.0',
       'aliases' => 
       array (
       ),
-      'reference' => '3e9d791b67d0a2912922b7b7c7312f4b37af41e4',
+      'reference' => 'd70c840f68657ce49094b8d91f9ee0cc07fbf66c',
     ),
     'dasprid/enum' => 
     array (
@@ -66,12 +66,12 @@ private static $installed = array (
     ),
     'endroid/qr-code' => 
     array (
-      'pretty_version' => '4.1.3',
-      'version' => '4.1.3.0',
+      'pretty_version' => '4.3.5',
+      'version' => '4.3.5.0',
       'aliases' => 
       array (
       ),
-      'reference' => '35141df51e11f4a13bc74d33737b6bfbeb456159',
+      'reference' => '5630e192948b466d418608ecce697465d20260af',
     ),
   ),
 );

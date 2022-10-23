@@ -1,9 +1,14 @@
 {
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "7f2cf6c6828cba00fe983897a918c829",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
             "version": "2.0.7",
-            "version_normalized": "2.0.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Bacon/BaconQrCode.git",
@@ -29,9 +34,7 @@
             "suggest": {
                 "ext-imagick": "to generate QR code images"
             },
-            "time": "2022-03-14T02:02:36+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "BaconQrCode\\": "src/"
@@ -55,12 +58,11 @@
                 "issues": "https://github.com/Bacon/BaconQrCode/issues",
                 "source": "https://github.com/Bacon/BaconQrCode/tree/2.0.7"
             },
-            "install-path": "../bacon/bacon-qr-code"
+            "time": "2022-03-14T02:02:36+00:00"
         },
         {
             "name": "dasprid/enum",
             "version": "1.0.3",
-            "version_normalized": "1.0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DASPRiD/Enum.git",
@@ -76,9 +78,7 @@
                 "phpunit/phpunit": "^7 | ^8 | ^9",
                 "squizlabs/php_codesniffer": "^3.4"
             },
-            "time": "2020-10-02T16:03:48+00:00",
             "type": "library",
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "DASPRiD\\Enum\\": "src/"
@@ -105,12 +105,11 @@
                 "issues": "https://github.com/DASPRiD/Enum/issues",
                 "source": "https://github.com/DASPRiD/Enum/tree/1.0.3"
             },
-            "install-path": "../dasprid/enum"
+            "time": "2020-10-02T16:03:48+00:00"
         },
         {
             "name": "endroid/qr-code",
             "version": "4.3.5",
-            "version_normalized": "4.3.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/endroid/qr-code.git",
@@ -138,14 +137,12 @@
                 "roave/security-advisories": "Makes sure package versions with known security issues are not installed",
                 "setasign/fpdf": "Enables you to use the PDF writer"
             },
-            "time": "2021-09-17T07:50:43+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-master": "4.x-dev"
                 }
             },
-            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Endroid\\QrCode\\": "src/"
@@ -180,9 +177,16 @@
                     "type": "github"
                 }
             ],
-            "install-path": "../endroid/qr-code"
+            "time": "2021-09-17T07:50:43+00:00"
         }
     ],
-    "dev": true,
-    "dev-package-names": []
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
 }
