@@ -7,7 +7,7 @@
  * Author URI: https://cardano.sargatxet.cloud/
  * Text Domain: sargapay-plugin
  * Domain Path: /languages
- * Version: 0.1.0
+ * Version: 1.0.0
  * Requires PHP: 7.3
  * License: MIT
  * License URI: https://github.com/sargatxet/WooCommerce-sargapay/blob/main/LICENSE
