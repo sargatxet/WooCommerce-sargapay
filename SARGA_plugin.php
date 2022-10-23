@@ -126,17 +126,54 @@ function sargapay_plugin_init_gateway_class()
     add_action('wp_enqueue_scripts', 'load_wp_gen_address');
     add_action('wp_ajax_nopriv_save_address', 'save_address');
 
+    # Get APIKEY and Network for hotwallets
+    add_action('wp_ajax_nopriv_get_settings_vars', 'get_settings_vars');
+
     // Woocommerce Mail QR and Payment Address
     add_action('woocommerce_email_before_order_table', 'SARGAPAY_add_content_wc_order_email', 20, 4);
 
     // Show cancel time for orders without payment
     add_action('woocommerce_view_order', 'view_order_cancel_notice');
 
+    add_action('init', 'my_register_styles');
+
+    function my_register_styles()
+    {
+        wp_register_style('wallet_btn', plugins_url('/assets/css/walletsBtns.css', __FILE__));
+    }
+
+    add_action('wp_enqueue_scripts', 'my_enqueue_styles');
+
+    function my_enqueue_styles()
+    {
+        wp_enqueue_style('wallet_btn');
+    }
+
     // Add Payment Method to Woocommerce
     function sargapay_plugin_add_gateway_class($gateways)
     {
         $gateways[] = 'SARGAPAY_WC_Gateway';
         return $gateways;
+    }
+
+    function get_settings_vars()
+    {
+        $action = isset($_POST['action']) ? $_POST['action'] : false;
+        if ($action) {
+            if (wp_doing_ajax() && $action === "get_settings_vars") {
+
+                // 0=TESTNET 1=MAINNET
+                $testmode = WC()->payment_gateways->payment_gateways()['sargapay-plugin']->testmode == 1 ? 1 : 0;
+
+                $network = $testmode == 1 ? $network = 0 : $network = 1;
+
+                $APIKEY  = $network === 1 ? WC()->payment_gateways->payment_gateways()['sargapay-plugin']->blockfrost_key :
+                    WC()->payment_gateways->payment_gateways()['sargapay-plugin']->blockfrost_test_key;
+
+                wp_send_json(array('apikey' => $APIKEY, 'network' => $network));
+            }
+        }
+        wp_die();
     }
 
     //Function to add settings link
@@ -161,22 +198,29 @@ function sargapay_plugin_init_gateway_class()
     // Load JS to Gen Cardano Address
     function admin_load_gen_addressjs()
     {
-        wp_enqueue_script('gen_addressjs', plugins_url('/js/main.js', __FILE__), array('jquery', 'cardano_serialization_lib', 'cardano_asm', 'cardano_lib_bg', 'bech32'));
-        wp_enqueue_script('cardano_serialization_lib', plugins_url('/js/cardano-serialization-lib-asmjs/cardano_serialization_lib.js', __FILE__), array('cardano_asm'));
-        wp_enqueue_script('cardano_asm', plugins_url('/js/cardano-serialization-lib-asmjs/cardano_serialization_lib.asm.js', __FILE__), array('cardano_lib_bg'));
-        wp_enqueue_script('cardano_lib_bg', plugins_url('/js/cardano-serialization-lib-asmjs/cardano_serialization_lib_bg.js', __FILE__), false);
-        wp_enqueue_script('bech32', plugins_url('/js/bech32.js', __FILE__), false);
+        wp_enqueue_script('gen_addressjs', plugins_url('assets/js/main.js', __FILE__), array('jquery', 'cardano_serialization_lib', 'cardano_asm', 'cardano_lib_bg', 'bech32'));
+        wp_enqueue_script('cardano_serialization_lib', plugins_url('assets/js/cardano-serialization-lib-asmjs/cardano_serialization_lib.js', __FILE__), array('cardano_asm'));
+        wp_enqueue_script('cardano_asm', plugins_url('assets/js/cardano-serialization-lib-asmjs/cardano_serialization_lib.asm.js', __FILE__), array('cardano_lib_bg'));
+        wp_enqueue_script('cardano_lib_bg', plugins_url('assets/js/cardano-serialization-lib-asmjs/cardano_serialization_lib_bg.js', __FILE__), false);
+        wp_enqueue_script('bech32', plugins_url('assets/js/bech32.js', __FILE__), false);
         wp_localize_script('gen_addressjs', 'wp_ajax_save_address_vars', array(
             'ajax_url' => admin_url('admin-ajax.php')
         ));
     }
+
     // Load JS to Gen Cardano Address when a loged in user visit the site
     function load_wp_gen_address()
     {
-        wp_enqueue_script('wp_gen_address', plugins_url('/js/main_index.js', __FILE__), array('jquery'));
+        wp_enqueue_script('wp_gen_address', plugins_url('assets/js/main_index.js', __FILE__), array('jquery', 'wp-i18n'));
         wp_localize_script('wp_gen_address', 'wp_ajax_save_address_vars', array(
             'ajax_url' => admin_url('admin-ajax.php')
         ));
+        wp_localize_script('wp_gen_address', 'wp_ajax_nopriv_get_settings_vars', array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'noWallet_txt' => esc_html(__('Cardano Wallet Not Found!', "sargapay-plugin")),
+            'unknown_txt' => esc_html(__('Something Went Wrong!', 'sargapay-plugin'))
+        ));
+        wp_enqueue_script('wp_sarga_alerts', "//cdn.jsdelivr.net/npm/sweetalert2@11", array('jquery'));
     }
     // Add Type = Module to js 
     function add_type_attribute($tag, $handle, $src)
@@ -231,7 +275,7 @@ function sargapay_plugin_init_gateway_class()
                     $total_ada = $query_address[0]->order_amount;
                     // Get payment address
                     $payment_address = $query_address[0]->pay_address;
-                    $qr = new GenerateQR();
+                    $qr = GenerateQR::getInstance();
                     echo "<style>
                 .modal_tk_plugin {
                     display: none; 
@@ -268,28 +312,54 @@ function sargapay_plugin_init_gateway_class()
                   }                  
                   </style>";
                     // Qr Button
-                    echo
-                    "<div id='copy_modal' class='modal_tk_plugin'>
-                    <div class='modal_tk_plugin_content'>
-                        <span class='close_tk_plugin'>&times;</span>
-                        <p style='text-align:center;'>" . esc_html(__('Payment Address Copied!', 'sargapay-plugin')) . "</p>
-                    </div>
-                </div>";
-                    echo "<div style='text-align:center; font-weight:bold;'><h4>"
-                        . esc_html(__('Payment Address', 'sargapay-plugin')) .
-                        "</h4><p id='pay_add_p_field_tk_plugin' style='width:100%; overflow-wrap:anywhere;'>" . esc_html($payment_address) . "</p>"
+                    echo    "<div id='copy_modal' class='modal_tk_plugin'>
+                                <div class='modal_tk_plugin_content'>
+                                    <span class='close_tk_plugin'>&times;</span>
+                                    <p style='text-align:center;'>" . esc_html(__('Payment Address Copied!', 'sargapay-plugin')) . "</p>
+                                </div>
+                            </div>";
+
+                    echo    "<div style='text-align:center; font-weight:bold;'>
+                                <h4>" . esc_html(__('Payment Address', 'sargapay-plugin')) . "</h4>
+                                <p id='pay_add_p_field_tk_plugin' style='width:100%; overflow-wrap:anywhere;'>" . esc_html($payment_address) . "</p>"
                         . $qr->generate($payment_address) .
                         '</div>';
+
+                    # Hot Wallets    
+                    echo    "<h4 style='text-align:center; font-weight:bold;'>" . esc_html(__('Pay Now', 'sargapay-plugin')) . "</h4>";
+                    echo    "<div id='loader-container'>
+                                <div class='lds-ellipsis'>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                                <p class='loader-p'>Building Transaction...</p>
+                            </div>";
+                    echo    "<div class='hot_wallets_container'>
+                                <button id='hot_wallet_nami' class='wallet-btn'>                                    
+                                    Nami
+                                </button>
+                                <button id='hot_wallet_eternl' class='wallet-btn'>                                    
+                                    Eternl
+                                </button>
+                                <button id='hot_wallet_flint' class='wallet-btn'>                                    
+                                    Flint
+                                </button>
+                            </div>";
+
                     // Amount Button     
-                    echo
-                    "<div id='copy_modal_amount' class='modal_tk_plugin'>
-                    <div class='modal_tk_plugin_content'>
-                        <span class='close_tk_plugin'>&times;</span>
-                        <p style='text-align:center;'>" . esc_html(__('Amount Copied!', 'sargapay-plugin')) . "</p>
-                    </div>
-                </div>";
-                    echo '<p style="text-align: center;"><b>' . esc_html(__('ADA Total', 'sargapay-plugin')) . '</b><br><span id="pay_amount_span_field_tk_plugin">' . esc_html($total_ada) . '</span></p>' .
-                        "<div style='display:flex; justify-content: space-evenly; margin:15px;'><button class='button' id='pay_add_button_field_tk_plugin'>" . esc_html(__('Copy Payment Address', 'sargapay-plugin')) . "</button><button class='button' id='pay_amount_button_field_tk_plugin'>" . esc_html(__('Copy Amount', 'sargapay-plugin')) . "</button></div>";
+                    echo    "<div id='copy_modal_amount' class='modal_tk_plugin'>
+                                <div class='modal_tk_plugin_content'>
+                                    <span class='close_tk_plugin'>&times;</span>
+                                    <p style='text-align:center;'>" . esc_html(__('Amount Copied!', 'sargapay-plugin')) . "</p>
+                                </div>
+                            </div>";
+
+                    echo    '<p style="text-align: center;"><b>' . esc_html(__('ADA Total', 'sargapay-plugin')) . '</b><br><span id="pay_amount_span_field_tk_plugin">' . esc_html($total_ada) . '</span></p>' .
+                        "<div style='display:flex; justify-content: space-evenly; margin:15px;'>
+                                <button class='button' id='pay_add_button_field_tk_plugin'>" . esc_html(__('Copy Payment Address', 'sargapay-plugin')) . "</button><button class='button' id='pay_amount_button_field_tk_plugin'>" . esc_html(__('Copy Amount', 'sargapay-plugin')) . "</button>
+                            </div>";
 
                     // SEND EMAIL  
                     // Create QR PNG FILE

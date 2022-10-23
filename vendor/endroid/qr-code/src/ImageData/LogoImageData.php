@@ -23,19 +23,24 @@ class LogoImageData
     /** @var int */
     private $height;
 
+    /** @var bool */
+    private $punchoutBackground;
+
     /** @param mixed $image */
     private function __construct(
         string $data,
         $image,
         string $mimeType,
         int $width,
-        int $height
+        int $height,
+        bool $punchoutBackground
     ) {
         $this->data = $data;
         $this->image = $image;
         $this->mimeType = $mimeType;
         $this->width = $width;
         $this->height = $height;
+        $this->punchoutBackground = $punchoutBackground;
     }
 
     public static function createForLogo(LogoInterface $logo): self
@@ -60,7 +65,7 @@ class LogoImageData
                 throw new \Exception('SVG Logos require an explicitly set resize width and height');
             }
 
-            return new self($data, null, $mimeType, $width, $height);
+            return new self($data, null, $mimeType, $width, $height, $logo->getPunchoutBackground());
         }
 
         $image = imagecreatefromstring($data);
@@ -71,20 +76,20 @@ class LogoImageData
 
         // No target width and height specified: use from original image
         if (null !== $width && null !== $height) {
-            return new self($data, $image, $mimeType, $width, $height);
+            return new self($data, $image, $mimeType, $width, $height, $logo->getPunchoutBackground());
         }
 
         // Only target width specified: calculate height
         if (null !== $width && null === $height) {
-            return new self($data, $image, $mimeType, $width, intval(imagesy($image) * $width / imagesx($image)));
+            return new self($data, $image, $mimeType, $width, intval(imagesy($image) * $width / imagesx($image)), $logo->getPunchoutBackground());
         }
 
         // Only target height specified: calculate width
         if (null === $width && null !== $height) {
-            return new self($data, $image, $mimeType, intval(imagesx($image) * $height / imagesy($image)), $height);
+            return new self($data, $image, $mimeType, intval(imagesx($image) * $height / imagesy($image)), $height, $logo->getPunchoutBackground());
         }
 
-        return new self($data, $image, $mimeType, imagesx($image), imagesy($image));
+        return new self($data, $image, $mimeType, imagesx($image), imagesy($image), $logo->getPunchoutBackground());
     }
 
     public function getData(): string
@@ -113,6 +118,11 @@ class LogoImageData
         return $this->height;
     }
 
+    public function getPunchoutBackground(): bool
+    {
+        return $this->punchoutBackground;
+    }
+
     public function createDataUri(): string
     {
         return 'data:'.$this->mimeType.';base64,'.base64_encode($this->data);
@@ -121,7 +131,7 @@ class LogoImageData
     private static function detectMimeTypeFromUrl(string $url): string
     {
         /** @var mixed $format */
-        $format = PHP_VERSION > 80000 ? true : 1;
+        $format = PHP_VERSION_ID >= 80000 ? true : 1;
 
         $headers = get_headers($url, $format);
 
@@ -129,7 +139,7 @@ class LogoImageData
             throw new \Exception(sprintf('Content type could not be determined for logo URL "%s"', $url));
         }
 
-        return $headers['Content-Type'];
+        return is_array($headers['Content-Type']) ? $headers['Content-Type'][1] : $headers['Content-Type'];
     }
 
     private static function detectMimeTypeFromPath(string $path): string

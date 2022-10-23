@@ -44,6 +44,7 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
         $this->blockfrost_key = $this->get_option('blockfrost_key');
         $this->blockfrost_test_key = $this->get_option('blockfrost_test_key');
         $this->confirmations = $this->get_option('confirmations');
+        $this->markup = $this->get_option('markup');
 
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
         add_action('wp_enqueue_scripts', array($this, 'payment_scripts'));
@@ -207,6 +208,12 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
                     '50' => '50',
                 ),
                 'desc_tip'    => true,
+            ),
+            'markup' => array(
+                'title'       => __('Markup/Markdown %', 'sargapay-plugin'),
+                'type'        => 'float',
+                'description' => __('This only increases the crypto amount owed, the original fiat value will still be displayed to the customer. 3.8 = 3.8% markup, -10.0 = 10.0% markdown', 'sargapay-plugin'),
+                'desc_tip'    => false,
             ),
             'blockfrost_key' => array(
                 'title'       => '<a href="https://blockfrost.io/">' . __('Blockfrost API Key for Mainnet', 'sargapay-plugin') . '</a>',
@@ -402,8 +409,18 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
                 echo "<h3 style='text-align:center; background:red; color:white; font-weight:bold;'>" . __("TEST MODE", 'sargapay-plugin') . "</h3>";
             }
             $instrucciones = $this->description;
+
+            $cryptoMarkupPercent = $this->markup;
+            if (!is_numeric($cryptoMarkupPercent)) {
+                $cryptoMarkupPercent = 0.0;
+            }
+            $cryptoMarkup = $cryptoMarkupPercent / 100.0;            
+            $cryptoPriceRatio = 1.0 + $cryptoMarkup;            
             $fiat = $data['cardano'][array_key_first($data['cardano'])];
-            $total_ada = round(WC()->cart->get_totals()["total"] / $fiat, 6);
+            $fiat_total_order = WC()->cart->get_totals()["total"];
+            $cryptoTotalPreMarkup = round($fiat_total_order / $fiat, 6, PHP_ROUND_HALF_UP);            
+            $total_ada = number_format((float)($cryptoTotalPreMarkup * $cryptoPriceRatio), 6, '.', '');
+
             echo "<p>$instrucciones</p>";
             echo "<div style='text-align:center;'>";
             echo "<p>" . __("Currency", 'sargapay-plugin') . " = " . $currency . "</p>";
@@ -445,8 +462,18 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
         }
         $data = json_decode(file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=' . $currency), true);
         if (count($data) == 1) {
+
+            $cryptoMarkupPercent = $this->markup;
+            if (!is_numeric($cryptoMarkupPercent)) {
+                $cryptoMarkupPercent = 0.0;
+            }
+            $cryptoMarkup = $cryptoMarkupPercent / 100.0;            
+            $cryptoPriceRatio = 1.0 + $cryptoMarkup;            
             $fiat = $data['cardano'][array_key_first($data['cardano'])];
-            $total_ada = round(WC()->cart->get_totals()["total"] / $fiat, 6);
+            $fiat_total_order = WC()->cart->get_totals()["total"];
+            $cryptoTotalPreMarkup = round($fiat_total_order / $fiat, 6, PHP_ROUND_HALF_UP);            
+            $total_ada = number_format((float)($cryptoTotalPreMarkup * $cryptoPriceRatio), 6, '.', '');
+
             // Get xpub from settings                
             $mpk = $this->mpk;
             // 0=TESTNET 1=MAINNET
