@@ -295,3 +295,34 @@ const initHotWallets = () => {
 }
 
 initHotWallets()
+
+//CountDown
+
+// Get when the order was made timestamp
+const p_timestamp = document.getElementById('sarga-timestamp')
+const countDownDate = (parseInt(p_timestamp.innerText) + 24 * 60 * 60) * 1000
+
+const countDown = setInterval(() => {
+
+    // Get today's date and time
+    let now = new Date().getTime();
+
+    // Find the distance between now and the count down date
+    let distance = countDownDate - now;
+
+    // Time calculations for days, hours, minutes and seconds
+    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // If the count down is finished, write some text
+    if (distance < 0) {
+        //|| distance > (24 * 60 * 60)) 
+        clearInterval(countDown);
+        document.getElementById("sarga-countdown").innerHTML = "EXPIRED";
+    } else {
+        // Display CountDown
+        document.getElementById("sarga-countdown").innerHTML = hours + "h " +
+            minutes + "m " + seconds + "s ";
+    }
+}, 1000);
