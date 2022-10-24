@@ -128,6 +128,7 @@ function sargapay_plugin_init_gateway_class()
 
     # Get APIKEY and Network for hotwallets
     add_action('wp_ajax_nopriv_get_settings_vars', 'get_settings_vars');
+    add_action('wp_ajax_get_settings_vars', 'get_settings_vars');
 
     // Woocommerce Mail QR and Payment Address
     add_action('woocommerce_email_before_order_table', 'SARGAPAY_add_content_wc_order_email', 20, 4);
@@ -219,7 +220,8 @@ function sargapay_plugin_init_gateway_class()
             'ajax_url' => admin_url('admin-ajax.php'),
             'noWallet_txt' => esc_html(__('Cardano Wallet Not Found!', "sargapay-plugin")),
             'unknown_txt' => esc_html(__('Something Went Wrong!', 'sargapay-plugin')),
-            'paid_txt' => esc_html(__('Paid', 'sargapay-plugin'))
+            'paid_txt' => esc_html(__('Paid', 'sargapay-plugin')),
+            'is_user_logged_in' => is_user_logged_in()
         ));
         wp_enqueue_script('wp_sarga_alerts', "//cdn.jsdelivr.net/npm/sweetalert2@11", array('jquery'));
     }
@@ -426,10 +428,33 @@ function sargapay_plugin_init_gateway_class()
                     $text = esc_html(__("Tienes para realizar la transacción ", 'sargapay-plugin'));
                     $qr = GenerateQR::getInstance();
                     echo '<p>' . $text . $time_until_cancel . '</p>';
-                    echo '<p style="text-align: center;"><b>' . esc_html(__('Payment Address', 'sargapay-plugin')) . '</b><br>' . $payment_address .
+                    echo '<p style="text-align: center;"><b>' . esc_html(__('Payment Address', 'sargapay-plugin')) . '</b><br><span id="pay_add_p_field_tk_plugin">' . $payment_address ."</span>".
                         $qr->generate($payment_address) .
                         '</p>';
-                    echo '<p style="text-align: center;"><b>' . esc_html(__('Total ADA', 'sargapay-plugin')) . '</b><br>' . $total_ada . '</p>';
+                    echo '<p style="text-align: center;"><b>' . esc_html(__('Total ADA', 'sargapay-plugin')) . '</b><br><span id="pay_amount_span_field_tk_plugin">' . $total_ada . '</span></p>';
+                    
+                    #Hotwallets
+                    echo    "<h4 style='text-align:center; font-weight:bold;'>" . esc_html(__('Pay Now', 'sargapay-plugin')) . "</h4>";
+                    echo    "<div id='loader-container'>
+                                <div class='lds-ellipsis'>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                                <p class='loader-p'>Building Transaction...</p>
+                            </div>";
+                    echo    "<div class='hot_wallets_container'>
+                                <button id='hot_wallet_nami' class='wallet-btn'>                                    
+                                    Nami
+                                </button>
+                                <button id='hot_wallet_eternl' class='wallet-btn'>                                    
+                                    Eternl
+                                </button>
+                                <button id='hot_wallet_flint' class='wallet-btn'>                                    
+                                    Flint
+                                </button>
+                            </div>";
                 }
             } else if (
                 $order->get_status() === "cancelled"

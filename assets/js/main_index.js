@@ -164,6 +164,8 @@ const walletAPI = async(apikey, network, walllet = "nami") => {
         const addr_p = document.getElementById("pay_add_p_field_tk_plugin")
         const amount_span = document.getElementById("pay_amount_span_field_tk_plugin")
 
+        console.dir(addr_p)
+        console.dir(amount_span)
         const address = addr_p.innerText
         const amount = BigInt(amount_span.innerText * 1000000)
 
@@ -231,7 +233,8 @@ const sendAda = async wallet => {
         // TODO: Get Apikey and Network
         jQuery.ajax({
             type: "post",
-            url: wp_ajax_nopriv_get_settings_vars.ajax_url,
+            url: wp_ajax_nopriv_get_settings_vars.is_user_logged_in == "1" ?
+                wp_ajax_save_address_vars.ajax_url : wp_ajax_nopriv_get_settings_vars.ajax_url,
             data: {
                 action: "get_settings_vars",
             },
