@@ -28,7 +28,7 @@ msgid ""
 "24 hours have passed and your order was canceled, the payment address is no "
 "longer valid."
 msgstr ""
-"20 horas han pasado y tu orden ha sido cancelada, la dirección de pago ya no "
+"24 horas han pasado y tu orden ha sido cancelada, la dirección de pago ya no "
 "es válida."
 
 #: SARGA_Gateway.php:430

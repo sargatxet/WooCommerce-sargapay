@@ -428,6 +428,7 @@ function sargapay_plugin_init_gateway_class()
                     $text = esc_html(__("Tienes para realizar la transacción ", 'sargapay-plugin'));
                     $qr = GenerateQR::getInstance();
                     echo '<p>' . $text . $time_until_cancel . '</p>';
+                    echo '<p id="sarga-countdown"></p>';
                     echo '<p style="text-align: center;"><b>' . esc_html(__('Payment Address', 'sargapay-plugin')) . '</b><br><span id="pay_add_p_field_tk_plugin">' . $payment_address ."</span>".
                         $qr->generate($payment_address) .
                         '</p>';
