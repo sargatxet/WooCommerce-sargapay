@@ -7,7 +7,7 @@ WooCommerce plugin para pagar usando Cardano ADA.
  - WooCommerce
 ## Instalación
 
-[Descarga el archivo zip](https://github.com/sargatxet/WooCommerce-sargapay/blob/main/release/WooCommerce-sargapay.zip "WooCommerce-Sargapay Link de descarga") y usa el panel de administración de Wordpress para instalarlo.
+[Descarga el archivo zip](https://github.com/sargatxet/WooCommerce-sargapay/releases/tag/v1.0.0 "WooCommerce-Sargapay Link de descarga") y usa el panel de administración de Wordpress para instalarlo.
  
 ## ¿Cómo obtener la xpub? [extended public key]
  
