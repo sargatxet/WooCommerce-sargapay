@@ -56,7 +56,7 @@ function SARGAPAY_activate()
         wp_schedule_event(time(), 'every_ten_minutes', 'SARGAPAY_cron_hook');
     }
     // Create DB for Addresses, if it doesn't exist.
-    require_once(plugin_basename("SARGA_Create_db.php"));
+    require_once(plugin_basename("SARGA_createDB.php"));
     SARGAPAY_create_address_table();
 }
 
@@ -95,11 +95,14 @@ function sargapay_plugin_init_gateway_class()
         return;
     }
 
-    require_once(plugin_basename("SARGA_GenerateQR.php"));
-    require_once(plugin_basename("SARGA_ConfirmPayment.php"));
-    require_once(plugin_basename("SARGA_send_email.php"));
-    require_once(plugin_basename("SARGA_SaveAddress.php"));
-    require_once(plugin_basename('SARGA_Gateway.php'));
+    require_once(plugin_basename("SARGA_gateway.php"));
+    require_once(plugin_basename("SARGA_thankYouPage.php"));
+    require_once(plugin_basename("SARGA_cancelOrder.php"));
+    require_once(plugin_basename("SARGA_generateQR.php"));
+    require_once(plugin_basename("SARGA_sendEmail.php"));
+    require_once(plugin_basename("SARGA_settings.php"));
+    require_once(plugin_basename("SARGA_saveAddress.php"));
+    require_once(plugin_basename("SARGA_confirmPayment.php"));
 
     // Init Plugin Class
     add_filter('woocommerce_payment_gateways', 'sargapay_plugin_add_gateway_class');
@@ -138,62 +141,24 @@ function sargapay_plugin_init_gateway_class()
 
     add_action('init', 'my_register_styles');
 
+    add_action('wp_enqueue_scripts', 'my_enqueue_styles');
+
     function my_register_styles()
     {
         wp_register_style('wallet_btn', plugins_url('/assets/css/walletsBtns.css', __FILE__));
+        wp_register_style('modals_thanks', plugins_url('/assets/css/modalThankYou.css', __FILE__));
     }
 
-    add_action('wp_enqueue_scripts', 'my_enqueue_styles');
 
     function my_enqueue_styles()
     {
-        wp_enqueue_style('wallet_btn');
-    }
-
-    // Add Payment Method to Woocommerce
-    function sargapay_plugin_add_gateway_class($gateways)
-    {
-        $gateways[] = 'SARGAPAY_WC_Gateway';
-        return $gateways;
-    }
-
-    function get_settings_vars()
-    {
-        $action = isset($_POST['action']) ? $_POST['action'] : false;
-        if ($action) {
-            if (wp_doing_ajax() && $action === "get_settings_vars") {
-
-                // 0=TESTNET 1=MAINNET
-                $testmode = WC()->payment_gateways->payment_gateways()['sargapay-plugin']->testmode == 1 ? 1 : 0;
-
-                $network = $testmode == 1 ? $network = 0 : $network = 1;
-
-                $APIKEY  = $network === 1 ? WC()->payment_gateways->payment_gateways()['sargapay-plugin']->blockfrost_key :
-                    WC()->payment_gateways->payment_gateways()['sargapay-plugin']->blockfrost_test_key;
-
-                wp_send_json(array('apikey' => $APIKEY, 'network' => $network));
-            }
+        #check if is thankyou page
+        if (is_checkout() && !empty(is_wc_endpoint_url('order-received'))) {
+            wp_enqueue_style('modals_thanks');
         }
-        wp_die();
-    }
-
-    //Function to add settings link
-    function sargapay_settings_link($links)
-    {
-        // Build and escape the URL.
-        $url = esc_url(add_query_arg(
-            array('page' =>
-            'wc-settings', 'tab' => 'checkout', 'section' => 'sargapay-plugin'),
-            get_admin_url() . 'admin.php'
-        ));
-        // Create the link.
-        $settings_link = "<a href='$url'>" . __('Settings') . '</a>';
-        // Adds the link to the end of the array.
-        array_push(
-            $links,
-            $settings_link
-        );
-        return $links;
+        if ((is_checkout() && !empty(is_wc_endpoint_url('order-received'))) || is_account_page()) {
+            wp_enqueue_style('wallet_btn');
+        }
     }
 
     // Load JS to Gen Cardano Address
@@ -216,6 +181,7 @@ function sargapay_plugin_init_gateway_class()
         wp_localize_script('wp_gen_address', 'wp_ajax_save_address_vars', array(
             'ajax_url' => admin_url('admin-ajax.php')
         ));
+
         wp_localize_script('wp_gen_address', 'wp_ajax_nopriv_get_settings_vars', array(
             'ajax_url' => admin_url('admin-ajax.php'),
             'noWallet_txt' => esc_html(__('Cardano Wallet Not Found!', "sargapay-plugin")),
@@ -223,8 +189,17 @@ function sargapay_plugin_init_gateway_class()
             'paid_txt' => esc_html(__('Paid', 'sargapay-plugin')),
             'is_user_logged_in' => is_user_logged_in()
         ));
-        wp_enqueue_script('wp_sarga_alerts', "//cdn.jsdelivr.net/npm/sweetalert2@11", array('jquery'));
+
+        if ((is_checkout() && !empty(is_wc_endpoint_url('order-received'))) || is_account_page()) {
+            wp_enqueue_script('wp_sarga_hot_wallets', plugins_url('assets/js/hotWallets.js', __FILE__), array('jquery'));
+            wp_enqueue_script('wp_sarga_alerts', "//cdn.jsdelivr.net/npm/sweetalert2@11", array('jquery'));
+        }
+
+        if(is_account_page()) {
+            wp_enqueue_script('wp_sarga_countDown', plugins_url('assets/js/countDown.js', __FILE__), array('jquery'));
+        }
     }
+
     // Add Type = Module to js 
     function add_type_attribute($tag, $handle, $src)
     {
@@ -234,7 +209,8 @@ function sargapay_plugin_init_gateway_class()
             'cardano_asm' === $handle ||
             'cardano_serialization_lib' === $handle ||
             'gen_addressjs' === $handle ||
-            'wp_gen_address' === $handle
+            'wp_gen_address' === $handle ||
+            'wp_sarga_hot_wallets' === $handle
         ) {
             $tag = '<script type="module" src="' . esc_url($src) . '"></script>';
             return $tag;
@@ -249,240 +225,12 @@ function sargapay_plugin_init_gateway_class()
     {
         load_plugin_textdomain('sargapay-plugin', false, dirname(plugin_basename(__FILE__)) . '/languages');
     }
-    /** Add QR and Payment address in Thank You Page    
-     ** Add Warning header if testmode is on
-     */
-    function plugin_thank_you_text($thank_you_title, $order)
-    {
-        if (isset($order)) {
-            if ($order->get_payment_method() === "sargapay-plugin") {
-                $message = '<div style="font-weight:bold; text-align:center; color:white; background:black;">' . esc_html(__('Remember that you have 24 hours to pay for your order before it\'s automatically canceled.', 'sargapay-plugin')) . '</div>';
-                $order_id = $order->get_id();
-                global $wpdb;
-                $table = $wpdb->prefix . "wc_sarga_address";
-                $query_address = $wpdb->get_results("SELECT pay_address, order_amount, testnet FROM $table WHERE order_id=$order_id");
-                //ERROR DB
-                if ($wpdb->last_error) {
-                    //LOG Error             
-                    write_log($wpdb->last_error);
-                } else if (count($query_address) === 0) {
-                    $message = "<p>" . esc_html(__('ERROR PLEASE CONTACT ADMIN TO PROCCED WITH THE ORDER', 'sargapay-plugin')) . "</p>";
-                    write_log("ERROR DB query empty in Thank You Page ");
-                    return $thank_you_title . "<br>" . $message . '<br><br>';
-                } else {
-                    if ($query_address[0]->testnet) {
-                        $testnet_msg  = esc_html(__("BE AWARE THIS IS A TESTNET PAYMENT ADDRESS", 'sargapay-plugin'));
-                        echo "<p style='background:red; font-weight:bold; color:white; text-align:center;'> $testnet_msg </p>";
-                    }
-                    // Get order amount in ada
-                    $total_ada = $query_address[0]->order_amount;
-                    // Get payment address
-                    $payment_address = $query_address[0]->pay_address;
-                    $qr = GenerateQR::getInstance();
-                    echo "<style>
-                .modal_tk_plugin {
-                    display: none; 
-                    position: fixed; 
-                    z-index: 1; 
-                    padding-top: 100px; 
-                    left: 0;
-                    top: 0;
-                    width: 100%; 
-                    height: 100%; 
-                    overflow: auto; 
-                    background-color: rgb(0,0,0); 
-                    background-color: rgba(0,0,0,0.4); 
-                  }
-                  .modal_tk_plugin_content {
-                    background-color: #fefefe;
-                    margin: auto;
-                    padding: 20px;
-                    border: 1px solid #888;
-                    width: 80%;
-                  }
-                  .close_tk_plugin {
-                    color: #aaaaaa;
-                    float: right;
-                    font-size: 28px;
-                    font-weight: bold;
-                  }
-                  
-                  .close_tk_plugin:hover,
-                  .close_tk_plugin:focus {
-                    color: #000;
-                    text-decoration: none;
-                    cursor: pointer;
-                  }                  
-                  </style>";
-                    // Qr Button
-                    echo    "<div id='copy_modal' class='modal_tk_plugin'>
-                                <div class='modal_tk_plugin_content'>
-                                    <span class='close_tk_plugin'>&times;</span>
-                                    <p style='text-align:center;'>" . esc_html(__('Payment Address Copied!', 'sargapay-plugin')) . "</p>
-                                </div>
-                            </div>";
 
-                    echo    "<div style='text-align:center; font-weight:bold;'>
-                                <h4>" . esc_html(__('Payment Address', 'sargapay-plugin')) . "</h4>
-                                <p id='pay_add_p_field_tk_plugin' style='width:100%; overflow-wrap:anywhere;'>" . esc_html($payment_address) . "</p>"
-                        . $qr->generate($payment_address) .
-                        '</div>';
-
-                    # Hot Wallets    
-                    echo    "<h4 style='text-align:center; font-weight:bold;'>" . esc_html(__('Pay Now', 'sargapay-plugin')) . "</h4>";
-                    echo    "<div id='loader-container'>
-                                <div class='lds-ellipsis'>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                </div>
-                                <p class='loader-p'>Building Transaction...</p>
-                            </div>";
-                    echo    "<div class='hot_wallets_container'>
-                                <button id='hot_wallet_nami' class='wallet-btn'>                                    
-                                    Nami
-                                </button>
-                                <button id='hot_wallet_eternl' class='wallet-btn'>                                    
-                                    Eternl
-                                </button>
-                                <button id='hot_wallet_flint' class='wallet-btn'>                                    
-                                    Flint
-                                </button>
-                            </div>";
-
-                    // Amount Button     
-                    echo    "<div id='copy_modal_amount' class='modal_tk_plugin'>
-                                <div class='modal_tk_plugin_content'>
-                                    <span class='close_tk_plugin'>&times;</span>
-                                    <p style='text-align:center;'>" . esc_html(__('Amount Copied!', 'sargapay-plugin')) . "</p>
-                                </div>
-                            </div>";
-
-                    echo    '<p style="text-align: center;"><b>' . esc_html(__('ADA Total', 'sargapay-plugin')) . '</b><br><span id="pay_amount_span_field_tk_plugin">' . esc_html($total_ada) . '</span></p>' .
-                        "<div style='display:flex; justify-content: space-evenly; margin:15px;'>
-                                <button class='button' id='pay_add_button_field_tk_plugin'>" . esc_html(__('Copy Payment Address', 'sargapay-plugin')) . "</button><button class='button' id='pay_amount_button_field_tk_plugin'>" . esc_html(__('Copy Amount', 'sargapay-plugin')) . "</button>
-                            </div>";
-
-                    // SEND EMAIL  
-                    // Create QR PNG FILE
-                    $url_img = $qr->QR_URL($payment_address);
-                    // Email config
-                    $email = $order->get_billing_email();
-                    $subject = __("Payment Instructions ", 'sargapay-plugin') . get_bloginfo('name');
-                    $file_name = $payment_address . ".png";
-                    $testnet_bool = $query_address[0]->testnet;
-                    // Email Sent                   
-                    send_email_woocommerce_style($email, $subject, $testnet_bool, $total_ada, $payment_address, $url_img, $file_name);
-                    return $thank_you_title . "<br>" . $message . '<br><br>';
-                }
-            }
-        }
-        return $thank_you_title;
-    }
-
-    function view_order_cancel_notice($order_id)
-    {
-        //add pending status and show confirmations
-        $order = wc_get_order($order_id);
-        if ($order->get_payment_method() === "sargapay-plugin") {
-            if (
-                $order->get_status() === "on-hold"
-            ) {
-                global $wpdb;
-                $table = $wpdb->prefix . "wc_sarga_address";
-                $query_address = $wpdb->get_results("SELECT pay_address, order_amount, testnet FROM $table WHERE order_id=$order_id");
-                //LOG ERROR DB
-                if ($wpdb->last_error) {
-                    //LOG Error             
-                    write_log($wpdb->last_error);
-                } else if (count($query_address) === 0) {
-                    echo "<p>" . __('ERROR PLEASE CONTACT THE ADMIN TO PROCCED WITH THE ORDER', 'sargapay-plugin') . "</p>";
-                    write_log("Emprty Query result in account page order");
-                } else {
-                    if ($query_address[0]->testnet) {
-                        $testnet_msg  = esc_html(__("BE AWARE THIS IS A TESTNET PAYMENT ADDRESS", 'sargapay-plugin'));
-                        echo "<p style='background:red; font-weight:bold; color:white; text-align:center;'> $testnet_msg </p>";
-                    }
-                    // Get order amount in ada
-                    $total_ada = $query_address[0]->order_amount;
-                    // Get payment address
-                    $payment_address = $query_address[0]->pay_address;
-                    $date_created_dt = $order->get_date_created();
-                    // Get the timezone
-                    $timezone = $date_created_dt->getTimezone();
-                    // Get the timestamp in seconds
-                    $date_created_ts = $date_created_dt->getTimestamp();
-                    // Get current WC_DateTime object instance
-                    $now_dt = new WC_DateTime();
-                    // Set the same time zone
-                    $now_dt->setTimezone($timezone);
-                    // Get the current timestamp in seconds
-                    $now_ts = $now_dt->getTimestamp();
-                    // 24hours in seconds            
-                    $twenty_four_hours = 24 * 60 * 60;
-                    // Get the difference (in seconds)
-                    $diff_in_seconds = $now_ts - $date_created_ts;
-                    $seconds_until_cancel = $twenty_four_hours - $diff_in_seconds;
-                    $time_until_cancel = gmdate("H:i:s", $seconds_until_cancel);
-                    $text = esc_html(__("Tienes para realizar la transacción ", 'sargapay-plugin'));
-                    $qr = GenerateQR::getInstance();
-                    echo '<p style="text-align: center;">' . $text . '</p>';
-                    echo "<p id='sarga-timestamp' style='display:none;'>$date_created_ts</p>";
-                    echo '<p id="sarga-countdown" style="text-align: center;"></p>';
-                    echo '<p style="text-align: center;"><b>' . esc_html(__('Payment Address', 'sargapay-plugin')) . '</b><br><span id="pay_add_p_field_tk_plugin">' . $payment_address ."</span>".
-                        $qr->generate($payment_address) .
-                        '</p>';
-                    echo '<p style="text-align: center;"><b>' . esc_html(__('Total ADA', 'sargapay-plugin')) . '</b><br><span id="pay_amount_span_field_tk_plugin">' . $total_ada . '</span></p>';
-                    
-                    #Hotwallets
-                    echo    "<h4 style='text-align:center; font-weight:bold;'>" . esc_html(__('Pay Now', 'sargapay-plugin')) . "</h4>";
-                    echo    "<div id='loader-container'>
-                                <div class='lds-ellipsis'>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                </div>
-                                <p class='loader-p'>Building Transaction...</p>
-                            </div>";
-                    echo    "<div class='hot_wallets_container'>
-                                <button id='hot_wallet_nami' class='wallet-btn'>                                    
-                                    Nami
-                                </button>
-                                <button id='hot_wallet_eternl' class='wallet-btn'>                                    
-                                    Eternl
-                                </button>
-                                <button id='hot_wallet_flint' class='wallet-btn'>                                    
-                                    Flint
-                                </button>
-                            </div>";
-                }
-            } else if (
-                $order->get_status() === "cancelled"
-            ) {
-                echo esc_html(__("24 hours have passed and your order was canceled, the payment address is no longer valid.", 'sargapay-plugin'));
-            }
-        }
-    }
     // we add data protocol to render qr img on emails
     add_filter('kses_allowed_protocols', function ($protocols) {
         $protocols[] = 'data';
         return $protocols;
     });
-
-    function SARGAPAY_add_content_wc_order_email($order, $sent_to_admin, $plain_text, $email)
-    {
-        if ($email->id == 'customer_on_hold_order') {
-            if ($order->get_payment_method() === "sargapay-plugin") {
-                if ($plain_text === false) {
-                    echo "<p>." . esc_html(__('Instructions for payment will be send soon!', 'sargapay-plugin')) . "</p>";
-                } else {
-                    echo esc_html(__("Instructions for payment will be send soon!\n", 'sargapay-plugin'));
-                }
-            }
-        }
-    }
 }
 
 //Activate Logs

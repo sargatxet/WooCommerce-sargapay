@@ -17,6 +17,20 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+function SARGAPAY_add_content_wc_order_email($order, $sent_to_admin, $plain_text, $email)
+{
+  if ($email->id == 'customer_on_hold_order') {
+    if ($order->get_payment_method() === "sargapay-plugin") {
+      if ($plain_text === false) {
+        echo "<p>." . esc_html(__('Instructions for payment will be send soon!', 'sargapay-plugin')) . "</p>";
+      } else {
+        echo esc_html(__("Instructions for payment will be send soon!\n", 'sargapay-plugin'));
+      }
+    }
+  }
+}
+
+
 // @email - Email address of the reciever
 // @subject - Subject of the email
 // @heading - Heading to place inside of the woocommerce template
@@ -60,7 +74,7 @@ function send_email_woocommerce_style($email, $subject, $testnet_bool, $total, $
     $message .= "<h3>" . esc_html(__("Address", 'sargapay-plugin')) . "</h3>";
   }
   $message .= '<div><img src="cid:qrimg" style="margin-left: auto; margin-right: auto;"></div>';
-  $message .= "<p style='font-weight: bold;'>". adrress_break($address)."</p>";
+  $message .= "<p style='font-weight: bold;'>" . adrress_break($address) . "</p>";
   $message .= "<p>" . esc_html(__('You can verify the payment address and amount if you login and go to my-account/orders', 'sargapay-plugin')) . "</p>";
   $message .= $ad;
   // Get woocommerce mailer from instance
@@ -91,18 +105,19 @@ function my_custom_email_content_type()
   return 'text/html';
 }
 
-function adrress_break($address) {
+function adrress_break($address)
+{
   $new_address = '';
-  $address_1 = explode('>',$address);
+  $address_1 = explode('>', $address);
   $sizeof = sizeof($address_1);
-  for ($i=0; $i<$sizeof; ++$i) {
-      $address_2 = explode('<',$address_1[$i]);
-      if (!empty($address_2[0])) {
-          $new_address .= preg_replace('#([^\n\r .]{60})#i', '\\1  ', $address_2[0]);
-      }
-      if (!empty($address_2[1])) {
-          $new_address .= '<' . $address_2[1] . '>';   
-      }
+  for ($i = 0; $i < $sizeof; ++$i) {
+    $address_2 = explode('<', $address_1[$i]);
+    if (!empty($address_2[0])) {
+      $new_address .= preg_replace('#([^\n\r .]{60})#i', '\\1  ', $address_2[0]);
+    }
+    if (!empty($address_2[1])) {
+      $new_address .= '<' . $address_2[1] . '>';
+    }
   }
   return $new_address;
 }
