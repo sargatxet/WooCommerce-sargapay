@@ -26,10 +26,12 @@ import {
 let noWalletText = 'Cardano Wallet Not Found!'
 let unknowText = 'Something Went Wrong!'
 let paidText = 'Paid'
+let wrongNetworkText = 'Wrong Network, Please Select the Correct Network'
 if (wp_ajax_nopriv_get_settings_vars) {
     noWalletText = wp_ajax_nopriv_get_settings_vars.noWallet_txt
     unknowText = wp_ajax_nopriv_get_settings_vars.unknow_txt
     paidText = wp_ajax_nopriv_get_settings_vars.paid_txt
+    wrongNetworkText = wp_ajax_nopriv_get_settings_vars.error_wrong_network_txt
 }
 
 const showLoader = () => {
@@ -51,8 +53,6 @@ const walletAPI = async(apikey, network, walllet = "nami") => {
         const addr_p = document.getElementById("pay_add_p_field_tk_plugin")
         const amount_span = document.getElementById("pay_amount_span_field_tk_plugin")
 
-        console.dir(addr_p)
-        console.dir(amount_span)
         const address = addr_p.innerText
         const amount = BigInt(amount_span.innerText * 1000000)
 
@@ -95,25 +95,25 @@ const walletAPI = async(apikey, network, walllet = "nami") => {
             })
         }
     } catch (error) {
+        let errorText = unknowText
         hideLoader()
         console.log(error)
         if (error.hasOwnProperty("info")) {
             console.log(error.info)
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: error.info
-            })
-        } else {
-            console.log(error)
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: unknowText
-            })
+            errorText = error.info
+        } else if (error.hasOwnProperty("message")) {
+            if (error.message.includes("unreachable") || error.message.includes('Invalid address: Expected address with network'))
+                errorText = wrongNetworkText
         }
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: errorText
+        })
     }
 }
+
+
 
 const sendAda = async wallet => {
     try {
@@ -138,7 +138,6 @@ const sendAda = async wallet => {
             },
         })
     } catch (error) {
-        console.log(error)
         if (error.hasOwnProperty("info")) {
             console.log(error.info)
             Swal.fire({

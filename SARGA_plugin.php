@@ -187,7 +187,8 @@ function sargapay_plugin_init_gateway_class()
             'noWallet_txt' => esc_html(__('Cardano Wallet Not Found!', "sargapay-plugin")),
             'unknown_txt' => esc_html(__('Something Went Wrong!', 'sargapay-plugin')),
             'paid_txt' => esc_html(__('Paid', 'sargapay-plugin')),
-            'is_user_logged_in' => is_user_logged_in()
+            'is_user_logged_in' => is_user_logged_in(),
+            'error_wrong_network_txt' => esc_html(__('Wrong Network, Please Select the Correct Network', 'sargapay-plugin'))
         ));
 
         if ((is_checkout() && !empty(is_wc_endpoint_url('order-received'))) || is_account_page()) {
