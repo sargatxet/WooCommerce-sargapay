@@ -17,12 +17,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require "vendor/autoload.php";
-
 use chillerlan\QRCode\{QRCode, QROptions};
-use chillerlan\QRCode\Common\EccLevel;
-use chillerlan\QRCode\Data\QRMatrix;
-use chillerlan\QRCode\Output\QROutputInterface;
+
+require_once('vendor/autoload.php');
 
 class GenerateQR
 {
@@ -31,15 +28,10 @@ class GenerateQR
     private static $instances = [];
     protected function __construct()
     {
-        $options = new QROptions([
-            'version'             => 7,
-            'outputType'          => QROutputInterface::GDIMAGE_PNG,
-            'eccLevel'            => EccLevel::L,
-            'scale'               => 10,
-            'imageBase64'         => false,
-            'imageTransparent'    => false,
-            'drawCircularModules' => true,
-            'circleRadius'        => 0.4
+        $this->options = new QROptions([
+            'eccLevel' => QRCode::ECC_L,
+            'outputType'   => QRCode::OUTPUT_IMAGE_PNG,
+            'version' => 10,
         ]);
     }
     protected function __clone()
@@ -60,25 +52,25 @@ class GenerateQR
     }
     function generate($payAdress)
     {
-        try{
-            $im = (new QRCode($options))->render($payAdress);
+        try {
+            $url = WP_CONTENT_DIR . "/uploads/$payAdress.png";
+            $im = (new QRCode($this->options))->render($payAdress, $url);
             return  "<div style='display:flex; justify-content:center; padding:10px 0; '><img style='width:10vw;
             height: 10vw;' src=" . $im . " /></div>";
-        }
-        catch(Throwable $e){
+        } catch (Throwable $e) {
             exit($e->getMessage());
         }
-        
     }
 
     function QR_URL($payAdress)
     {
-        try{
+        try {
             $url = WP_CONTENT_DIR . "/uploads/$payAdress.png";
-            $im = (new QRCode($options))->render($payAdress, $url);
+            if (!file_exists($url)) {
+                $im = (new QRCode($this->options))->render($payAdress, $url);
+            }
             return $url;
-        }
-        catch(Throwable $e){
+        } catch (Throwable $e) {
             exit($e->getMessage());
         }
     }
