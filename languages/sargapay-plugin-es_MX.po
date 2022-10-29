@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: TrakaDev Cardano Payments for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-30 04:34+0000\n"
-"PO-Revision-Date: 2022-10-25 03:48+0000\n"
+"PO-Revision-Date: 2022-10-29 00:37+0000\n"
 "Last-Translator: admn\n"
 "Language-Team: Español de México\n"
 "Language: es_MX\n"
@@ -259,8 +259,9 @@ msgid "Place the Public Adress Key to generate Payment Addresses."
 msgstr "Proporciona la Llave Pública para generar Direcciones de Pago."
 
 #: SARGA_plugin.php:52
-msgid "Plugin NOT activated: Minimun PHP version required  is 7.3"
-msgstr "El Plugin no se activo: Versión minima requerida es 7.3"
+#| msgid "Plugin NOT activated: Minimun PHP version required  is 7.3"
+msgid "Plugin NOT activated: Minimun PHP version required  is 7.4"
+msgstr "El Plugin no se activo: Versión minima requerida es 7.4"
 
 #: SARGA_plugin.php:49
 msgid "Plugin NOT activated: WooCommerce is required"
@@ -281,6 +282,10 @@ msgid ""
 msgstr ""
 "Recuerda que tienes 24 horas para pagar tu pedido antes de que se cancele "
 "automáticamente."
+
+#. Name of the plugin
+msgid "Sargapay"
+msgstr "Sargapay"
 
 #. Author of the plugin
 msgid "Sargatxet"
@@ -316,7 +321,8 @@ msgstr ""
 "de margen de rebaja"
 
 #: SARGA_cancelOrder.php:50
-msgid "Time left to make the payment"
+#| msgid "Time left to make the payment"
+msgid "Time left to make the payment "
 msgstr "Tiempo restante para realizar el pago"
 
 #: SARGA_gateway.php:165
@@ -330,10 +336,6 @@ msgstr "Total en ADA"
 #: SARGA_sendEmail.php:70
 msgid "Total Amount in ADA "
 msgstr "Monto Total en ADA "
-
-#. Name of the plugin
-msgid "WooCommerce Sargapay"
-msgstr "WooCommerce Sargapay"
 
 #: SARGA_plugin.php:191
 msgid "Wrong Network, Please Select the Correct Network"

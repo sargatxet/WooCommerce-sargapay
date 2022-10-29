@@ -17,21 +17,22 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-require "vendor/autoload.php";
+use chillerlan\QRCode\{QRCode, QROptions};
 
-use Endroid\QrCode\Builder\Builder;
-use Endroid\QrCode\Encoding\Encoding;
-use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
-use Endroid\QrCode\Label\Alignment\LabelAlignmentCenter;
-use Endroid\QrCode\Label\Font\NotoSans;
-use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
-use Endroid\QrCode\Writer\PngWriter;
+require_once('vendor/autoload.php');
 
 class GenerateQR
 {
+    private $options;
+
     private static $instances = [];
     protected function __construct()
     {
+        $this->options = new QROptions([
+            'eccLevel' => QRCode::ECC_L,
+            'outputType'   => QRCode::OUTPUT_IMAGE_PNG,
+            'version' => 10,
+        ]);
     }
     protected function __clone()
     {
@@ -51,41 +52,26 @@ class GenerateQR
     }
     function generate($payAdress)
     {
-        $result = Builder::create()
-            ->writer(new PngWriter())
-            ->writerOptions([])
-            ->data($payAdress)
-            ->encoding(new Encoding('UTF-8'))
-            ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
-            ->size(300)
-            ->margin(10)
-            ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
-            ->labelText("")
-            ->labelFont(new NotoSans(20))
-            ->labelAlignment(new LabelAlignmentCenter())
-            ->build();
-        return  "<div style='display:flex; justify-content:center; padding:10px 0; '><img style='width:10vw;
-        height: 10vw;' src=" . $result->getDataUri() . " /></div>";
+        try {
+            $url = WP_CONTENT_DIR . "/uploads/$payAdress.png";
+            $im = (new QRCode($this->options))->render($payAdress, $url);
+            return  "<div style='display:flex; justify-content:center; padding:10px 0; '><img style='width:10vw;
+            height: 10vw;' src=" . $im . " /></div>";
+        } catch (Throwable $e) {
+            exit($e->getMessage());
+        }
     }
 
     function QR_URL($payAdress)
     {
-        $result = Builder::create()
-            ->writer(new PngWriter())
-            ->writerOptions([])
-            ->data($payAdress)
-            ->encoding(new Encoding('UTF-8'))
-            ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
-            ->size(300)
-            ->margin(10)
-            ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
-            ->labelText("")
-            ->labelFont(new NotoSans(20))
-            ->labelAlignment(new LabelAlignmentCenter())
-            ->build();
-
-        $url = WP_CONTENT_DIR . "/uploads/$payAdress.png";
-        $result->saveToFile($url);
-        return $url;
+        try {
+            $url = WP_CONTENT_DIR . "/uploads/$payAdress.png";
+            if (!file_exists($url)) {
+                $im = (new QRCode($this->options))->render($payAdress, $url);
+            }
+            return $url;
+        } catch (Throwable $e) {
+            exit($e->getMessage());
+        }
     }
 }
