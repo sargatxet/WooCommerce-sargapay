@@ -47,7 +47,7 @@ function view_order_cancel_notice($order_id)
                 $date_created_dt = $order->get_date_created();
                 // Get the timestamp in seconds
                 $date_created_ts = $date_created_dt->getTimestamp();                
-                $text = esc_html(__("Tienes para realizar la transacción ", 'sargapay-plugin'));
+                $text = esc_html(__("Time left to make the payment ", 'sargapay-plugin'));
                 $qr = GenerateQR::getInstance();
                 echo '<p style="text-align: center;">' . $text . '</p>';
                 echo "<p id='sarga-timestamp' style='display:none;'>$date_created_ts</p>";
