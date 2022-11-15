@@ -44,8 +44,11 @@ function sargapay_thank_you_text($thank_you_title, $order)
                 return $thank_you_title . "<br>" . $message . '<br><br>';
             } else {
                 if ($query_address[0]->testnet) {
-                    $testnet_msg  = esc_html(__("BE AWARE THIS IS A TESTNET PAYMENT ADDRESS", 'sargapay'));
-                    echo "<p style='background:red; font-weight:bold; color:white; text-align:center;'> $testnet_msg </p>";
+?>
+                    <p style='background:red; font-weight:bold; color:white; text-align:center;'>
+                        <?php echo esc_html(__("BE AWARE THIS IS A TESTNET PAYMENT ADDRESS", 'sargapay')); ?>
+                    </p>
+                <?php
                 }
                 // Get order amount in ada
                 $total_ada = $query_address[0]->order_amount;
@@ -53,58 +56,61 @@ function sargapay_thank_you_text($thank_you_title, $order)
                 $payment_address = $query_address[0]->pay_address;
                 $qr = GenerateQR::getInstance();
                 // Qr Button
-                echo    "<div id='copy_modal' class='modal_tk_plugin'>
-                                <div class='modal_tk_plugin_content'>
-                                    <span class='close_tk_plugin'>&times;</span>
-                                    <p style='text-align:center;'>" . esc_html(__('Payment Address Copied!', 'sargapay')) . "</p>
-                                </div>
-                            </div>";
+                ?>
 
-                echo    "<div style='text-align:center; font-weight:bold;'>
-                                <h4>" . esc_html(__('Payment Address', 'sargapay')) . "</h4>
-                                <p id='pay_add_p_field_tk_plugin' style='width:100%; overflow-wrap:anywhere;'>" . esc_html($payment_address) . "</p>"
-                    . $qr->generate($payment_address) .
-                    '</div>';
+                <div id='copy_modal' class='modal_tk_plugin'>
+                    <div class='modal_tk_plugin_content'>
+                        <span class='close_tk_plugin'>&times;</span>
+                        <p style='text-align:center;'><?php esc_html(__('Payment Address Copied!', 'sargapay')) ?></p>
+                    </div>
+                </div>
+                <div style='text-align:center; font-weight:bold;'>
+                    <h4><?php echo esc_html(__('Payment Address', 'sargapay')); ?></h4>
+                    <p id='pay_add_p_field_tk_plugin' style='width:100%; overflow-wrap:anywhere;'>
+                        <?php echo esc_html($payment_address); ?>
+                    </p>
+                    <?php $qr->generate($payment_address); ?>
+                </div>
 
-                # Hot Wallets    
-                #Header
-                echo    "<h4 style='text-align:center; font-weight:bold;'>" . esc_html(__('Pay Now', 'sargapay')) . "</h4>";
-                # Loader
-                echo    "<div id='loader-container'>
-                                <div class='lds-ellipsis'>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                </div>
-                                <p class='loader-p'>Building Transaction...</p>
-                            </div>";
-                # Wallets Buttons
-                echo    "<div class='hot_wallets_container'>
-                                <button id='hot_wallet_nami' class='wallet-btn'>                                    
-                                    Nami
-                                </button>
-                                <button id='hot_wallet_eternl' class='wallet-btn'>                                    
-                                    Eternl
-                                </button>
-                                <button id='hot_wallet_flint' class='wallet-btn'>                                    
-                                    Flint
-                                </button>
-                            </div>";
+                <!-- # Hot Wallets Header -->
+                <h4 style='text-align:center; font-weight:bold;'><?php echo esc_html(__('Pay Now', 'sargapay')) ?></h4>
+                <!-- # Loader -->
+                <div id='loader-container'>
+                    <div class='lds-ellipsis'>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <p class='loader-p'>Building Transaction...</p>
+                </div>
+                <!-- # Wallets Buttons -->
+                <div class='hot_wallets_container'>
+                    <button id='hot_wallet_nami' class='wallet-btn'>Nami</button>
+                    <button id='hot_wallet_eternl' class='wallet-btn'>Eternl</button>
+                    <button id='hot_wallet_flint' class='wallet-btn'>Flint</button>
+                </div>
+                <!-- Amount Button -->
+                <div id='copy_modal_amount' class='modal_tk_plugin'>
+                    <div class='modal_tk_plugin_content'>
+                        <span class='close_tk_plugin'>&times;</span>
+                        <p style='text-align:center;'><?php echo esc_html(__('Amount Copied!', 'sargapay')) ?></p>
+                    </div>
+                </div>
 
-                // Amount Button     
-                echo    "<div id='copy_modal_amount' class='modal_tk_plugin'>
-                                <div class='modal_tk_plugin_content'>
-                                    <span class='close_tk_plugin'>&times;</span>
-                                    <p style='text-align:center;'>" . esc_html(__('Amount Copied!', 'sargapay')) . "</p>
-                                </div>
-                            </div>";
-
-                echo    '<p style="text-align: center;"><b>' . esc_html(__('ADA Total', 'sargapay')) . '</b><br><span id="pay_amount_span_field_tk_plugin">' . esc_html($total_ada) . '</span></p>' .
-                    "<div style='display:flex; justify-content: space-evenly; margin:15px;'>
-                                <button class='button' id='pay_add_button_field_tk_plugin'>" . esc_html(__('Copy Payment Address', 'sargapay')) . "</button><button class='button' id='pay_amount_button_field_tk_plugin'>" . esc_html(__('Copy Amount', 'sargapay')) . "</button>
-                            </div>";
-
+                <p style="text-align: center;">
+                    <b><?php echo esc_html(__('ADA Total', 'sargapay')) ?></b><br>
+                    <span id="pay_amount_span_field_tk_plugin"><?php echo esc_html($total_ada) ?></span>
+                </p>
+                <div style='display:flex; justify-content: space-evenly; margin:15px;'>
+                    <button class='button' id='pay_add_button_field_tk_plugin'>
+                        <?php echo esc_html(__('Copy Payment Address', 'sargapay')) ?>
+                    </button>
+                    <button class='button' id='pay_amount_button_field_tk_plugin'>
+                        <?php echo esc_html(__('Copy Amount', 'sargapay')) ?>
+                    </button>
+                </div>
+<?php
                 // SEND EMAIL  
                 // Create QR PNG FILE
                 $url_img = $qr->QR_URL($payment_address);

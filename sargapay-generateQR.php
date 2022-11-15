@@ -54,9 +54,12 @@ class Sargapay_GenerateQR
     {
         try {
             $url = WP_CONTENT_DIR . "/uploads/$payAdress.png";
-            $im = (new QRCode($this->options))->render($payAdress, $url);
-            return  "<div style='display:flex; justify-content:center; padding:10px 0; '><img style='width:10vw;
-            height: 10vw;' src=" . $im . " /></div>";
+            (new QRCode($this->options))->render($payAdress, $url);
+?>
+            <div style="display:flex; justify-content:center; padding:10px 0;">
+                <img style="width:10vw; height: 10vw;" src="<?php esc_url($url) ?>" />
+            </div>
+<?php
         } catch (Throwable $e) {
             exit($e->getMessage());
         }
@@ -67,7 +70,7 @@ class Sargapay_GenerateQR
         try {
             $url = WP_CONTENT_DIR . "/uploads/$payAdress.png";
             if (!file_exists($url)) {
-                $im = (new QRCode($this->options))->render($payAdress, $url);
+                (new QRCode($this->options))->render($payAdress, $url);
             }
             return $url;
         } catch (Throwable $e) {
