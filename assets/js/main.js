@@ -172,8 +172,8 @@ function sargapay_gen_extra_fields() {
     const ap_k_test = document.getElementById('woocommerce_sargapay_blockfrost_test_key');
     let pay_address_mainet = null;
     let pay_address_testnet = null;
-    if (ap_k_main) show_p(ap_k_main);
-    if (ap_k_test) show_p(ap_k_test);
+    if (ap_k_main) sargapay_show_p(ap_k_main);
+    if (ap_k_test) sargapay_show_p(ap_k_test);
     if (input) {
         // Show Password btn        
         sargapay_show_p(input);

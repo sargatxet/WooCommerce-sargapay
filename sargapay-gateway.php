@@ -352,7 +352,7 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
                     $errors = 1;
                 }
                 $errors = $this->check_API_KEY($_POST['woocommerce_sargapay_testmode'], $_POST['woocommerce_sargapay_blockfrost_test_key']);
-            }            
+            }
             return $errors === 0;
         }
         return false;
@@ -368,24 +368,31 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
             $url = "https://cardano-mainnet.blockfrost.io/api/v0/";
             $network = "MAINNET";
         }
-        // API KEY TEST
-        $apicall = curl_init();
-        curl_setopt($apicall, CURLOPT_URL, $url);
-        curl_setopt($apicall, CURLOPT_HTTPHEADER, array(
-            'project_id: ' . $apikey,
-        ));
-        curl_setopt($apicall, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($apicall, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        $result = json_decode(curl_exec($apicall), true);
-        if (!$result) {
+
+        $headers = array('project_id' => $apikey, 'Content-Type' => 'application/json',);
+
+        $args = array(
+            'body'        => array(),
+            'timeout'     => '5',
+            'redirection' => '5',
+            'httpversion' => '1.0',
+            'blocking'    => true,
+            'headers'     => $headers,
+            'cookies'     => array(),
+        );
+
+        $response  = wp_remote_get($url, $args);
+        $body      = wp_remote_retrieve_body($response);
+        $body_json = json_decode($body);
+        
+        if (!isset($body_json->version)) {
             // API CALL CONECTION FAILED
             WC_Admin_Settings::add_error(__('Error: Connection Failed', 'sargapay'));
             return 1;
         }
-        curl_close($apicall);
-        if (isset($result["status_code"])) {
+        if (isset($body_json->status_code)) {
             // ERROR API CALL
-            WC_Admin_Settings::add_error($network . " API KEY Code: " . $result["status_code"] . " Error: " . $result["error"] . " Message: " . $result["message"]);
+            WC_Admin_Settings::add_error($network . " API KEY Code: " . $body_json->status_code . " Error: " . $body_json->error . " Message: " . $body_json->message);
             return 1;
         }
         return 0;
@@ -414,11 +421,11 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
             if (!is_numeric($cryptoMarkupPercent)) {
                 $cryptoMarkupPercent = 0.0;
             }
-            $cryptoMarkup = $cryptoMarkupPercent / 100.0;            
-            $cryptoPriceRatio = 1.0 + $cryptoMarkup;            
+            $cryptoMarkup = $cryptoMarkupPercent / 100.0;
+            $cryptoPriceRatio = 1.0 + $cryptoMarkup;
             $fiat = $data['cardano'][array_key_first($data['cardano'])];
             $fiat_total_order = WC()->cart->get_totals()["total"];
-            $cryptoTotalPreMarkup = round($fiat_total_order / $fiat, 6, PHP_ROUND_HALF_UP);            
+            $cryptoTotalPreMarkup = round($fiat_total_order / $fiat, 6, PHP_ROUND_HALF_UP);
             $total_ada = number_format((float)($cryptoTotalPreMarkup * $cryptoPriceRatio), 6, '.', '');
 
             echo "<p>$instrucciones</p>";
@@ -467,11 +474,11 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
             if (!is_numeric($cryptoMarkupPercent)) {
                 $cryptoMarkupPercent = 0.0;
             }
-            $cryptoMarkup = $cryptoMarkupPercent / 100.0;            
-            $cryptoPriceRatio = 1.0 + $cryptoMarkup;            
+            $cryptoMarkup = $cryptoMarkupPercent / 100.0;
+            $cryptoPriceRatio = 1.0 + $cryptoMarkup;
             $fiat = $data['cardano'][array_key_first($data['cardano'])];
             $fiat_total_order = WC()->cart->get_totals()["total"];
-            $cryptoTotalPreMarkup = round($fiat_total_order / $fiat, 6, PHP_ROUND_HALF_UP);            
+            $cryptoTotalPreMarkup = round($fiat_total_order / $fiat, 6, PHP_ROUND_HALF_UP);
             $total_ada = number_format((float)($cryptoTotalPreMarkup * $cryptoPriceRatio), 6, '.', '');
 
             // Get xpub from settings                
