@@ -17,27 +17,27 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-function view_order_cancel_notice($order_id)
+function sargapay_view_order_cancel_notice($order_id)
 {
     //add pending status and show confirmations
     $order = wc_get_order($order_id);
-    if ($order->get_payment_method() === "sargapay-plugin") {
+    if ($order->get_payment_method() === "sargapay") {
         if (
             $order->get_status() === "on-hold"
         ) {
             global $wpdb;
-            $table = $wpdb->prefix . "wc_sarga_address";
+            $table = $wpdb->prefix . "wc_sargapay_address";
             $query_address = $wpdb->get_results("SELECT pay_address, order_amount, testnet FROM $table WHERE order_id=$order_id");
             //LOG ERROR DB
             if ($wpdb->last_error) {
                 //LOG Error             
                 write_log($wpdb->last_error);
             } else if (count($query_address) === 0) {
-                echo "<p>" . __('ERROR PLEASE CONTACT THE ADMIN TO PROCCED WITH THE ORDER', 'sargapay-plugin') . "</p>";
+                echo "<p>" . __('ERROR PLEASE CONTACT THE ADMIN TO PROCCED WITH THE ORDER', 'sargapay') . "</p>";
                 write_log("Emprty Query result in account page order");
             } else {
                 if ($query_address[0]->testnet) {
-                    $testnet_msg  = esc_html(__("BE AWARE THIS IS A TESTNET PAYMENT ADDRESS", 'sargapay-plugin'));
+                    $testnet_msg  = esc_html(__("BE AWARE THIS IS A TESTNET PAYMENT ADDRESS", 'sargapay'));
                     echo "<p style='background:red; font-weight:bold; color:white; text-align:center;'> $testnet_msg </p>";
                 }
                 // Get order amount in ada
@@ -47,18 +47,18 @@ function view_order_cancel_notice($order_id)
                 $date_created_dt = $order->get_date_created();
                 // Get the timestamp in seconds
                 $date_created_ts = $date_created_dt->getTimestamp();                
-                $text = esc_html(__("Time left to make the payment ", 'sargapay-plugin'));
+                $text = esc_html(__("Time left to make the payment ", 'sargapay'));
                 $qr = GenerateQR::getInstance();
                 echo '<p style="text-align: center;">' . $text . '</p>';
                 echo "<p id='sarga-timestamp' style='display:none;'>$date_created_ts</p>";
                 echo '<p id="sarga-countdown" style="text-align: center;"></p>';
-                echo '<p style="text-align: center;"><b>' . esc_html(__('Payment Address', 'sargapay-plugin')) . '</b><br><span id="pay_add_p_field_tk_plugin">' . $payment_address . "</span>" .
+                echo '<p style="text-align: center;"><b>' . esc_html(__('Payment Address', 'sargapay')) . '</b><br><span id="pay_add_p_field_tk_plugin">' . $payment_address . "</span>" .
                     $qr->generate($payment_address) .
                     '</p>';
-                echo '<p style="text-align: center;"><b>' . esc_html(__('Total ADA', 'sargapay-plugin')) . '</b><br><span id="pay_amount_span_field_tk_plugin">' . $total_ada . '</span></p>';
+                echo '<p style="text-align: center;"><b>' . esc_html(__('Total ADA', 'sargapay')) . '</b><br><span id="pay_amount_span_field_tk_plugin">' . $total_ada . '</span></p>';
 
                 #Hotwallets
-                echo    "<h4 style='text-align:center; font-weight:bold;'>" . esc_html(__('Pay Now', 'sargapay-plugin')) . "</h4>";
+                echo    "<h4 style='text-align:center; font-weight:bold;'>" . esc_html(__('Pay Now', 'sargapay')) . "</h4>";
                 echo    "<div id='loader-container'>
                                 <div class='lds-ellipsis'>
                                     <div></div>
@@ -83,7 +83,7 @@ function view_order_cancel_notice($order_id)
         } else if (
             $order->get_status() === "cancelled"
         ) {
-            echo esc_html(__("24 hours have passed and your order was canceled, the payment address is no longer valid.", 'sargapay-plugin'));
+            echo esc_html(__("24 hours have passed and your order was canceled, the payment address is no longer valid.", 'sargapay'));
         }
     }
 }

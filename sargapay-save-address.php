@@ -17,19 +17,19 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-function save_address()
+function sargapay_save_address()
 {
     $addresses  = isset($_POST['addresses']) ? $_POST['addresses'] : false;
     $action_type = isset($_POST['action_type']) ? $_POST['action_type'] : false;
     if (wp_doing_ajax()) {
         if (isset($_POST['action_type'])) {
-            $xpub = WC()->payment_gateways->payment_gateways()['sargapay-plugin']->mpk;
+            $xpub = WC()->payment_gateways->payment_gateways()['sargapay']->mpk;
             // 0=TESTNET 1=MAINNET
-            $testmode = WC()->payment_gateways->payment_gateways()['sargapay-plugin']->testmode == 1 ? 1 : 0;
+            $testmode = WC()->payment_gateways->payment_gateways()['sargapay']->testmode == 1 ? 1 : 0;
             $network = $testmode == 1 ? $network = 0 : $network = 1;
             // wpdb call to check address index
             global $wpdb;
-            $table = $wpdb->prefix . "wc_sarga_address";
+            $table = $wpdb->prefix . "wc_sargapay_address";
             $last_index_response = $wpdb->get_results("SELECT address_index FROM $table WHERE testnet=$testmode AND mpk='$xpub' ORDER BY id DESC LIMIT 1");
             if ($wpdb->last_error) {
                 //LOG Error
@@ -58,7 +58,7 @@ function save_address()
                 } else if ($action_type == "save_address") {
                     if (!$addresses) {
                         write_log("Empty request in get_xpub ajax call");
-                        wp_send_json(__('Error no request sent :(', 'sargapay-plugin'));
+                        wp_send_json(__('Error no request sent :(', 'sargapay'));
                     } else {
                         if (count($addresses) >= 1) {
                             if ($last_index != 0) {
@@ -93,7 +93,7 @@ function save_address()
                                     $last_index += 1;
                                 }
                             }
-                            wp_send_json(__(' Adresses Generated and Saved in Database.', 'sargapay-plugin'));
+                            wp_send_json(__(' Adresses Generated and Saved in Database.', 'sargapay'));
                         }
                     }
                 }

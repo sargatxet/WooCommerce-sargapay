@@ -15,13 +15,13 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-import { generate_payment_address } from "./gen_address.js"
+import { sargapay_generate_payment_address } from "./gen_address.js"
 
-window.onload = () => wp_gen()
+window.onload = () => sargapay_gen()
 
-copy_text()
+sargapay_copy_text()
 
-function copy_text() {
+function sargapay_copy_text() {
     // Copy Address
     if (
         document.getElementById("pay_add_p_field_tk_plugin") &&
@@ -73,14 +73,14 @@ function copy_text() {
     }
 }
 
-function wp_gen() {
+function sargapay_gen() {
     //Get How many addresses have left
     const unused = null
     jQuery.ajax({
         type: "post",
-        url: wp_ajax_save_address_vars.ajax_url,
+        url: wp_ajax_sargapay_save_address_vars.ajax_url,
         data: {
-            action: "save_address",
+            action: "sargapay_save_address",
             action_type: "get_unused",
         },
         error: function(response) {
@@ -106,22 +106,22 @@ function wp_gen() {
             }
             // IF you have less than 20 unused address you will generate a new one
             if (parseInt(unused) < 20) {
-                wp_add_index(xpub, lastIndex, testnet)
+                sargapay_add_index(xpub, lastIndex, testnet)
             }
         },
     })
 }
 
-function wp_add_index(xpub, lastIndex, testnet) {
+function sargapay_add_index(xpub, lastIndex, testnet) {
     // Generate New Address
-    const address = generate_payment_address(xpub, lastIndex, 1, testnet)
+    const address = sargapay_generate_payment_address(xpub, lastIndex, 1, testnet)
         // Save New Address on DB
     if (address.length > 0 && !address[0].includes("Error:")) {
         jQuery.ajax({
             type: "post",
-            url: wp_ajax_save_address_vars.ajax_url,
+            url: wp_ajax_sargapay_save_address_vars.ajax_url,
             data: {
-                action: "save_address",
+                action: "sargapay_save_address",
                 addresses: address,
                 action_type: "save_address",
             },

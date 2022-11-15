@@ -23,26 +23,26 @@
  * Add Warning header if testmode is on
  **/
 
-function plugin_thank_you_text($thank_you_title, $order)
+function sargapay_thank_you_text($thank_you_title, $order)
 {
     if (isset($order)) {
-        if ($order->get_payment_method() === "sargapay-plugin") {
-            $message = '<div style="font-weight:bold; text-align:center; color:white; background:black;">' . esc_html(__('Remember that you have 24 hours to pay for your order before it\'s automatically canceled.', 'sargapay-plugin')) . '</div>';
+        if ($order->get_payment_method() === "sargapay") {
+            $message = '<div style="font-weight:bold; text-align:center; color:white; background:black;">' . esc_html(__('Remember that you have 24 hours to pay for your order before it\'s automatically canceled.', 'sargapay')) . '</div>';
             $order_id = $order->get_id();
             global $wpdb;
-            $table = $wpdb->prefix . "wc_sarga_address";
+            $table = $wpdb->prefix . "wc_sargapay_address";
             $query_address = $wpdb->get_results("SELECT pay_address, order_amount, testnet FROM $table WHERE order_id=$order_id");
             //ERROR DB
             if ($wpdb->last_error) {
                 //LOG Error             
                 write_log($wpdb->last_error);
             } else if (count($query_address) === 0) {
-                $message = "<p>" . esc_html(__('ERROR PLEASE CONTACT ADMIN TO PROCCED WITH THE ORDER', 'sargapay-plugin')) . "</p>";
+                $message = "<p>" . esc_html(__('ERROR PLEASE CONTACT ADMIN TO PROCCED WITH THE ORDER', 'sargapay')) . "</p>";
                 write_log("ERROR DB query empty in Thank You Page ");
                 return $thank_you_title . "<br>" . $message . '<br><br>';
             } else {
                 if ($query_address[0]->testnet) {
-                    $testnet_msg  = esc_html(__("BE AWARE THIS IS A TESTNET PAYMENT ADDRESS", 'sargapay-plugin'));
+                    $testnet_msg  = esc_html(__("BE AWARE THIS IS A TESTNET PAYMENT ADDRESS", 'sargapay'));
                     echo "<p style='background:red; font-weight:bold; color:white; text-align:center;'> $testnet_msg </p>";
                 }
                 // Get order amount in ada
@@ -54,19 +54,19 @@ function plugin_thank_you_text($thank_you_title, $order)
                 echo    "<div id='copy_modal' class='modal_tk_plugin'>
                                 <div class='modal_tk_plugin_content'>
                                     <span class='close_tk_plugin'>&times;</span>
-                                    <p style='text-align:center;'>" . esc_html(__('Payment Address Copied!', 'sargapay-plugin')) . "</p>
+                                    <p style='text-align:center;'>" . esc_html(__('Payment Address Copied!', 'sargapay')) . "</p>
                                 </div>
                             </div>";
 
                 echo    "<div style='text-align:center; font-weight:bold;'>
-                                <h4>" . esc_html(__('Payment Address', 'sargapay-plugin')) . "</h4>
+                                <h4>" . esc_html(__('Payment Address', 'sargapay')) . "</h4>
                                 <p id='pay_add_p_field_tk_plugin' style='width:100%; overflow-wrap:anywhere;'>" . esc_html($payment_address) . "</p>"
                     . $qr->generate($payment_address) .
                     '</div>';
 
                 # Hot Wallets    
                 #Header
-                echo    "<h4 style='text-align:center; font-weight:bold;'>" . esc_html(__('Pay Now', 'sargapay-plugin')) . "</h4>";
+                echo    "<h4 style='text-align:center; font-weight:bold;'>" . esc_html(__('Pay Now', 'sargapay')) . "</h4>";
                 # Loader
                 echo    "<div id='loader-container'>
                                 <div class='lds-ellipsis'>
@@ -94,13 +94,13 @@ function plugin_thank_you_text($thank_you_title, $order)
                 echo    "<div id='copy_modal_amount' class='modal_tk_plugin'>
                                 <div class='modal_tk_plugin_content'>
                                     <span class='close_tk_plugin'>&times;</span>
-                                    <p style='text-align:center;'>" . esc_html(__('Amount Copied!', 'sargapay-plugin')) . "</p>
+                                    <p style='text-align:center;'>" . esc_html(__('Amount Copied!', 'sargapay')) . "</p>
                                 </div>
                             </div>";
 
-                echo    '<p style="text-align: center;"><b>' . esc_html(__('ADA Total', 'sargapay-plugin')) . '</b><br><span id="pay_amount_span_field_tk_plugin">' . esc_html($total_ada) . '</span></p>' .
+                echo    '<p style="text-align: center;"><b>' . esc_html(__('ADA Total', 'sargapay')) . '</b><br><span id="pay_amount_span_field_tk_plugin">' . esc_html($total_ada) . '</span></p>' .
                     "<div style='display:flex; justify-content: space-evenly; margin:15px;'>
-                                <button class='button' id='pay_add_button_field_tk_plugin'>" . esc_html(__('Copy Payment Address', 'sargapay-plugin')) . "</button><button class='button' id='pay_amount_button_field_tk_plugin'>" . esc_html(__('Copy Amount', 'sargapay-plugin')) . "</button>
+                                <button class='button' id='pay_add_button_field_tk_plugin'>" . esc_html(__('Copy Payment Address', 'sargapay')) . "</button><button class='button' id='pay_amount_button_field_tk_plugin'>" . esc_html(__('Copy Amount', 'sargapay')) . "</button>
                             </div>";
 
                 // SEND EMAIL  
@@ -108,7 +108,7 @@ function plugin_thank_you_text($thank_you_title, $order)
                 $url_img = $qr->QR_URL($payment_address);
                 // Email config
                 $email = $order->get_billing_email();
-                $subject = __("Payment Instructions ", 'sargapay-plugin') . get_bloginfo('name');
+                $subject = __("Payment Instructions ", 'sargapay') . get_bloginfo('name');
                 $file_name = $payment_address . ".png";
                 $testnet_bool = $query_address[0]->testnet;
                 // Email Sent                   

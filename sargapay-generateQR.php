@@ -21,7 +21,7 @@ use chillerlan\QRCode\{QRCode, QROptions};
 
 require_once('vendor/autoload.php');
 
-class GenerateQR
+class Sargapay_GenerateQR
 {
     private $options;
 

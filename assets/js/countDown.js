@@ -17,7 +17,7 @@
 */
 
 //CountDown
-const countDown = setInterval(() => {
+const sargapay_countDown = setInterval(() => {
     try {
         // Get when the order was made timestamp
         const p_timestamp = document.getElementById('sarga-timestamp')
@@ -39,7 +39,7 @@ const countDown = setInterval(() => {
         // If the count down is finished, write some text
         if (distance < 0) {
             //|| distance > (24 * 60 * 60)) 
-            clearInterval(countDown);
+            clearInterval(sargapay_countDown);
             document.getElementById("sarga-countdown").innerHTML = "EXPIRED";
         } else {
             // Display CountDown

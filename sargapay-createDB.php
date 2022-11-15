@@ -17,10 +17,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-function SARGAPAY_create_address_table()
+function sargapay_create_address_table()
 {
     global $wpdb;
-    $tableName = $wpdb->prefix . 'wc_sarga_address';
+    $tableName = $wpdb->prefix . 'wc_sargapay_address';
 
     $query = "CREATE TABLE IF NOT EXISTS `$tableName`
         (

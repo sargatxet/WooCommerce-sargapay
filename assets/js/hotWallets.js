@@ -27,28 +27,28 @@ let noWalletText = 'Cardano Wallet Not Found!'
 let unknowText = 'Something Went Wrong!'
 let paidText = 'Paid'
 let wrongNetworkText = 'Wrong Network, Please Select the Correct Network'
-if (wp_ajax_nopriv_get_settings_vars) {
-    noWalletText = wp_ajax_nopriv_get_settings_vars.noWallet_txt
-    unknowText = wp_ajax_nopriv_get_settings_vars.unknow_txt
-    paidText = wp_ajax_nopriv_get_settings_vars.paid_txt
-    wrongNetworkText = wp_ajax_nopriv_get_settings_vars.error_wrong_network_txt
+if (wp_ajax_nopriv_sargapay_get_settings_vars) {
+    noWalletText = wp_ajax_nopriv_sargapay_get_settings_vars.noWallet_txt
+    unknowText = wp_ajax_nopriv_sargapay_get_settings_vars.unknow_txt
+    paidText = wp_ajax_nopriv_sargapay_get_settings_vars.paid_txt
+    wrongNetworkText = wp_ajax_nopriv_sargapay_get_settings_vars.error_wrong_network_txt
 }
 
-const showLoader = () => {
+const sargapay_showLoader = () => {
     const body = document.getElementsByTagName("body")
     body[0].style.overflow = "hidden"
     const loader = document.getElementById("loader-container")
     loader.style.display = "flex"
 }
 
-const hideLoader = () => {
+const sargapay_hideLoader = () => {
     const body = document.getElementsByTagName("body")
     body[0].style.overflow = ""
     const loader = document.getElementById("loader-container")
     loader.style.display = "none"
 }
 
-const walletAPI = async(apikey, network, walllet = "nami") => {
+const sargapay_walletAPI = async(apikey, network, walllet = "nami") => {
     try {
         const addr_p = document.getElementById("pay_add_p_field_tk_plugin")
         const amount_span = document.getElementById("pay_amount_span_field_tk_plugin")
@@ -61,7 +61,7 @@ const walletAPI = async(apikey, network, walllet = "nami") => {
         const lucid = await Lucid.new(new Blockfrost(url, apikey), net)
 
         if (window.cardano[walllet]) {
-            showLoader()
+            sargapay_showLoader()
             const api = await window.cardano[walllet].enable()
 
             lucid.selectWallet(api)
@@ -71,7 +71,7 @@ const walletAPI = async(apikey, network, walllet = "nami") => {
                 .payToAddress(address, { lovelace: amount })
                 .complete()
 
-            hideLoader()
+            sargapay_hideLoader()
 
             const signedTx = await tx.sign().complete()
 
@@ -87,7 +87,7 @@ const walletAPI = async(apikey, network, walllet = "nami") => {
                 html: `txHash <a href="${explorerUrl}${txHash}" target="__blank">${txHash}</a>`
             })
         } else {
-            hideLoader()
+            sargapay_hideLoader()
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -96,7 +96,7 @@ const walletAPI = async(apikey, network, walllet = "nami") => {
         }
     } catch (error) {
         let errorText = unknowText
-        hideLoader()
+        sargapay_hideLoader()
         console.log(error)
         if (error.hasOwnProperty("info")) {
             console.log(error.info)
@@ -115,15 +115,15 @@ const walletAPI = async(apikey, network, walllet = "nami") => {
 
 
 
-const sendAda = async wallet => {
+const sargapay_sendAda = async wallet => {
     try {
         // TODO: Get Apikey and Network
         jQuery.ajax({
             type: "post",
-            url: wp_ajax_nopriv_get_settings_vars.is_user_logged_in == "1" ?
-                wp_ajax_save_address_vars.ajax_url : wp_ajax_nopriv_get_settings_vars.ajax_url,
+            url: wp_ajax_nopriv_sargapay_get_settings_vars.is_user_logged_in == "1" ?
+                wp_ajax_sargapay_save_address_vars.ajax_url : wp_ajax_nopriv_sargapay_get_settings_vars.ajax_url,
             data: {
-                action: "get_settings_vars",
+                action: "sargapay_get_settings_vars",
             },
             error: function(response) {
                 console.log(response)
@@ -134,7 +134,7 @@ const sendAda = async wallet => {
                 })
             },
             success: function(response) {
-                walletAPI(response.apikey, response.network, wallet)
+                sargapay_walletAPI(response.apikey, response.network, wallet)
             },
         })
     } catch (error) {
@@ -156,7 +156,7 @@ const sendAda = async wallet => {
     }
 }
 
-const initHotWallets = () => {
+const sargapay_initHotWallets = () => {
     /**
      *  Wallets Supported
      *  Nami
@@ -166,18 +166,18 @@ const initHotWallets = () => {
 
     if (document.getElementById("hot_wallet_nami")) {
         const btn_nami = document.getElementById("hot_wallet_nami")
-        btn_nami.addEventListener("click", async e => await sendAda("nami"))
+        btn_nami.addEventListener("click", async e => await sargapay_sendAda("nami"))
     }
 
     if (document.getElementById("hot_wallet_flint")) {
         const btn_flint = document.getElementById("hot_wallet_flint")
-        btn_flint.addEventListener("click", async e => await sendAda("flint"))
+        btn_flint.addEventListener("click", async e => await sargapay_sendAda("flint"))
     }
 
     if (document.getElementById("hot_wallet_eternl")) {
         const btn_eternl = document.getElementById("hot_wallet_eternl")
-        btn_eternl.addEventListener("click", async e => await sendAda("eternl"))
+        btn_eternl.addEventListener("click", async e => await sargapay_sendAda("eternl"))
     }
 }
 
-initHotWallets()
+sargapay_initHotWallets()

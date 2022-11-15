@@ -52,7 +52,7 @@ function sargapay_settings_link($links)
     // Build and escape the URL.
     $url = esc_url(add_query_arg(
         array('page' =>
-        'wc-settings', 'tab' => 'checkout', 'section' => 'sargapay-plugin'),
+        'wc-settings', 'tab' => 'checkout', 'section' => 'sargapay'),
         get_admin_url() . 'admin.php'
     ));
     // Create the link.
