@@ -119,6 +119,7 @@ function sargapay_plugin_init_gateway_class()
     // Ajax Admin Panel
     if (is_admin()) {
         add_action('admin_enqueue_scripts', 'sargapay_admin_load_gen_addressjs');
+        add_action('admin_enqueue_styles',  'sargapay_admin_load_styles');
         add_action('wp_ajax_save_address', 'sargapay_save_address');
     }
 
@@ -144,6 +145,7 @@ function sargapay_plugin_init_gateway_class()
     {
         wp_register_style('wallet_btn', plugins_url('/assets/css/walletsBtns.css', __FILE__));
         wp_register_style('modals_thanks', plugins_url('/assets/css/modalThankYou.css', __FILE__));
+        wp_register_style('sargapay_admin_styles', plugin_url('/assets/css/adminStyles.css', __FILE__));
     }
 
 
@@ -156,6 +158,11 @@ function sargapay_plugin_init_gateway_class()
         if ((is_checkout() && !empty(is_wc_endpoint_url('order-received'))) || is_account_page()) {
             wp_enqueue_style('wallet_btn');
         }
+    }
+
+    function sargapay_admin_load_styles()
+    {
+        wp_enqueue_style('sargapay_admin_styles');
     }
 
     // Load JS to Gen Cardano Address
@@ -213,7 +220,7 @@ function sargapay_plugin_init_gateway_class()
 
     // Load JS to Gen Cardano Address when a loged in user visit the site
     function sargapay_load_wp_gen_address()
-    {        
+    {
 
         wp_print_script_tag(
             array(
@@ -237,7 +244,7 @@ function sargapay_plugin_init_gateway_class()
             'error_wrong_network_txt' => esc_html(__('Wrong Network, Please Select the Correct Network', 'sargapay-plugin'))
         ));
 
-        if ((is_checkout() && !empty(is_wc_endpoint_url('order-received'))) || is_account_page()) {           
+        if ((is_checkout() && !empty(is_wc_endpoint_url('order-received'))) || is_account_page()) {
             wp_print_script_tag(
                 array(
                     'id' => 'wp_sarga_hot_wallets',
@@ -246,7 +253,7 @@ function sargapay_plugin_init_gateway_class()
                     'type' => 'module'
                 )
             );
-            
+
             wp_print_script_tag(
                 array(
                     'id' => 'wp_sarga_alerts',
