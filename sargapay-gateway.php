@@ -400,8 +400,9 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
 
     public function payment_fields()
     {
-        // Get supported currencies 
-        $supported_currencies = json_decode(file_get_contents('https://api.coingecko.com/api/v3/simple/supported_vs_currencies'), true);
+        // Get supported currencies
+        $request = wp_remote_retrieve_body(wp_remote_get('https://api.coingecko.com/api/v3/simple/supported_vs_currencies'));
+        $supported_currencies = json_decode($request, true);
         // check if the wc currency is supported if is not we remplace it with the plugin options currency            
         if (in_array(strtolower(get_woocommerce_currency()), $supported_currencies)) {
             $currency = get_woocommerce_currency();
@@ -410,7 +411,8 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
             $currency = $this->currency;
             $currency === "USD" ? $symbol = "$" : $symbol = "€";
         }
-        $data = json_decode(file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=' . $currency), true);
+        $request = wp_remote_retrieve_body(wp_remote_get('https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=' . $currency));
+        $data = json_decode($request, true);
         if (count($data) == 1) {
             if ($this->testmode) {
                 echo "<h3 style='text-align:center; background:red; color:white; font-weight:bold;'>" . __("TEST MODE", 'sargapay') . "</h3>";
@@ -460,14 +462,16 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
         // GENERATE PAYMENT ADDRESS
         $total_ada = 0;
         // Get supported currencies 
-        $supported_currencies = json_decode(file_get_contents('https://api.coingecko.com/api/v3/simple/supported_vs_currencies'), true);
+        $request = wp_remote_retrieve_body(wp_remote_get('https://api.coingecko.com/api/v3/simple/supported_vs_currencies'));
+        $supported_currencies = json_decode($request, true);
         // check if the wc currency is supported if is not we remplace it with the plugin options currency            
         if (in_array(strtolower(get_woocommerce_currency()), $supported_currencies)) {
             $currency = get_woocommerce_currency();
         } else {
             $currency = $this->currency;
         }
-        $data = json_decode(file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=' . $currency), true);
+        $request = wp_remote_retrieve_body(wp_remote_get('https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=' . $currency));
+        $data = json_decode($request, true);
         if (count($data) == 1) {
 
             $cryptoMarkupPercent = $this->markup;
