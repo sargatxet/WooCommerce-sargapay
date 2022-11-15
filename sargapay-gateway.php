@@ -384,7 +384,7 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
         $response  = wp_remote_get($url, $args);
         $body      = wp_remote_retrieve_body($response);
         $body_json = json_decode($body);
-        
+
         if (!isset($body_json->version)) {
             // API CALL CONECTION FAILED
             WC_Admin_Settings::add_error(__('Error: Connection Failed', 'sargapay'));
