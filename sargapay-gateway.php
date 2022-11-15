@@ -315,7 +315,7 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-<?php               } else {
+            <?php               } else {
                     echo '<p>' . __('No orders done yet with this gateway', 'sargapay') . '</p>';
                 }
             }
@@ -433,16 +433,22 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
             $fiat_total_order = WC()->cart->get_totals()["total"];
             $cryptoTotalPreMarkup = round($fiat_total_order / $fiat, 6, PHP_ROUND_HALF_UP);
             $total_ada = number_format((float)($cryptoTotalPreMarkup * $cryptoPriceRatio), 6, '.', '');
-
-            echo "<p>$instrucciones</p>";
-            echo "<div style='text-align:center;'>";
-            echo "<p>" . __("Currency", 'sargapay') . " = " . $currency . "</p>";
-            echo "<p>" . __("ADA Price", 'sargapay') . " = $symbol $fiat</p>";
-            echo "<p>" . __("ADA Total", 'sargapay') . " = " . $total_ada . "*</p>";
-            echo "</div>";
-            echo "<p style='text-align: center; font-size:1rem'>* " . __("ADA exchange rate is calculated at the time the order is made", 'sargapay') . "</p>";
+            ?>
+            <p><?php echo esc_html($instrucciones); ?></p>
+            <div style='text-align:center;'>
+                <p><?php echo __("Currency", 'sargapay') . " = " . esc_html($currency); ?></p>
+                <p><?php echo __("ADA Price", 'sargapay') . " = " . esc_html($symbol) . " " . esc_html($fiat); ?></p>
+                <p><?php echo __("ADA Total", 'sargapay') . " = " . esc_html($total_ada); ?>*</p>
+            </div>
+            <p style='text-align: center; font-size:1rem'>
+                <?php echo "* " . __("ADA exchange rate is calculated at the time the order is made", 'sargapay') ?>
+            </p>
+        <?php
         } else {
-            echo "<br>" . __("Contact the admin to provide you with a payment address.", 'sargapay');
+        ?>
+
+            <br><?php echo __("Contact the admin to provide you with a payment address.", 'sargapay'); ?>
+<?php
         }
     }
 
