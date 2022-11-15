@@ -193,7 +193,7 @@ function sargapay_plugin_init_gateway_class()
 
         if ((is_checkout() && !empty(is_wc_endpoint_url('order-received'))) || is_account_page()) {
             wp_enqueue_script('wp_sarga_hot_wallets', plugins_url('assets/js/hotWallets.js', __FILE__), array('jquery'));
-            wp_enqueue_script('wp_sarga_alerts', "//cdn.jsdelivr.net/npm/sweetalert2@11", array('jquery'));
+            wp_enqueue_script('wp_sarga_alerts', plugins_url('assets/js/sweetalert2.all.min.js', __FILE__), array('jquery'));
         }
 
         if(is_account_page()) {
