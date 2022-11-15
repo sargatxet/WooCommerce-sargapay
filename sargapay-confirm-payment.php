@@ -131,7 +131,7 @@ class Sargapay_ConfirmPayment
         $result = new stdClass;
         // First Api call to see if address is in cardano blockchain
         $url = $url_network . 'addresses/' . $payment_address;
-        $response_data = $this->curl_api_call($url, $api_key);
+        $response_data = $this->sargapay_api_call($url, $api_key);
         // Check if the api key
         if (isset($response_data->status_code)) {
             // 404 Error means there is not register on blockchain
@@ -149,7 +149,7 @@ class Sargapay_ConfirmPayment
             if ($has_ada) {
                 // Get all Transactions  
                 $url = $url_network . 'addresses/' . $payment_address . '/transactions?order=desc';
-                $response_data = $this->curl_api_call($url, $api_key);
+                $response_data = $this->sargapay_api_call($url, $api_key);
                 // Api Return tx_hash - Hash de la transacción                               
                 // loop for every transaction to get tx hash
                 // Iterar cada transacción para obtener el hash 
@@ -157,20 +157,20 @@ class Sargapay_ConfirmPayment
                     // Get Block for each transactions 
                     // Obtenemos el bloque de cada transacción
                     $url = $url_network . 'txs/' . $key->tx_hash;
-                    $response_data = $this->curl_api_call($url, $api_key);
+                    $response_data = $this->sargapay_api_call($url, $api_key);
                     // get the time each block was created
                     // obtener el tiempo de creación de los bloques
                     $url = $url_network . 'blocks/' . $response_data->block;
-                    $response_data = $this->curl_api_call($url, $api_key);
+                    $response_data = $this->sargapay_api_call($url, $api_key);
                     $confirmations = $response_data->confirmations;
                     // Check if the transaction was made after the order
                     // Revisa si la transacción fue hecha despues de la orden                
                     if ($order_was_made <= $response_data->time) {
                         $url = $url_network . 'txs/' . $key->tx_hash . "/utxos";
-                        $response_data = $this->curl_api_call($url, $api_key);
+                        $response_data = $this->sargapay_api_call($url, $api_key);
                         $internal_deposit = false;
                         // Loop for each input to find if the imput came from the same wallet
-                        foreach ($response_data->inputs as $key) {                            
+                        foreach ($response_data->inputs as $key) {
                             if (
                                 $key->address === $payment_address ||
                                 $stake_key === substr($key->address, 53, -6) ||
@@ -185,11 +185,11 @@ class Sargapay_ConfirmPayment
                             // iterar cada salida para encontrar los depositos a la dirección de pago 
                             foreach ($response_data->outputs as $key) {
                                 if ($key->address === $payment_address) {
-                                    foreach($key->amount as $asset){
-                                        if($asset->unit === "lovelace"){
+                                    foreach ($key->amount as $asset) {
+                                        if ($asset->unit === "lovelace") {
                                             $transaction_amount += round(intval($asset->quantity) / 1000000, 6);
                                         }
-                                    }                                    
+                                    }
                                     // check if current amount is the same or more than the order amount
                                     // Revisar si el monto de las transacciones superan el de la orden                        
                                     if ($transaction_amount >= $payment_amount) {
@@ -212,17 +212,24 @@ class Sargapay_ConfirmPayment
         }
     }
 
-    function curl_api_call($url, $api_key)
+    function sargapay_api_call($url, $api_key)
     {
-        $curl_confirmations = curl_init();
-        curl_setopt($curl_confirmations, CURLOPT_URL, $url);
-        curl_setopt($curl_confirmations, CURLOPT_HTTPHEADER, array(
-            'project_id: ' . $api_key
-        ));
-        curl_setopt($curl_confirmations, CURLOPT_RETURNTRANSFER, true);
-        $curl_data = curl_exec($curl_confirmations);
-        $response_data = json_decode($curl_data);
-        curl_close($curl_confirmations);
-        return $response_data;
+        $headers = array('project_id' => $api_key, 'Content-Type' => 'application/json',);
+
+        $args = array(
+            'body'        => array(),
+            'timeout'     => '5',
+            'redirection' => '5',
+            'httpversion' => '1.0',
+            'blocking'    => true,
+            'headers'     => $headers,
+            'cookies'     => array(),
+        );
+
+        $response  = wp_remote_get($url, $args);
+        $body      = wp_remote_retrieve_body($response);
+        $body_json = json_decode($body);
+
+        return $body_json;
     }
 }
