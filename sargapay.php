@@ -110,9 +110,6 @@ function sargapay_plugin_init_gateway_class()
     // Add Settings link
     add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'sargapay_settings_link');
 
-    // Add Type Module to Javascript tags
-    add_filter('script_loader_tag', 'add_type_attribute', 10, 3);
-
     // Load Transalations
     add_action('init', 'sargapay_load_textdomain');
 
@@ -164,25 +161,74 @@ function sargapay_plugin_init_gateway_class()
     // Load JS to Gen Cardano Address
     function sargapay_admin_load_gen_addressjs()
     {
-        wp_enqueue_script('gen_addressjs', plugins_url('assets/js/main.js', __FILE__), array('jquery', 'cardano_serialization_lib', 'cardano_asm', 'cardano_lib_bg', 'bech32'));
-        wp_enqueue_script('cardano_serialization_lib', plugins_url('assets/js/cardano-serialization-lib-asmjs/cardano_serialization_lib.js', __FILE__), array('cardano_asm'));
-        wp_enqueue_script('cardano_asm', plugins_url('assets/js/cardano-serialization-lib-asmjs/cardano_serialization_lib.asm.js', __FILE__), array('cardano_lib_bg'));
-        wp_enqueue_script('cardano_lib_bg', plugins_url('assets/js/cardano-serialization-lib-asmjs/cardano_serialization_lib_bg.js', __FILE__), false);
-        wp_enqueue_script('bech32', plugins_url('assets/js/bech32.js', __FILE__), false);
-        wp_localize_script('gen_addressjs', 'wp_ajax_save_address_vars', array(
+        wp_localize_script('gen_addressjs', 'wp_ajax_sargapay_save_address_vars', array(
             'ajax_url' => admin_url('admin-ajax.php')
         ));
+
+        wp_print_script_tag(
+            array(
+                'id' => 'gen_addressjs',
+                'src' => esc_url(plugin_dir_url(__FILE__) . 'assets/js/main.js'),
+                'defer' => true,
+                'type' => 'module'
+            )
+        );
+
+        wp_print_script_tag(
+            array(
+                'id' => 'cardano_serialization_lib',
+                'src' => esc_url(plugin_dir_url(__FILE__) . 'assets/js/cardano-serialization-lib-asmjs/cardano_serialization_lib.js'),
+                'defer' => true,
+                'type' => 'module'
+            )
+        );
+
+        wp_print_script_tag(
+            array(
+                'id' => 'cardano_asm',
+                'src' => esc_url(plugin_dir_url(__FILE__) . 'assets/js/cardano-serialization-lib-asmjs/cardano_serialization_lib.asm.js'),
+                'defer' => true,
+                'type' => 'module'
+            )
+        );
+
+        wp_print_script_tag(
+            array(
+                'id' => 'cardano_lib_bg',
+                'src' => esc_url(plugin_dir_url(__FILE__) . 'assets/js/cardano-serialization-lib-asmjs/cardano_serialization_lib_bg.js'),
+                'defer' => true,
+                'type' => 'module'
+            )
+        );
+
+        wp_print_script_tag(
+            array(
+                'id' => 'bech32',
+                'src' => esc_url(plugin_dir_url(__FILE__) . 'assets/js/bech32.js'),
+                'defer' => true,
+                'type' => 'module'
+            )
+        );
     }
 
     // Load JS to Gen Cardano Address when a loged in user visit the site
     function sargapay_load_wp_gen_address()
-    {
-        wp_enqueue_script('wp_gen_address', plugins_url('assets/js/main_index.js', __FILE__), array('jquery', 'wp-i18n'));
-        wp_localize_script('wp_gen_address', 'wp_ajax_save_address_vars', array(
+    {        
+
+        wp_print_script_tag(
+            array(
+                'id' => 'wp_gen_address',
+                'src' => esc_url(plugin_dir_url(__FILE__) . 'assets/js/main_index.js'),
+                'defer' => true,
+                'type' => 'module'
+            )
+        );
+
+        wp_localize_script('wp_gen_address', 'wp_ajax_sargapay_save_address_vars', array(
             'ajax_url' => admin_url('admin-ajax.php')
         ));
 
-        wp_localize_script('wp_gen_address', 'wp_ajax_nopriv_get_settings_vars', array(
+        wp_localize_script('wp_gen_address', 'wp_ajax_nopriv_sargapay_get_settings_vars', array(
             'ajax_url' => admin_url('admin-ajax.php'),
             'noWallet_txt' => esc_html(__('Cardano Wallet Not Found!', "sargapay-plugin")),
             'unknown_txt' => esc_html(__('Something Went Wrong!', 'sargapay-plugin')),
@@ -191,34 +237,31 @@ function sargapay_plugin_init_gateway_class()
             'error_wrong_network_txt' => esc_html(__('Wrong Network, Please Select the Correct Network', 'sargapay-plugin'))
         ));
 
-        if ((is_checkout() && !empty(is_wc_endpoint_url('order-received'))) || is_account_page()) {
-            wp_enqueue_script('wp_sarga_hot_wallets', plugins_url('assets/js/hotWallets.js', __FILE__), array('jquery'));
-            wp_enqueue_script('wp_sarga_alerts', plugins_url('assets/js/sweetalert2.all.min.js', __FILE__), array('jquery'));
+        if ((is_checkout() && !empty(is_wc_endpoint_url('order-received'))) || is_account_page()) {           
+            wp_print_script_tag(
+                array(
+                    'id' => 'wp_sarga_hot_wallets',
+                    'src' => esc_url(plugin_dir_url(__FILE__) . 'assets/js/hotWallets.js'),
+                    'defer' => true,
+                    'type' => 'module'
+                )
+            );
+            
+            wp_print_script_tag(
+                array(
+                    'id' => 'wp_sarga_alerts',
+                    'src' => esc_url(plugin_dir_url(__FILE__) . 'assets/js/sweetalert2.all.min.js'),
+                    'defer' => true,
+                    'type' => 'module'
+                )
+            );
         }
 
-        if(is_account_page()) {
+        if (is_account_page()) {
             wp_enqueue_script('sargapay_countdown', plugins_url('assets/js/countDown.js', __FILE__), array('jquery'));
         }
     }
 
-    // Add Type = Module to js 
-    function add_type_attribute($tag, $handle, $src)
-    {
-        if (
-            'bech32' === $handle ||
-            'cardano_lib_bg' === $handle ||
-            'cardano_asm' === $handle ||
-            'cardano_serialization_lib' === $handle ||
-            'gen_addressjs' === $handle ||
-            'wp_gen_address' === $handle ||
-            'wp_sarga_hot_wallets' === $handle
-        ) {
-            $tag = '<script type="module" src="' . esc_url($src) . '"></script>';
-            return $tag;
-        } else {
-            return $tag;
-        }
-    }
     /**
      * Load plugin textdomain.
      */
