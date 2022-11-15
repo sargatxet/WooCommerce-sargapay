@@ -37,12 +37,16 @@ function sargapay_view_order_cancel_notice($order_id)
                 //LOG Error             
                 write_log($wpdb->last_error);
             } else if (count($query_address) === 0) {
-                echo "<p>" . __('ERROR PLEASE CONTACT THE ADMIN TO PROCCED WITH THE ORDER', 'sargapay') . "</p>";
+?>
+                <p><?php echo __('ERROR PLEASE CONTACT THE ADMIN TO PROCCED WITH THE ORDER', 'sargapay'); ?></p>
+                <?php
                 write_log("Emprty Query result in account page order");
             } else {
                 if ($query_address[0]->testnet) {
-                    $testnet_msg  = esc_html(__("BE AWARE THIS IS A TESTNET PAYMENT ADDRESS", 'sargapay'));
-                    echo "<p style='background:red; font-weight:bold; color:white; text-align:center;'> $testnet_msg </p>";
+                    $testnet_msg  = __("BE AWARE THIS IS A TESTNET PAYMENT ADDRESS", 'sargapay');
+                ?>
+                    <p style='background:red; font-weight:bold; color:white; text-align:center;'><?php echo esc_html($testnet_msg); ?> </p>
+                <?php
                 }
                 // Get order amount in ada
                 $total_ada = $query_address[0]->order_amount;
@@ -51,38 +55,35 @@ function sargapay_view_order_cancel_notice($order_id)
                 $date_created_dt = $order->get_date_created();
                 // Get the timestamp in seconds
                 $date_created_ts = $date_created_dt->getTimestamp();
-                $text = esc_html(__("Time left to make the payment ", 'sargapay'));
+                $text = __("Time left to make the payment ", 'sargapay');
                 $qr = GenerateQR::getInstance();
-                echo '<p style="text-align: center;">' . $text . '</p>';
-                echo "<p id='sarga-timestamp' style='display:none;'>$date_created_ts</p>";
-                echo '<p id="sarga-countdown" style="text-align: center;"></p>';
-                echo '<p style="text-align: center;"><b>' . esc_html(__('Payment Address', 'sargapay')) . '</b><br><span id="pay_add_p_field_tk_plugin">' . $payment_address . "</span>" .
-                    $qr->generate($payment_address) .
-                    '</p>';
-                echo '<p style="text-align: center;"><b>' . esc_html(__('Total ADA', 'sargapay')) . '</b><br><span id="pay_amount_span_field_tk_plugin">' . $total_ada . '</span></p>';
-
-                #Hotwallets
-                echo    "<h4 style='text-align:center; font-weight:bold;'>" . esc_html(__('Pay Now', 'sargapay')) . "</h4>";
-                echo    "<div id='loader-container'>
-                                <div class='lds-ellipsis'>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                </div>
-                                <p class='loader-p'>Building Transaction...</p>
-                            </div>";
-                echo    "<div class='hot_wallets_container'>
-                                <button id='hot_wallet_nami' class='wallet-btn'>                                    
-                                    Nami
-                                </button>
-                                <button id='hot_wallet_eternl' class='wallet-btn'>                                    
-                                    Eternl
-                                </button>
-                                <button id='hot_wallet_flint' class='wallet-btn'>                                    
-                                    Flint
-                                </button>
-                            </div>";
+                ?>
+                <p style="text-align: center;"><?php echo esc_html($text); ?></p>
+                <p id='sarga-timestamp' style='display:none;'><?php echo esc_html($date_created_ts) ?></p>
+                <p id="sarga-countdown" style="text-align: center;"></p>
+                <p style="text-align: center;"><b><?php echo esc_html(__('Payment Address', 'sargapay')); ?></b><br><span id="pay_add_p_field_tk_plugin"><?php echo esc_html($payment_address); ?></span>
+                    <?php
+                    $qr->generate($payment_address);
+                    ?>
+                </p>
+                <p style="text-align: center;"><b><?php echo esc_html(__('Total ADA', 'sargapay')) ?></b><br><span id="pay_amount_span_field_tk_plugin"><?php echo esc_html($total_ada); ?></span></p>
+                <!-- Hotwallets -->
+                <h4 style='text-align:center; font-weight:bold;'><?php echo esc_html(__('Pay Now', 'sargapay')); ?></h4>
+                <div id='loader-container'>
+                    <div class='lds-ellipsis'>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <p class='loader-p'>Building Transaction...</p>
+                </div>
+                <div class='hot_wallets_container'>
+                    <button id='hot_wallet_nami' class='wallet-btn'>Nami</button>
+                    <button id='hot_wallet_eternl' class='wallet-btn'>Eternl</button>
+                    <button id='hot_wallet_flint' class='wallet-btn'>Flint</button>
+                </div>
+<?
             }
         } else if (
             $order->get_status() === "cancelled"

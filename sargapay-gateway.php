@@ -51,90 +51,23 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
     }
     public function generate_screen_button_html($key, $value)
     {
-        if (true) {
 ?>
-            <!-- Banner Config Panel TODO: text and check for license -->
-            <style>
-                .ad-container {
-                    display: flex;
-                    justify-content: space-between;
-                    padding: 25px 0;
-                }
-
-                .banner-container {
-                    display: flex;
-                    flex-direction: column;
-                }
-
-                .banner {
-                    background-image: linear-gradient(135deg, #3C8CE7 10%, #00EAFF 100%);
-                    color: white;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-around;
-                    width: 50vw;
-                    height: 10vh;
-                    padding: 10px;
-                    border-radius: 10px;
-                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                }
-
-                .img-container {
-                    width: 40%;
-                    display: flex;
-                    justify-content: center;
-                }
-
-                .header-subtitle {
-                    text-align: left;
-                    font-weight: bold;
-                }
-
-                .banner-logo {
-                    height: 20vh;
-                    width: 30vh;
-                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                }
-
-                .banner-link {
-                    text-decoration: none;
-                    color: #fff;
-                    font-size: 2vw;
-                    font-weight: bold;
-                }
-
-                .banner-link:after,
-                .banner-link:hover,
-                .banner-link:active {
-                    color: #fff;
-                }
-
-                .discord-logo {
-                    height: 40px;
-                }
-
-                .icono-link {
-                    font-size: 2vw;
-                    padding-right: 5px;
-                }
-            </style>
-            <tr valign="top">
-                <td colspan="2" class="forminp forminp-<?php echo sanitize_title($value['type']) ?>">
-                    <div class="ad-container">
-                        <div class="banner-container">
-                            <span class="header-subtitle">Delega en el pool de Cardano Sargatxet</span>
-                            <div class="banner">
-                                <a class="banner-link" href="https://cardano.sargatxet.cloud/" target="_blank"><span class="dashicons dashicons-admin-site-alt3 icono-link"></span> Website</a>
-                                <a class="banner-link" href="https://discord.gg/X6Ruku9q42" target="_blank"><img class="discord-logo" src="<?php echo plugin_dir_url(__FILE__) . '/assets/img/discord.png';  ?>" alt="Discord Logo" /></a>
-                            </div>
-                        </div>
-                        <div class="img-container">
-                            <img class="banner-logo" src="<?php echo plugin_dir_url(__FILE__) . '/assets/img/banner.png';  ?>" alt="Sargatxet Logo" />
+        <tr valign="top">
+            <td colspan="2" class="forminp forminp-<?php echo sanitize_title($value['type']) ?>">
+                <div class="ad-container">
+                    <div class="banner-container">
+                        <span class="header-subtitle">Delega en el pool de Cardano Sargatxet</span>
+                        <div class="banner">
+                            <a class="banner-link" href="https://cardano.sargatxet.cloud/" target="_blank"><span class="dashicons dashicons-admin-site-alt3 icono-link"></span> Website</a>
+                            <a class="banner-link" href="https://discord.gg/X6Ruku9q42" target="_blank"><img class="discord-logo" src="<?php echo plugin_dir_url(__FILE__) . '/assets/img/discord.png';  ?>" alt="Discord Logo" /></a>
                         </div>
                     </div>
-                </td>
-            </tr>
-        <?php } ?>
+                    <div class="img-container">
+                        <img class="banner-logo" src="<?php echo plugin_dir_url(__FILE__) . '/assets/img/banner.png';  ?>" alt="Sargatxet Logo" />
+                    </div>
+                </div>
+            </td>
+        </tr>
         <tr valign="top">
             <td colspan="2" class="forminp forminp-<?php echo sanitize_title($value['type']) ?>">
                 <a href="<?php echo admin_url('admin.php?page=wc-settings&tab=checkout&section=sargapay&screen=orders'); ?>" class="button"><?php _e('Orders Paid with this plugin', 'sargapay'); ?></a>
@@ -243,12 +176,18 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
 
     public function admin_options()
     {
+        #sanitize 
         if (!isset($_GET['screen']) || '' === $_GET['screen']) {
             parent::admin_options();
         } else {
             if ('orders' === $_GET['screen']) {
-                echo '<h2><a href="' . admin_url('admin.php?page=wc-settings&tab=checkout&section=sargapay') . '">' . $this->method_title . '</a> > ' . __('Orders done with Sargapay Gateway', 'sargapay') . '</h2>';
-                $hide_save_button = true; // Remove the submit button need to be fixed.
+        ?>
+                <h2>
+                    <a href="<?php echo esc_url(admin_url('admin.php?page=wc-settings&tab=checkout&section=sargapay')); ?>"><?php echo esc_html($this->method_title); ?>
+                    </a>
+                    <?php echo __('Orders done with Sargapay Gateway', 'sargapay'); ?>
+                </h2>
+                <?php
                 $orders = wc_get_orders(array(
                     'limit' => '-1',
                     'payment_method' => $this->id,
@@ -315,8 +254,11 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-            <?php               } else {
-                    echo '<p>' . __('No orders done yet with this gateway', 'sargapay') . '</p>';
+                <?php
+                } else {
+                ?>
+                    <p> <?php echo __('No orders done yet with this gateway', 'sargapay'); ?> </p>
+                <?php
                 }
             }
         }
@@ -419,7 +361,11 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
         $data = json_decode($request, true);
         if (count($data) == 1) {
             if ($this->testmode) {
-                echo "<h3 style='text-align:center; background:red; color:white; font-weight:bold;'>" . __("TEST MODE", 'sargapay') . "</h3>";
+                ?>
+                <h3 style='text-align:center; background:red; color:white; font-weight:bold;'>
+                    <?php echo __("TEST MODE", 'sargapay'); ?>
+                </h3>
+            <?php
             }
             $instrucciones = $this->description;
 
