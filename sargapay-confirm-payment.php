@@ -25,7 +25,11 @@ class Sargapay_ConfirmPayment
     {
         global $wpdb;
         $table = $wpdb->prefix . 'wc_sargapay_address';
-        $orders = $wpdb->get_results("SELECT id, pay_address, order_id, order_amount, testnet FROM $table WHERE status='on-hold' OR status = 'validation'");
+        $orders = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT id, pay_address, order_id, order_amount, testnet FROM {$wpdb->prefix}wc_sargapay_address WHERE WHERE status='on-hold' OR status = 'validation'",
+            )
+        );
         if ($wpdb->last_error) {
             //LOG Error
             write_log($wpdb->last_error);
