@@ -26,8 +26,12 @@ function sargapay_view_order_cancel_notice($order_id)
             $order->get_status() === "on-hold"
         ) {
             global $wpdb;
-            $table = $wpdb->prefix . "wc_sargapay_address";
-            $query_address = $wpdb->get_results("SELECT pay_address, order_amount, testnet FROM $table WHERE order_id=$order_id");
+            $query_address = $wpdb->get_results(
+                $wpdb->prepare(
+                    "SELECT pay_address, order_amount, testnet FROM {$wpdb->prefix}wc_sargapay_address WHERE order_id=%d",
+                    $order_id
+                )
+            );
             //LOG ERROR DB
             if ($wpdb->last_error) {
                 //LOG Error             
@@ -46,7 +50,7 @@ function sargapay_view_order_cancel_notice($order_id)
                 $payment_address = $query_address[0]->pay_address;
                 $date_created_dt = $order->get_date_created();
                 // Get the timestamp in seconds
-                $date_created_ts = $date_created_dt->getTimestamp();                
+                $date_created_ts = $date_created_dt->getTimestamp();
                 $text = esc_html(__("Time left to make the payment ", 'sargapay'));
                 $qr = GenerateQR::getInstance();
                 echo '<p style="text-align: center;">' . $text . '</p>';

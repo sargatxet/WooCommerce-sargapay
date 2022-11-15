@@ -30,7 +30,13 @@ function sargapay_save_address()
             // wpdb call to check address index
             global $wpdb;
             $table = $wpdb->prefix . "wc_sargapay_address";
-            $last_index_response = $wpdb->get_results("SELECT address_index FROM $table WHERE testnet=$testmode AND mpk='$xpub' ORDER BY id DESC LIMIT 1");
+            $last_index_response = $wpdb->get_results(
+                $wpdb->prepare(
+                    "SELECT address_index FROM {$wpdb->prefix}wc_sargapay_address WHERE testnet=%d AND mpk=%s ORDER BY id DESC LIMIT 1",
+                    $testmode,
+                    $xpub
+                )
+            );
             if ($wpdb->last_error) {
                 //LOG Error
                 write_log($wpdb->last_error);
@@ -40,18 +46,18 @@ function sargapay_save_address()
                     $was_null = true;
                 } else {
                     $last_index = $last_index_response[0]->address_index;
-                    $was_null = false;                    
+                    $was_null = false;
                 }
                 if ($action_type == "get_unused") {
                     //Get Unused address from DB 
                     if ($testmode == 1) {
-                        $response_query = $wpdb->get_var("SELECT COUNT(*) FROM $table WHERE status = 'unused' AND testnet = 1 AND mpk = '$xpub'");
+                        $response_query = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}wc_sargapay_address WHERE status = 'unused' AND testnet = 1 AND mpk = %s"), $xpub);
                     } else {
-                        $response_query = $wpdb->get_var("SELECT COUNT(*) FROM $table WHERE status = 'unused' AND testnet = 0 AND mpk = '$xpub'");
+                        $response_query = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}wc_sargapay_address WHERE status = 'unused' AND testnet = 0 AND mpk = %s"), $xpub);
                     }
-                    if($last_index == 0 && $was_null){
+                    if ($last_index == 0 && $was_null) {
                         $last_index = null;
-                    }                   
+                    }
                     wp_send_json(array('unused' => $response_query, 'xpub' => $xpub, 'last_unused' => $last_index, 'network' => $network));
                 } else if ($action_type == "get_xpub") {
                     wp_send_json(array('xpub' => $xpub, 'last_unused' => $last_index, 'network' => $network));
@@ -64,9 +70,9 @@ function sargapay_save_address()
                             if ($last_index != 0) {
                                 $last_index += 1;
                             } else if ($last_index == 0) {
-                                $first_address = $wpdb->get_var("SELECT COUNT(*) FROM $table WHERE testnet = $testmode AND mpk = '$xpub'");
+                                $first_address = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}wc_sargapay_address WHERE testnet = %d AND mpk = %s"), $testmode, $xpub);                                
                                 if ($first_address == 1) {
-                                    $last_index = 1;                                    
+                                    $last_index = 1;
                                 }
                             }
                             foreach ($addresses as $address) {

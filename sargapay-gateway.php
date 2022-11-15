@@ -288,9 +288,13 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
                                             <?php elseif ('order-total' === $column_id) : ?>
                                                 <?php
                                                 global $wpdb;
-                                                $table = $wpdb->prefix . 'wc_sarga_address';
                                                 $order_id = $order->get_id();
-                                                $query_result = $wpdb->get_results("SELECT order_amount FROM $table WHERE order_id=$order_id");
+                                                $query_result = $wpdb->get_results(
+                                                    $wpdb->prepare(
+                                                        "SELECT order_amount FROM {$wpdb->prefix}wc_sargapay_address WHERE order_id=%d",
+                                                        $order_id
+                                                    )
+                                                );
                                                 if ($wpdb->last_error) {
                                                     //LOG Error
                                                     write_log($wpdb->last_error);
@@ -491,12 +495,18 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
             $this->testmode == 1 ? $network = 1 : $network = 0;
             // GET IT AND UPDATE IT
             global $wpdb;
-            $table = $wpdb->prefix . 'wc_sarga_address';
-            $get_key = $wpdb->get_results("SELECT id, pay_address FROM $table WHERE testnet=$network AND status = 'unused' ORDER BY id ASC LIMIT 1");
+            $table = $wpdb->prefix . 'wc_sargapay_address';
+            $get_key =  $wpdb->get_results(
+                $wpdb->prepare(
+                    "SELECT id, pay_address FROM {$wpdb->prefix}wc_sargapay_address WHERE testnet=%d AND status =%s ORDER BY id ASC LIMIT 1",
+                    $network,
+                    'unused'
+                )
+            );
             //LOG ERROR DB
             if ($wpdb->last_error) {
                 write_log($wpdb->last_error);
-            } else {
+            } else if (isset($get_key[0]->pay_address)) {
                 $pay_address = $get_key[0]->pay_address;
                 $id = $get_key[0]->id;
                 // Update data                 
@@ -530,6 +540,15 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
                     );
                 }
             }
+
+            $order->update_status('failed', __('Payment error:', 'woocommerce') . $this->get_option('error_message'));
+            wc_add_notice($payment_status['message'], 'error');
+            // Remove cart
+            WC()->cart->empty_cart();
+            return array(
+                'result'   => 'failure',
+                'redirect' => WC()->cart->get_checkout_url()
+            );
         } else {
             $order->update_status('failed', __('Payment error:', 'woocommerce') . $this->get_option('error_message'));
             wc_add_notice($payment_status['message'], 'error');

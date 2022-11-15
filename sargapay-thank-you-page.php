@@ -30,8 +30,10 @@ function sargapay_thank_you_text($thank_you_title, $order)
             $message = '<div style="font-weight:bold; text-align:center; color:white; background:black;">' . esc_html(__('Remember that you have 24 hours to pay for your order before it\'s automatically canceled.', 'sargapay')) . '</div>';
             $order_id = $order->get_id();
             global $wpdb;
-            $table = $wpdb->prefix . "wc_sargapay_address";
-            $query_address = $wpdb->get_results("SELECT pay_address, order_amount, testnet FROM $table WHERE order_id=$order_id");
+            $query_address = $wpdb->get_results($wpdb->prepare(
+                "SELECT pay_address, order_amount, testnet FROM {$wpdb->prefix}wc_sargapay_address WHERE order_id=%d",
+                $order_id
+            ));
             //ERROR DB
             if ($wpdb->last_error) {
                 //LOG Error             
