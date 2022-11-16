@@ -19,7 +19,7 @@
 
 function sargapay_save_address()
 {
-    $addresses  = isset($_POST['addresses']) ? sanitize_text_field($_POST['addresses']) : false;
+    $addresses  = isset($_POST['addresses']) ? sargapay_recursive_sanitize_text_field($_POST['addresses']) : false;
     $action_type = isset($_POST['action_type']) ? sanitize_text_field($_POST['action_type']) : false;
     if (wp_doing_ajax()) {
         if (isset($action_type)) {
@@ -37,7 +37,7 @@ function sargapay_save_address()
                     $xpub
                 )
             );
-            if (!isset($wpdb->last_error)) {
+            if ($wpdb->last_error === "") {
                 if ($last_index_response[0]->address_index == null) {
                     $last_index = 0;
                     $was_null = true;
@@ -47,10 +47,11 @@ function sargapay_save_address()
                 }
                 if ($action_type == "get_unused") {
                     //Get Unused address from DB 
+                    $esc_xpub = esc_sql($xpub);
                     if ($testmode == 1) {
-                        $response_query = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}wc_sargapay_address WHERE status = 'unused' AND testnet = 1 AND mpk = %s"), $xpub);
+                        $response_query = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}wc_sargapay_address WHERE status_order = 'unused' AND testnet = 1 AND mpk = '$esc_xpub'");
                     } else {
-                        $response_query = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}wc_sargapay_address WHERE status = 'unused' AND testnet = 0 AND mpk = %s"), $xpub);
+                        $response_query = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}wc_sargapay_address WHERE status_order = 'unused' AND testnet = 0 AND mpk = '$esc_xpub'");
                     }
                     if ($last_index == 0 && $was_null) {
                         $last_index = null;
@@ -66,7 +67,7 @@ function sargapay_save_address()
                             if ($last_index != 0) {
                                 $last_index += 1;
                             } else if ($last_index == 0) {
-                                $first_address = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}wc_sargapay_address WHERE testnet = %d AND mpk = %s"), $testmode, $xpub);                                
+                                $first_address = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}wc_sargapay_address WHERE testnet = %d AND mpk = %s"), $testmode, $xpub);
                                 if ($first_address == 1) {
                                     $last_index = 1;
                                 }
@@ -77,7 +78,7 @@ function sargapay_save_address()
                                         'mpk' => $xpub,
                                         'address_index' => $last_index,
                                         'pay_address' => $address,
-                                        'status' => 'unused',
+                                        'status_order' => 'unused',
                                         'last_checked' => 0,
                                         'assigned_at' => 0,
                                         'order_id' => 0,
@@ -88,7 +89,7 @@ function sargapay_save_address()
                                     );
                                 $format = array('%s', '%d', '%s', '%s', '%d', '%d', '%d', '%f', '%f', '%s', '%d');
                                 $wpdb->insert($table, $dataDB, $format);
-                                if (!isset($wpdb->last_error)) {
+                                if ($wpdb->last_error === "") {
                                     $last_index += 1;
                                 }
                             }
@@ -100,4 +101,16 @@ function sargapay_save_address()
         }
     }
     wp_die();
+}
+
+function sargapay_recursive_sanitize_text_field($array)
+{
+    foreach ($array as $key => &$value) {
+        if (is_array($value)) {
+            $value = sargapay_recursive_sanitize_text_field($value);
+        } else {
+            $value = sanitize_text_field($value);
+        }
+    }
+    return $array;
 }

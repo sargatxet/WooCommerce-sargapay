@@ -27,10 +27,10 @@ class Sargapay_ConfirmPayment
         $table = $wpdb->prefix . 'wc_sargapay_address';
         $orders = $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT id, pay_address, order_id, order_amount, testnet FROM {$wpdb->prefix}wc_sargapay_address WHERE WHERE status='on-hold' OR status = 'validation'",
+                "SELECT id, pay_address, order_id, order_amount, testnet FROM {$wpdb->prefix}wc_sargapay_address WHERE WHERE status_order = 'on-hold' OR status_order = 'validation'",
             )
         );
-        if (!isset($wpdb->last_error) && count($orders) !== 0) {
+        if ($wpdb->last_error === "" && count($orders) !== 0) {
             for ($i = 0; $i < count($orders); $i++) {
                 $network = $orders[$i]->testnet == 1 ? 0 : 1;
                 $order = wc_get_order($orders[$i]->order_id);
@@ -62,17 +62,17 @@ class Sargapay_ConfirmPayment
                     //update confirmation  
                     if ($confirmation_obj->confirmations > 0) {
                         if ($confirmation_obj->confirmations > WC()->payment_gateways->payment_gateways()['sargapay']->confirmations) {
-                            $data = ['status' => 'paid', 'last_checked' => $now_ts];
+                            $data = ['status_order' => 'paid', 'last_checked' => $now_ts];
                             $order->update_status('completed');
                         } else {
-                            $data = ['status' => 'validation', 'last_checked' => $now_ts];
+                            $data = ['status_order' => 'validation', 'last_checked' => $now_ts];
                         }
                         $where = ['id' => $orders[$i]->id];
                         $updated = $wpdb->update($table, $data, $where);
                     } else {
                         if ($diff_in_seconds > $twenty_four_hours) {
                             $order->update_status('cancelled');
-                            $data = ['status' => 'cancelled', 'last_checked' => $now_ts];
+                            $data = ['status_order' => 'cancelled', 'last_checked' => $now_ts];
                         } else {
                             $data = ['last_checked' => $now_ts];
                         }
@@ -82,7 +82,7 @@ class Sargapay_ConfirmPayment
                 } else if ($confirmation_obj->error == 404) {
                     if ($diff_in_seconds > $twenty_four_hours) {
                         $order->update_status('cancelled');
-                        $data = ['status' => 'cancelled', 'last_checked' => $now_ts];
+                        $data = ['status_order' => 'cancelled', 'last_checked' => $now_ts];
                     } else {
                         $data = ['last_checked' => $now_ts];
                     }
@@ -92,7 +92,7 @@ class Sargapay_ConfirmPayment
                     //LOG ERROR
                     if ($diff_in_seconds > $twenty_four_hours) {
                         $order->update_status('cancelled');
-                        $data = ['status' => 'cancelled', 'last_checked' => $now_ts];
+                        $data = ['status_order' => 'cancelled', 'last_checked' => $now_ts];
                     }
                 }
             }

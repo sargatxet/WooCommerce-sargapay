@@ -28,7 +28,7 @@ function sargapay_create_address_table()
             `mpk` char(150) NOT NULL,
             `address_index` bigint(12) NOT NULL,
             `pay_address` char(199) NOT NULL UNIQUE,
-            `status` char(24)  NOT NULL DEFAULT 'on-hold',
+            `status_order` char(24)  NOT NULL DEFAULT 'on-hold',
             `last_checked` bigint(20) NOT NULL DEFAULT '0',
             `assigned_at` bigint(20) NOT NULL DEFAULT '0',
             `order_id` bigint(10) NULL,            

@@ -33,11 +33,11 @@ function sargapay_view_order_cancel_notice($order_id)
                 )
             );
             //LOG ERROR DB
-            if (!isset($wpdb->last_error) && count($query_address) === 0) {
+            if ($wpdb->last_error === "" && count($query_address) === 0) {
 ?>
                 <p><?php echo __('ERROR PLEASE CONTACT THE ADMIN TO PROCCED WITH THE ORDER', 'sargapay'); ?></p>
                 <?php
-            } else if (!isset($wpdb->last_error)) {
+            } else if ($wpdb->last_error === "") {
                 if ($query_address[0]->testnet) {
                     $testnet_msg  = __("BE AWARE THIS IS A TESTNET PAYMENT ADDRESS", 'sargapay');
                 ?>

@@ -76,7 +76,7 @@ window.onload = function() {
 function sargapay_ajax_gen_address(num_address) {
     jQuery.ajax({
         type: "post",
-        url: wp_ajax_sargapay_save_address_vars.ajax_url,
+        url: wp_ajax_sargapay_save_address.ajax_url,
         data: {
             action: "sargapay_save_address",
             action_type: "get_xpub"
@@ -104,7 +104,7 @@ function sargapay_ajax_gen_address(num_address) {
             if (addresses.length > 0 && !addresses[0].includes("Error:")) {
                 jQuery.ajax({
                     type: "post",
-                    url: wp_ajax_sargapay_save_address_vars.ajax_url,
+                    url: wp_ajax_sargapay_save_address.ajax_url,
                     data: {
                         action: "sargapay_save_address",
                         addresses: addresses,

@@ -120,11 +120,15 @@ const sargapay_walletAPI = async(apikey, network, walllet = "nami") => {
 
 
 const sargapay_sendAda = async wallet => {
+    const ajax = window.hasOwnProperty('wp_ajax_nopriv_sargapay_get_settings_vars') ?
+        wp_ajax_nopriv_sargapay_get_settings_vars :
+        wp_ajax_sargapay_get_settings_vars
+    console.dir(ajax.ajax_url)
     try {
         // TODO: Get Apikey and Network
         jQuery.ajax({
             type: "post",
-            url: wp_ajax.ajax_url,
+            url: ajax.ajax_url,
             data: {
                 action: "sargapay_get_settings_vars",
             },
@@ -137,6 +141,7 @@ const sargapay_sendAda = async wallet => {
                 })
             },
             success: function(response) {
+                console.dir(response)
                 sargapay_walletAPI(response.apikey, response.network, wallet)
             },
         })

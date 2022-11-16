@@ -30,15 +30,15 @@ function sargapay_get_settings_vars()
 {
     $action = isset($_POST['action']) ? sanitize_text_field($_POST['action']) : false;
     if ($action) {
-        if (wp_doing_ajax() && $action === "get_settings_vars") {
+        if (wp_doing_ajax() && $action === "sargapay_get_settings_vars") {
 
             // 0=TESTNET 1=MAINNET
-            $testmode = WC()->payment_gateways->payment_gateways()['sargapay-plugin']->testmode == 1 ? 1 : 0;
+            $testmode = WC()->payment_gateways->payment_gateways()['sargapay']->testmode == 1 ? 1 : 0;
 
             $network = $testmode == 1 ? $network = 0 : $network = 1;
 
-            $APIKEY  = $network === 1 ? WC()->payment_gateways->payment_gateways()['sargapay-plugin']->blockfrost_key :
-                WC()->payment_gateways->payment_gateways()['sargapay-plugin']->blockfrost_test_key;
+            $APIKEY  = $network === 1 ? WC()->payment_gateways->payment_gateways()['sargapay']->blockfrost_key :
+                WC()->payment_gateways->payment_gateways()['sargapay']->blockfrost_test_key;
 
             wp_send_json(array('apikey' => $APIKEY, 'network' => $network));
         }

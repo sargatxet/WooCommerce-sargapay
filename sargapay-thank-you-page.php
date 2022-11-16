@@ -35,10 +35,10 @@ function sargapay_thank_you_text($thank_you_title, $order)
                 $order_id
             ));
             //ERROR DB
-            if (!isset($wpdb->last_error) && count($query_address) === 0) {
+            if ($wpdb->last_error === "" && count($query_address) === 0) {
                 $message = "<p>" . esc_html(__('ERROR PLEASE CONTACT ADMIN TO PROCCED WITH THE ORDER', 'sargapay')) . "</p>";
                 return $thank_you_title . "<br>" . $message . '<br><br>';
-            } else if (!isset($wpdb->last_error)) {
+            } else if ($wpdb->last_error === "") {
                 if ($query_address[0]->testnet) {
 ?>
                     <p style='background:red; font-weight:bold; color:white; text-align:center;'>
@@ -50,14 +50,14 @@ function sargapay_thank_you_text($thank_you_title, $order)
                 $total_ada = $query_address[0]->order_amount;
                 // Get payment address
                 $payment_address = $query_address[0]->pay_address;
-                $qr = GenerateQR::getInstance();
+                $qr = Sargapay_GenerateQR::getInstance();
                 // Qr Button
                 ?>
 
                 <div id='copy_modal' class='modal_tk_plugin'>
                     <div class='modal_tk_plugin_content'>
                         <span class='close_tk_plugin'>&times;</span>
-                        <p style='text-align:center;'><?php esc_html(__('Payment Address Copied!', 'sargapay')) ?></p>
+                        <p style='text-align:center;'><?php echo esc_html(__('Payment Address Copied!', 'sargapay')); ?></p>
                     </div>
                 </div>
                 <div style='text-align:center; font-weight:bold;'>
@@ -100,10 +100,10 @@ function sargapay_thank_you_text($thank_you_title, $order)
                 </p>
                 <div style='display:flex; justify-content: space-evenly; margin:15px;'>
                     <button class='button' id='pay_add_button_field_tk_plugin'>
-                        <?php echo esc_html(__('Copy Payment Address', 'sargapay')) ?>
+                        <?php echo esc_html(__('Copy Payment Address', 'sargapay')); ?>
                     </button>
                     <button class='button' id='pay_amount_button_field_tk_plugin'>
-                        <?php echo esc_html(__('Copy Amount', 'sargapay')) ?>
+                        <?php echo esc_html(__('Copy Amount', 'sargapay')); ?>
                     </button>
                 </div>
 <?php
@@ -116,7 +116,7 @@ function sargapay_thank_you_text($thank_you_title, $order)
                 $file_name = $payment_address . ".png";
                 $testnet_bool = $query_address[0]->testnet;
                 // Email Sent                   
-                send_email_woocommerce_style($email, $subject, $testnet_bool, $total_ada, $payment_address, $url_img, $file_name);
+                sargapay_send_email_woocommerce_style($email, $subject, $testnet_bool, $total_ada, $payment_address, $url_img, $file_name);
                 return $thank_you_title . "<br>" . $message . '<br><br>';
             }
         }

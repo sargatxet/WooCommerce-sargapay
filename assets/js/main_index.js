@@ -74,9 +74,9 @@ function sargapay_copy_text() {
 }
 
 function sargapay_gen() {
-    const url = window.hasOwnProperty('wp_ajax_nonpriv_sargapay_save_address_vars') ?
-        wp_ajax_nonpriv_sargapay_save_address_vars.ajax_url :
-        wp_ajax_sargapay_save_address_vars.ajax_url
+    const url = window.hasOwnProperty('wp_ajax_nopriv_sargapay_save_address') ?
+        wp_ajax_nopriv_sargapay_save_address.ajax_url :
+        wp_ajax_sargapay_save_address.ajax_url
 
     //Get How many addresses have left
     const unused = null
@@ -91,11 +91,13 @@ function sargapay_gen() {
             console.log(response)
         },
         success: function(response) {
-            const unused = response.unused
+            const unused = response.unused === null ? 0 : response.unused
             const xpub = response.xpub
             const testnet = response.network
             let lastIndex = response.last_unused
-                // No address ever generated
+            console.dir(parseInt(unused))
+
+            // No address ever generated
             if (lastIndex === null) {
                 lastIndex = 0
             } else {
@@ -118,13 +120,17 @@ function sargapay_gen() {
 
 function sargapay_add_index(xpub, lastIndex, testnet) {
 
-    const url = window.hasOwnProperty('wp_ajax_nonpriv_sargapay_save_address_vars') ?
-        wp_ajax_nonpriv_sargapay_save_address_vars.ajax_url :
-        wp_ajax_sargapay_save_address_vars.ajax_url
+    const url = window.hasOwnProperty('wp_ajax_nopriv_sargapay_save_address') ?
+        wp_ajax_nopriv_sargapay_save_address.ajax_url :
+        wp_ajax_sargapay_save_address.ajax_url
+    console.log("add index")
 
     // Generate New Address
     const address = sargapay_generate_payment_address(xpub, lastIndex, 1, testnet)
-        // Save New Address on DB
+
+    console.dir(address)
+
+    // Save New Address on DB
     if (address.length > 0 && !address[0].includes("Error:")) {
         jQuery.ajax({
             type: "post",
@@ -135,5 +141,7 @@ function sargapay_add_index(xpub, lastIndex, testnet) {
                 action_type: "save_address",
             },
         })
+    } else {
+        console.log("error address")
     }
 }

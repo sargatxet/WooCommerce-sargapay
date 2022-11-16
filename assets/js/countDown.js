@@ -22,29 +22,32 @@ const sargapay_countDown = setInterval(() => {
         // Get when the order was made timestamp
         const p_timestamp = document.getElementById('sarga-timestamp')
 
-        // Add 24 hrs to make the countdown   
-        const countDownDate = (parseInt(p_timestamp.innerText) + 24 * 60 * 60) * 1000
+        if (p_timestamp) {
 
-        // Get today's date and time
-        let now = new Date().getTime();
+            // Add 24 hrs to make the countdown   
+            const countDownDate = (parseInt(p_timestamp.innerText) + 24 * 60 * 60) * 1000
 
-        // Find the distance between now and the count down date
-        let distance = countDownDate - now;
+            // Get today's date and time
+            let now = new Date().getTime();
 
-        // Time calculations for days, hours, minutes and seconds
-        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            // Find the distance between now and the count down date
+            let distance = countDownDate - now;
 
-        // If the count down is finished, write some text
-        if (distance < 0) {
-            //|| distance > (24 * 60 * 60)) 
-            clearInterval(sargapay_countDown);
-            document.getElementById("sarga-countdown").innerHTML = "EXPIRED";
-        } else {
-            // Display CountDown
-            document.getElementById("sarga-countdown").innerHTML = hours + "h " +
-                minutes + "m " + seconds + "s ";
+            // Time calculations for days, hours, minutes and seconds
+            let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // If the count down is finished, write some text
+            if (distance < 0) {
+                //|| distance > (24 * 60 * 60)) 
+                clearInterval(sargapay_countDown);
+                document.getElementById("sarga-countdown").innerHTML = "EXPIRED";
+            } else {
+                // Display CountDown
+                document.getElementById("sarga-countdown").innerHTML = hours + "h " +
+                    minutes + "m " + seconds + "s ";
+            }
         }
     } catch (error) {
         console.dir(error)

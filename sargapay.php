@@ -123,7 +123,7 @@ function sargapay_plugin_init_gateway_class()
     } else {
         add_action('wp_ajax_nopriv_sargapay_save_address', 'sargapay_save_address');
         # Get APIKEY and Network for hotwallets
-        add_action('wp_ajax_nopriv_get_settings_vars', 'sargapay_get_settings_vars');
+        add_action('wp_ajax_nopriv_sargapay_get_settings_vars', 'sargapay_get_settings_vars');
     }
     add_action('admin_enqueue_scripts', 'sargapay_admin_load_gen_addressjs');
     add_action('admin_enqueue_scripts',  'sargapay_admin_load_styles');
@@ -265,15 +265,8 @@ function sargapay_plugin_init_gateway_class()
                     'type' => 'module'
                 )
             );
-
-            wp_print_script_tag(
-                array(
-                    'id' => 'wp_sarga_alerts',
-                    'src' => esc_url(plugin_dir_url(__FILE__) . 'assets/js/sweetalert2.all.min.js'),
-                    'defer' => true,
-                    'type' => 'module'
-                )
-            );
+                       
+            wp_enqueue_script('wp_sarga_alerts', plugin_dir_url(__FILE__) . 'assets/js/sweetalert2.all.min.js', array('jquery'));
         }
 
         if (is_account_page()) {

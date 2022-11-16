@@ -235,7 +235,7 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
                                                         $order_id
                                                     )
                                                 );
-                                                if (isset($wpdb->last_error) || count($query_result) === 0) {
+                                                if ($wpdb->last_error === "" || count($query_result) === 0) {
                                                     $ada_amount = "Error";
                                                 } else {
                                                     $ada_amount = $query_result[0]->order_amount;
@@ -449,13 +449,13 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
             $table = $wpdb->prefix . 'wc_sargapay_address';
             $get_key =  $wpdb->get_results(
                 $wpdb->prepare(
-                    "SELECT id, pay_address FROM {$wpdb->prefix}wc_sargapay_address WHERE testnet=%d AND status =%s ORDER BY id ASC LIMIT 1",
+                    "SELECT id, pay_address FROM {$wpdb->prefix}wc_sargapay_address WHERE testnet=%d AND status_order =%s ORDER BY id ASC LIMIT 1",
                     $network,
                     'unused'
                 )
             );
             //LOG ERROR DB
-            if (!isset($wpdb->last_error) && isset($get_key[0]->pay_address)) {
+            if ($wpdb->last_error === "" && isset($get_key[0]->pay_address)) {
                 $pay_address = $get_key[0]->pay_address;
                 $id = $get_key[0]->id;
                 // Update data                 
@@ -463,7 +463,7 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
                     array(
                         'mpk' => $mpk,
                         'pay_address' => $pay_address,
-                        'status' => 'on-hold',
+                        'status_order' => 'on-hold',
                         'last_checked' => 0,
                         'assigned_at' => $order->get_date_created()->getTimestamp(),
                         'order_id' => $order_id,
@@ -475,7 +475,7 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
                 $format = array('%s',  '%s', '%s', '%d', '%d', '%d', '%f', '%f', '%s');
                 $wpdb->update($table, $dataDB, array('id' => $id), $format);
                 //LOG ERROR UPDATE
-                if (!isset($wpdb->last_error)) {
+                if ($wpdb->last_error === "") {
                     // Remove cart
                     $woocommerce->cart->empty_cart();
                     return array(
