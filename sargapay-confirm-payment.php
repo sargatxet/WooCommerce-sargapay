@@ -31,55 +31,45 @@ class Sargapay_ConfirmPayment
             )
         );
         if (!isset($wpdb->last_error) && count($orders) !== 0) {
-                for ($i = 0; $i < count($orders); $i++) {
-                    $network = $orders[$i]->testnet == 1 ? 0 : 1;
-                    $order = wc_get_order($orders[$i]->order_id);
-                    // TIME SINCE ORDER WAS CREATED
-                    // Get order date created
-                    $date_created_dt = $order->get_date_created();
-                    // Get the timezone
-                    $timezone = $date_created_dt->getTimezone();
-                    // Get the timestamp in seconds
-                    $date_created_ts = $date_created_dt->getTimestamp();
-                    // Get current WC_DateTime object instance
-                    $now_dt = new WC_DateTime();
-                    // Set the same time zone
-                    $now_dt->setTimezone($timezone);
-                    // Get the current timestamp in seconds
-                    $now_ts = $now_dt->getTimestamp();
-                    // 24hours in seconds            
-                    $twenty_four_hours = 24 * 60 * 60;
-                    // Get the difference (in seconds)
-                    $diff_in_seconds = $now_ts - $date_created_ts;
-                    $confirmation_obj = $this->get_confirmations(
-                        $orders[$i]->pay_address,
-                        $orders[$i]->order_amount,
-                        $network,
-                        $date_created_ts
-                    );
-                    // if error = 0 and confirmations greater than 0 update confirmations 
-                    if ($confirmation_obj->error === 0) {
-                        //update confirmation  
-                        if ($confirmation_obj->confirmations > 0) {
-                            if ($confirmation_obj->confirmations > WC()->payment_gateways->payment_gateways()['sargapay']->confirmations) {
-                                $data = ['status' => 'paid', 'last_checked' => $now_ts];
-                                $order->update_status('completed');
-                            } else {
-                                $data = ['status' => 'validation', 'last_checked' => $now_ts];
-                            }
-                            $where = ['id' => $orders[$i]->id];
-                            $updated = $wpdb->update($table, $data, $where);
+            for ($i = 0; $i < count($orders); $i++) {
+                $network = $orders[$i]->testnet == 1 ? 0 : 1;
+                $order = wc_get_order($orders[$i]->order_id);
+                // TIME SINCE ORDER WAS CREATED
+                // Get order date created
+                $date_created_dt = $order->get_date_created();
+                // Get the timezone
+                $timezone = $date_created_dt->getTimezone();
+                // Get the timestamp in seconds
+                $date_created_ts = $date_created_dt->getTimestamp();
+                // Get current WC_DateTime object instance
+                $now_dt = new WC_DateTime();
+                // Set the same time zone
+                $now_dt->setTimezone($timezone);
+                // Get the current timestamp in seconds
+                $now_ts = $now_dt->getTimestamp();
+                // 24hours in seconds            
+                $twenty_four_hours = 24 * 60 * 60;
+                // Get the difference (in seconds)
+                $diff_in_seconds = $now_ts - $date_created_ts;
+                $confirmation_obj = $this->get_confirmations(
+                    $orders[$i]->pay_address,
+                    $orders[$i]->order_amount,
+                    $network,
+                    $date_created_ts
+                );
+                // if error = 0 and confirmations greater than 0 update confirmations 
+                if ($confirmation_obj->error === 0) {
+                    //update confirmation  
+                    if ($confirmation_obj->confirmations > 0) {
+                        if ($confirmation_obj->confirmations > WC()->payment_gateways->payment_gateways()['sargapay']->confirmations) {
+                            $data = ['status' => 'paid', 'last_checked' => $now_ts];
+                            $order->update_status('completed');
                         } else {
-                            if ($diff_in_seconds > $twenty_four_hours) {
-                                $order->update_status('cancelled');
-                                $data = ['status' => 'cancelled', 'last_checked' => $now_ts];
-                            } else {
-                                $data = ['last_checked' => $now_ts];
-                            }
-                            $where = ['id' => $orders[$i]->id];
-                            $updated = $wpdb->update($table, $data, $where);                           
+                            $data = ['status' => 'validation', 'last_checked' => $now_ts];
                         }
-                    } else if ($confirmation_obj->error == 404) {
+                        $where = ['id' => $orders[$i]->id];
+                        $updated = $wpdb->update($table, $data, $where);
+                    } else {
                         if ($diff_in_seconds > $twenty_four_hours) {
                             $order->update_status('cancelled');
                             $data = ['status' => 'cancelled', 'last_checked' => $now_ts];
@@ -88,17 +78,27 @@ class Sargapay_ConfirmPayment
                         }
                         $where = ['id' => $orders[$i]->id];
                         $updated = $wpdb->update($table, $data, $where);
+                    }
+                } else if ($confirmation_obj->error == 404) {
+                    if ($diff_in_seconds > $twenty_four_hours) {
+                        $order->update_status('cancelled');
+                        $data = ['status' => 'cancelled', 'last_checked' => $now_ts];
                     } else {
-                        //LOG ERROR
-                        if ($diff_in_seconds > $twenty_four_hours) {
-                            $order->update_status('cancelled');
-                            $data = ['status' => 'cancelled', 'last_checked' => $now_ts];
-                        }
+                        $data = ['last_checked' => $now_ts];
+                    }
+                    $where = ['id' => $orders[$i]->id];
+                    $updated = $wpdb->update($table, $data, $where);
+                } else {
+                    //LOG ERROR
+                    if ($diff_in_seconds > $twenty_four_hours) {
+                        $order->update_status('cancelled');
+                        $data = ['status' => 'cancelled', 'last_checked' => $now_ts];
                     }
                 }
             }
         }
     }
+
 
     function get_confirmations($payment_address, $payment_amount, $network, $order_was_made)
     {
