@@ -59,11 +59,11 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
                         <span class="header-subtitle">Delega en el pool de Cardano Sargatxet</span>
                         <div class="banner">
                             <a class="banner-link" href="https://cardano.sargatxet.cloud/" target="_blank"><span class="dashicons dashicons-admin-site-alt3 icono-link"></span> Website</a>
-                            <a class="banner-link" href="https://discord.gg/X6Ruku9q42" target="_blank"><img class="discord-logo" src="<?php echo plugin_dir_url(__FILE__) . '/assets/img/discord.png';  ?>" alt="Discord Logo" /></a>
+                            <a class="banner-link" href="https://discord.gg/X6Ruku9q42" target="_blank"><img class="discord-logo" src="<?php echo plugin_dir_url(__FILE__) . 'assets/img/discord.png';  ?>" alt="Discord Logo" /></a>
                         </div>
                     </div>
                     <div class="img-container">
-                        <img class="banner-logo" src="<?php echo plugin_dir_url(__FILE__) . '/assets/img/banner.png';  ?>" alt="Sargatxet Logo" />
+                        <img class="banner-logo" src="<?php echo plugin_dir_url(__FILE__) . 'assets/img/banner.png';  ?>" alt="Sargatxet Logo" />
                     </div>
                 </div>
             </td>
@@ -234,12 +234,8 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
                                                         $order_id
                                                     )
                                                 );
-                                                if ($wpdb->last_error) {
-                                                    //LOG Error
-                                                    write_log($wpdb->last_error);
-                                                } else if (count($query_result) === 0) {
+                                                if (isset($wpdb->last_error) || count($query_result) === 0) {
                                                     $ada_amount = "Error";
-                                                    write_log("Error ADA AMOUNT is empty for order #$order_id");
                                                 } else {
                                                     $ada_amount = $query_result[0]->order_amount;
                                                 }
@@ -266,6 +262,7 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
 
     function process_admin_options()
     {
+
         if (isset($_GET['screen']) && '' !== $_GET['screen']) {
         } else {
             parent::process_admin_options();
@@ -456,9 +453,7 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
                 )
             );
             //LOG ERROR DB
-            if ($wpdb->last_error) {
-                write_log($wpdb->last_error);
-            } else if (isset($get_key[0]->pay_address)) {
+            if (!isset($wpdb->last_error) && isset($get_key[0]->pay_address)) {
                 $pay_address = $get_key[0]->pay_address;
                 $id = $get_key[0]->id;
                 // Update data                 
@@ -478,13 +473,9 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
                 $format = array('%s',  '%s', '%s', '%d', '%d', '%d', '%f', '%f', '%s');
                 $wpdb->update($table, $dataDB, array('id' => $id), $format);
                 //LOG ERROR UPDATE
-                if ($wpdb->last_error) {
-                    //LOG Error             
-                    write_log($wpdb->last_error);
-                } else {
+                if (!isset($wpdb->last_error)) {
                     // Remove cart
                     $woocommerce->cart->empty_cart();
-
                     return array(
                         'result' => 'success',
                         'redirect' => $this->get_return_url($order)

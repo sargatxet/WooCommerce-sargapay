@@ -60,7 +60,6 @@ function sargapay_send_email_woocommerce_style($email, $subject, $testnet_bool, 
     // Load QR Img
     $attachment = array($path);
   } else {
-    write_log("Error: QR File doesn't Exist");
     $attachment = array();
   }
 

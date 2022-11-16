@@ -30,11 +30,7 @@ class Sargapay_ConfirmPayment
                 "SELECT id, pay_address, order_id, order_amount, testnet FROM {$wpdb->prefix}wc_sargapay_address WHERE WHERE status='on-hold' OR status = 'validation'",
             )
         );
-        if ($wpdb->last_error) {
-            //LOG Error
-            write_log($wpdb->last_error);
-        } else {
-            if (count($orders) !== 0) {
+        if (!isset($wpdb->last_error) && count($orders) !== 0) {
                 for ($i = 0; $i < count($orders); $i++) {
                     $network = $orders[$i]->testnet == 1 ? 0 : 1;
                     $order = wc_get_order($orders[$i]->order_id);
@@ -73,10 +69,6 @@ class Sargapay_ConfirmPayment
                             }
                             $where = ['id' => $orders[$i]->id];
                             $updated = $wpdb->update($table, $data, $where);
-                            if (false === $updated) {
-                                // DB LOG ERROR.
-                                write_log($wpdb->last_error);
-                            }
                         } else {
                             if ($diff_in_seconds > $twenty_four_hours) {
                                 $order->update_status('cancelled');
@@ -85,11 +77,7 @@ class Sargapay_ConfirmPayment
                                 $data = ['last_checked' => $now_ts];
                             }
                             $where = ['id' => $orders[$i]->id];
-                            $updated = $wpdb->update($table, $data, $where);
-                            if (false === $updated) {
-                                // DB LOG ERROR.
-                                write_log($wpdb->last_error);
-                            }
+                            $updated = $wpdb->update($table, $data, $where);                           
                         }
                     } else if ($confirmation_obj->error == 404) {
                         if ($diff_in_seconds > $twenty_four_hours) {
@@ -100,17 +88,12 @@ class Sargapay_ConfirmPayment
                         }
                         $where = ['id' => $orders[$i]->id];
                         $updated = $wpdb->update($table, $data, $where);
-                        if (false === $updated) {
-                            // DB LOG ERROR.
-                            write_log($wpdb->last_error);
-                        }
                     } else {
                         //LOG ERROR
                         if ($diff_in_seconds > $twenty_four_hours) {
                             $order->update_status('cancelled');
                             $data = ['status' => 'cancelled', 'last_checked' => $now_ts];
                         }
-                        write_log("Error Call BLockForst API " . $confirmation_obj->error);
                     }
                 }
             }

@@ -118,10 +118,10 @@ function sargapay_plugin_init_gateway_class()
 
     // Ajax Admin Panel
     if (is_admin()) {
-        add_action('admin_enqueue_scripts', 'sargapay_admin_load_gen_addressjs');
-        add_action('admin_enqueue_styles',  'sargapay_admin_load_styles');
         add_action('wp_ajax_save_address', 'sargapay_save_address');
+        add_action('admin_enqueue_scripts', 'sargapay_admin_load_gen_addressjs');
     }
+    add_action('admin_enqueue_scripts',  'sargapay_admin_load_styles');
 
     // Ajax visitors
     add_action('wp_enqueue_scripts', 'sargapay_load_wp_gen_address');
@@ -145,7 +145,7 @@ function sargapay_plugin_init_gateway_class()
     {
         wp_register_style('wallet_btn', plugins_url('/assets/css/walletsBtns.css', __FILE__));
         wp_register_style('modals_thanks', plugins_url('/assets/css/modalThankYou.css', __FILE__));
-        wp_register_style('sargapay_admin_styles', plugin_url('/assets/css/adminStyles.css', __FILE__));
+        wp_register_style('sargapay_admin_styles', plugins_url('/assets/css/adminStyles.css', __FILE__));
     }
 
 
@@ -282,18 +282,4 @@ function sargapay_plugin_init_gateway_class()
         $protocols[] = 'data';
         return $protocols;
     });
-}
-
-//Activate Logs
-if (!function_exists('write_log')) {
-    function write_log($log)
-    {
-        if (true === WP_DEBUG) {
-            if (is_array($log) || is_object($log)) {
-                error_log(print_r($log, true));
-            } else {
-                error_log($log);
-            }
-        }
-    }
 }

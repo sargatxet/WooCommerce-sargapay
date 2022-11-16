@@ -37,10 +37,7 @@ function sargapay_save_address()
                     $xpub
                 )
             );
-            if ($wpdb->last_error) {
-                //LOG Error
-                write_log($wpdb->last_error);
-            } else {
+            if (!isset($wpdb->last_error)) {
                 if ($last_index_response[0]->address_index == null) {
                     $last_index = 0;
                     $was_null = true;
@@ -63,7 +60,6 @@ function sargapay_save_address()
                     wp_send_json(array('xpub' => $xpub, 'last_unused' => $last_index, 'network' => $network));
                 } else if ($action_type == "save_address") {
                     if (!$addresses) {
-                        write_log("Empty request in get_xpub ajax call");
                         wp_send_json(__('Error no request sent :(', 'sargapay'));
                     } else {
                         if (count($addresses) >= 1) {
@@ -92,10 +88,7 @@ function sargapay_save_address()
                                     );
                                 $format = array('%s', '%d', '%s', '%s', '%d', '%d', '%d', '%f', '%f', '%s', '%d');
                                 $wpdb->insert($table, $dataDB, $format);
-                                if ($wpdb->last_error) {
-                                    //LOG Error
-                                    write_log($wpdb->last_error);
-                                } else {
+                                if (!isset($wpdb->last_error)) {
                                     $last_index += 1;
                                 }
                             }

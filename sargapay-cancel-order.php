@@ -33,15 +33,11 @@ function sargapay_view_order_cancel_notice($order_id)
                 )
             );
             //LOG ERROR DB
-            if ($wpdb->last_error) {
-                //LOG Error             
-                write_log($wpdb->last_error);
-            } else if (count($query_address) === 0) {
+            if (!isset($wpdb->last_error) && count($query_address) === 0) {
 ?>
                 <p><?php echo __('ERROR PLEASE CONTACT THE ADMIN TO PROCCED WITH THE ORDER', 'sargapay'); ?></p>
                 <?php
-                write_log("Emprty Query result in account page order");
-            } else {
+            } else if (!isset($wpdb->last_error)) {
                 if ($query_address[0]->testnet) {
                     $testnet_msg  = __("BE AWARE THIS IS A TESTNET PAYMENT ADDRESS", 'sargapay');
                 ?>
@@ -83,7 +79,7 @@ function sargapay_view_order_cancel_notice($order_id)
                     <button id='hot_wallet_eternl' class='wallet-btn'>Eternl</button>
                     <button id='hot_wallet_flint' class='wallet-btn'>Flint</button>
                 </div>
-<?
+<?php
             }
         } else if (
             $order->get_status() === "cancelled"

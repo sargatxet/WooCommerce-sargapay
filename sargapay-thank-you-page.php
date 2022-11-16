@@ -35,14 +35,10 @@ function sargapay_thank_you_text($thank_you_title, $order)
                 $order_id
             ));
             //ERROR DB
-            if ($wpdb->last_error) {
-                //LOG Error             
-                write_log($wpdb->last_error);
-            } else if (count($query_address) === 0) {
+            if (!isset($wpdb->last_error) && count($query_address) === 0) {
                 $message = "<p>" . esc_html(__('ERROR PLEASE CONTACT ADMIN TO PROCCED WITH THE ORDER', 'sargapay')) . "</p>";
-                write_log("ERROR DB query empty in Thank You Page ");
                 return $thank_you_title . "<br>" . $message . '<br><br>';
-            } else {
+            } else if (!isset($wpdb->last_error)) {
                 if ($query_address[0]->testnet) {
 ?>
                     <p style='background:red; font-weight:bold; color:white; text-align:center;'>
