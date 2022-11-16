@@ -19,10 +19,10 @@
 
 function sargapay_save_address()
 {
-    $addresses  = isset($_POST['addresses']) ? $_POST['addresses'] : false;
-    $action_type = isset($_POST['action_type']) ? $_POST['action_type'] : false;
+    $addresses  = isset($_POST['addresses']) ? sanitize_text_field($_POST['addresses']) : false;
+    $action_type = isset($_POST['action_type']) ? sanitize_text_field($_POST['action_type']) : false;
     if (wp_doing_ajax()) {
-        if (isset($_POST['action_type'])) {
+        if (isset($action_type)) {
             $xpub = WC()->payment_gateways->payment_gateways()['sargapay']->mpk;
             // 0=TESTNET 1=MAINNET
             $testmode = WC()->payment_gateways->payment_gateways()['sargapay']->testmode == 1 ? 1 : 0;

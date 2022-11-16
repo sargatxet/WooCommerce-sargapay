@@ -27,11 +27,15 @@ let noWalletText = 'Cardano Wallet Not Found!'
 let unknowText = 'Something Went Wrong!'
 let paidText = 'Paid'
 let wrongNetworkText = 'Wrong Network, Please Select the Correct Network'
-if (wp_ajax_nopriv_sargapay_get_settings_vars) {
-    noWalletText = wp_ajax_nopriv_sargapay_get_settings_vars.noWallet_txt
-    unknowText = wp_ajax_nopriv_sargapay_get_settings_vars.unknow_txt
-    paidText = wp_ajax_nopriv_sargapay_get_settings_vars.paid_txt
-    wrongNetworkText = wp_ajax_nopriv_sargapay_get_settings_vars.error_wrong_network_txt
+const wp_ajax = window.hasOwnProperty('wp_ajax_nopriv_sargapay_get_settings_vars') ?
+    wp_ajax_nopriv_sargapay_get_settings_vars :
+    wp_ajax_sargapay_get_settings_vars
+
+if (wp_ajax.hasOwnProperty("noWallet_txt")) {
+    noWalletText = wp_ajax.noWallet_txt
+    unknowText = wp_ajax.unknow_txt
+    paidText = wp_ajax.paid_txt
+    wrongNetworkText = wp_ajax.error_wrong_network_txt
 }
 
 const sargapay_showLoader = () => {
@@ -120,8 +124,7 @@ const sargapay_sendAda = async wallet => {
         // TODO: Get Apikey and Network
         jQuery.ajax({
             type: "post",
-            url: wp_ajax_nopriv_sargapay_get_settings_vars.is_user_logged_in == "1" ?
-                wp_ajax_sargapay_save_address_vars.ajax_url : wp_ajax_nopriv_sargapay_get_settings_vars.ajax_url,
+            url: wp_ajax.ajax_url,
             data: {
                 action: "sargapay_get_settings_vars",
             },

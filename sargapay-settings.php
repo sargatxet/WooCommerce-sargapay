@@ -26,9 +26,9 @@ function sargapay_plugin_add_gateway_class($gateways)
     return $gateways;
 }
 
-function get_settings_vars()
+function sargapay_get_settings_vars()
 {
-    $action = isset($_POST['action']) ? $_POST['action'] : false;
+    $action = isset($_POST['action']) ? sanitize_text_field($_POST['action']) : false;
     if ($action) {
         if (wp_doing_ajax() && $action === "get_settings_vars") {
 

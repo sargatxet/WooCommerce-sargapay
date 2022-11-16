@@ -116,20 +116,19 @@ function sargapay_plugin_init_gateway_class()
     // Add QR and Payment Address to thank you page
     add_filter('woocommerce_thankyou_order_received_text', 'sargapay_thank_you_text', 20, 2);
 
-    // Ajax Admin Panel
-    if (is_admin()) {
-        add_action('wp_ajax_save_address', 'sargapay_save_address');
-        add_action('admin_enqueue_scripts', 'sargapay_admin_load_gen_addressjs');
+    if (is_user_logged_in()) {
+        add_action('wp_ajax_sargapay_save_address', 'sargapay_save_address');
+        # Get APIKEY and Network for hotwallets
+        add_action('wp_ajax_get_sargapay_get_settings_vars', 'sargapay_get_settings_vars');
+    } else {
+        add_action('wp_ajax_nopriv_sargapay_save_address', 'sargapay_save_address');
+        # Get APIKEY and Network for hotwallets
+        add_action('wp_ajax_nopriv_get_settings_vars', 'sargapay_get_settings_vars');
     }
+    add_action('admin_enqueue_scripts', 'sargapay_admin_load_gen_addressjs');
     add_action('admin_enqueue_scripts',  'sargapay_admin_load_styles');
 
-    // Ajax visitors
     add_action('wp_enqueue_scripts', 'sargapay_load_wp_gen_address');
-    add_action('wp_ajax_nopriv_save_address', 'sargapay_save_address');
-
-    # Get APIKEY and Network for hotwallets
-    add_action('wp_ajax_nopriv_get_settings_vars', 'sargapay_get_settings_vars');
-    add_action('wp_ajax_get_settings_vars', 'sargapay_get_settings_vars');
 
     // Woocommerce Mail QR and Payment Address
     add_action('woocommerce_email_before_order_table', 'sargapay_add_content_wc_order_email', 20, 4);
@@ -168,13 +167,13 @@ function sargapay_plugin_init_gateway_class()
     // Load JS to Gen Cardano Address
     function sargapay_admin_load_gen_addressjs()
     {
-        wp_localize_script('gen_addressjs', 'wp_ajax_sargapay_save_address_vars', array(
+        wp_localize_script('jquery', 'wp_ajax_sargapay_save_address', array(
             'ajax_url' => admin_url('admin-ajax.php')
         ));
 
         wp_print_script_tag(
             array(
-                'id' => 'gen_addressjs',
+                'id' => 'gen_address',
                 'src' => esc_url(plugin_dir_url(__FILE__) . 'assets/js/main.js'),
                 'defer' => true,
                 'type' => 'module'
@@ -231,18 +230,31 @@ function sargapay_plugin_init_gateway_class()
             )
         );
 
-        wp_localize_script('wp_gen_address', 'wp_ajax_sargapay_save_address_vars', array(
-            'ajax_url' => admin_url('admin-ajax.php')
-        ));
-
-        wp_localize_script('wp_gen_address', 'wp_ajax_nopriv_sargapay_get_settings_vars', array(
-            'ajax_url' => admin_url('admin-ajax.php'),
-            'noWallet_txt' => esc_html(__('Cardano Wallet Not Found!', "sargapay-plugin")),
-            'unknown_txt' => esc_html(__('Something Went Wrong!', 'sargapay-plugin')),
-            'paid_txt' => esc_html(__('Paid', 'sargapay-plugin')),
-            'is_user_logged_in' => is_user_logged_in(),
-            'error_wrong_network_txt' => esc_html(__('Wrong Network, Please Select the Correct Network', 'sargapay-plugin'))
-        ));
+        if(is_user_logged_in()){
+            wp_localize_script('jquery', 'wp_ajax_sargapay_save_address', array(
+                'ajax_url' => admin_url('admin-ajax.php')
+            ));
+            wp_localize_script('jquery', 'wp_ajax_sargapay_get_settings_vars', array(
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'noWallet_txt' => esc_html(__('Cardano Wallet Not Found!', "sargapay-plugin")),
+                'unknown_txt' => esc_html(__('Something Went Wrong!', 'sargapay-plugin')),
+                'paid_txt' => esc_html(__('Paid', 'sargapay-plugin')),
+                'is_user_logged_in' => is_user_logged_in(),
+                'error_wrong_network_txt' => esc_html(__('Wrong Network, Please Select the Correct Network', 'sargapay-plugin'))
+            ));
+        }else{
+            wp_localize_script('jquery', 'wp_ajax_nopriv_sargapay_save_address', array(
+                'ajax_url' => admin_url('admin-ajax.php')
+            ));
+            wp_localize_script('jquery', 'wp_ajax_nopriv_sargapay_get_settings_vars', array(
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'noWallet_txt' => esc_html(__('Cardano Wallet Not Found!', "sargapay-plugin")),
+                'unknown_txt' => esc_html(__('Something Went Wrong!', 'sargapay-plugin')),
+                'paid_txt' => esc_html(__('Paid', 'sargapay-plugin')),
+                'is_user_logged_in' => is_user_logged_in(),
+                'error_wrong_network_txt' => esc_html(__('Wrong Network, Please Select the Correct Network', 'sargapay-plugin'))
+            ));
+        }        
 
         if ((is_checkout() && !empty(is_wc_endpoint_url('order-received'))) || is_account_page()) {
             wp_print_script_tag(

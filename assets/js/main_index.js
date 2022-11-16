@@ -74,11 +74,15 @@ function sargapay_copy_text() {
 }
 
 function sargapay_gen() {
+    const url = window.hasOwnProperty('wp_ajax_nonpriv_sargapay_save_address_vars') ?
+        wp_ajax_nonpriv_sargapay_save_address_vars.ajax_url :
+        wp_ajax_sargapay_save_address_vars.ajax_url
+
     //Get How many addresses have left
     const unused = null
     jQuery.ajax({
         type: "post",
-        url: wp_ajax_sargapay_save_address_vars.ajax_url,
+        url: url,
         data: {
             action: "sargapay_save_address",
             action_type: "get_unused",
@@ -113,13 +117,18 @@ function sargapay_gen() {
 }
 
 function sargapay_add_index(xpub, lastIndex, testnet) {
+
+    const url = window.hasOwnProperty('wp_ajax_nonpriv_sargapay_save_address_vars') ?
+        wp_ajax_nonpriv_sargapay_save_address_vars.ajax_url :
+        wp_ajax_sargapay_save_address_vars.ajax_url
+
     // Generate New Address
     const address = sargapay_generate_payment_address(xpub, lastIndex, 1, testnet)
         // Save New Address on DB
     if (address.length > 0 && !address[0].includes("Error:")) {
         jQuery.ajax({
             type: "post",
-            url: wp_ajax_sargapay_save_address_vars.ajax_url,
+            url: url,
             data: {
                 action: "sargapay_save_address",
                 addresses: address,
