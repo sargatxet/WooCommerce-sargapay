@@ -177,8 +177,8 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
     public function admin_options()
     {
         #sanitize 
-        $get_key = sanitize_text_field($_GET['screen']);
-        if (!isset($get_key) || '' === $get_key) {
+        $get_key =  isset($_GET['screen']) ? sanitize_text_field($_GET['screen']) : false;
+        if (!$get_key || '' === $get_key) {
             parent::admin_options();
         } else {
             if ('orders' === $get_key) {
