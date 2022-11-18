@@ -119,7 +119,7 @@ function sargapay_plugin_init_gateway_class()
     if (is_user_logged_in()) {
         add_action('wp_ajax_sargapay_save_address', 'sargapay_save_address');
         # Get APIKEY and Network for hotwallets
-        add_action('wp_ajax_get_sargapay_get_settings_vars', 'sargapay_get_settings_vars');
+        add_action('wp_ajax_sargapay_get_settings_vars', 'sargapay_get_settings_vars');
     } else {
         add_action('wp_ajax_nopriv_sargapay_save_address', 'sargapay_save_address');
         # Get APIKEY and Network for hotwallets
