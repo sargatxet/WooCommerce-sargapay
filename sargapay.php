@@ -295,12 +295,14 @@ function sargapay_plugin_log( $entry, $mode = 'a', $file = 'sargapay' ) {
     $upload_dir = $upload_dir['basedir'];
     // If the entry is array, json_encode.
     if ( is_array( $entry ) ) { 
-      $entry = json_encode( $entry ); 
-    } 
+      $entry = sanitize_text_field(json_encode( $entry )); 
+    } else{
+        $entry = sanitize_text_field($entry);
+    }
     // Write the log file.
     $file  = $upload_dir . '/' . $file . '.log';
     $file  = fopen( $file, $mode );
-    $bytes = fwrite( $file, current_time( 'mysql' ) . "::" . $entry . "\n" ); 
+    $bytes = fwrite( $file, current_time( 'mysql' ) . "::" . esc_html($entry) . "\n" ); 
     fclose( $file ); 
     return $bytes;
   }
