@@ -96,8 +96,8 @@ class Sargapay_ConfirmPayment
                     }
                 }
             }
-        }else{
-            sargapay_plugin_log("SARGAPAY::Error Payment Validation:: ". $wpdb->last_error);
+        } else if ($wpdb->last_error !== '') {
+            sargapay_plugin_log("SARGAPAY::Error Payment Validation:: " . $wpdb->last_error);
         }
     }
 
