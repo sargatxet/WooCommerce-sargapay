@@ -413,7 +413,7 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
     {
         global $woocommerce;
         $order = new WC_Order($order_id);
-
+        sargapay_plugin_log("INIT PROCESS PAYMENT");
         // Mark as on-hold (we're awaiting the confirmations)
         $order->update_status('on-hold', __('Awaiting valid payment', 'woocommerce'));
 

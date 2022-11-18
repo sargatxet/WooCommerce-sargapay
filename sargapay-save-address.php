@@ -49,9 +49,11 @@ function sargapay_save_address()
                     //Get Unused address from DB 
                     $esc_xpub = esc_sql($xpub);
                     if ($testmode == 1) {
-                        $response_query = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}wc_sargapay_address WHERE status_order = 'unused' AND testnet = 1 AND mpk = '$esc_xpub'");
+                        $response_query = $wpdb->get_results("SELECT id FROM {$wpdb->prefix}wc_sargapay_address WHERE status_order = 'unused' AND testnet = 1 AND mpk = '$esc_xpub'");
+                        $response_query = count($response_query);
                     } else {
-                        $response_query = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}wc_sargapay_address WHERE status_order = 'unused' AND testnet = 0 AND mpk = '$esc_xpub'");
+                        $response_query = $wpdb->get_results("SELECT id FROM {$wpdb->prefix}wc_sargapay_address WHERE status_order = 'unused' AND testnet = 0 AND mpk = '$esc_xpub'");                        
+                        $response_query = count($response_query);
                     }
                     if ($last_index == 0 && $was_null) {
                         $last_index = null;
@@ -67,7 +69,12 @@ function sargapay_save_address()
                             if ($last_index != 0) {
                                 $last_index += 1;
                             } else if ($last_index == 0) {
-                                $first_address = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}wc_sargapay_address WHERE testnet = %d AND mpk = %s"), $testmode, $xpub);
+                                $esc_xpub = esc_sql($xpub);
+                                $first_address = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}wc_sargapay_address WHERE testnet = '$testmode' AND mpk = '$esc_xpub'");
+                                sargapay_plugin_log("SARGAPAY::". $testmode);
+                                sargapay_plugin_log("SARGAPAY2::". $xpub);
+                                sargapay_plugin_log("SARGAPAY3::". var_dump($first_address));
+                                $first_address = count($first_address);
                                 if ($first_address == 1) {
                                     $last_index = 1;
                                 }

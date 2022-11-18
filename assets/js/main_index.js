@@ -95,14 +95,16 @@ function sargapay_gen() {
             const xpub = response.xpub
             const testnet = response.network
             let lastIndex = response.last_unused
-            console.dir(parseInt(unused))
+            console.log("unused", unused)
+            console.dir(response)
+            console.log(":D")
 
             // No address ever generated
             if (lastIndex === null) {
                 lastIndex = 0
             } else {
                 lastIndex = parseInt(response.last_unused)
-                if (lastIndex === 0) {
+                if (lastIndex == 0) {
                     // first address generated
                     lastIndex = 1
                 } else {
@@ -112,6 +114,7 @@ function sargapay_gen() {
             }
             // IF you have less than 20 unused address you will generate a new one
             if (parseInt(unused) < 20) {
+                console.log("last index", lastIndex)
                 sargapay_add_index(xpub, lastIndex, testnet)
             }
         },
