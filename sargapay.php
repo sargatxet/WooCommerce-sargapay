@@ -64,17 +64,17 @@ function sargapay_activate()
 function sargapay_cron_hook($schedules)
 {
     $schedules['every_ten_minutes'] = array(
-        'interval'  => 60 * 10,
+        'interval'  => 60 * 2,
         'display'   => __('Every 10 Minutes', 'sargapay')
     );
     return $schedules;
 }
 
 // Hook for transactions check, that'll fire every 10 minutes
-function check_confirmations_cardano()
+function sargapay_check_confirmations_cardano()
 {
     $check_confirm = new Sargapay_ConfirmPayment();
-    $check_confirm->sargapay_check_all_pendding_orders();
+    $check_confirm->sargapay_check_all_pendding_orders(); 
 }
 
 /* Deactivate Actions
@@ -230,7 +230,7 @@ function sargapay_plugin_init_gateway_class()
             )
         );
 
-        if(is_user_logged_in()){
+        if (is_user_logged_in()) {
             wp_localize_script('jquery', 'wp_ajax_sargapay_save_address', array(
                 'ajax_url' => admin_url('admin-ajax.php')
             ));
@@ -242,7 +242,7 @@ function sargapay_plugin_init_gateway_class()
                 'is_user_logged_in' => is_user_logged_in(),
                 'error_wrong_network_txt' => esc_html(__('Wrong Network, Please Select the Correct Network', 'sargapay-plugin'))
             ));
-        }else{
+        } else {
             wp_localize_script('jquery', 'wp_ajax_nopriv_sargapay_save_address', array(
                 'ajax_url' => admin_url('admin-ajax.php')
             ));
@@ -254,7 +254,7 @@ function sargapay_plugin_init_gateway_class()
                 'is_user_logged_in' => is_user_logged_in(),
                 'error_wrong_network_txt' => esc_html(__('Wrong Network, Please Select the Correct Network', 'sargapay-plugin'))
             ));
-        }        
+        }
 
         if ((is_checkout() && !empty(is_wc_endpoint_url('order-received'))) || is_account_page()) {
             wp_print_script_tag(
@@ -265,7 +265,7 @@ function sargapay_plugin_init_gateway_class()
                     'type' => 'module'
                 )
             );
-                       
+
             wp_enqueue_script('wp_sarga_alerts', plugin_dir_url(__FILE__) . 'assets/js/sweetalert2.all.min.js', array('jquery'));
         }
 
@@ -288,3 +288,19 @@ function sargapay_plugin_init_gateway_class()
         return $protocols;
     });
 }
+
+function sargapay_plugin_log( $entry, $mode = 'a', $file = 'sargapay' ) { 
+    // Get WordPress uploads directory.
+    $upload_dir = wp_upload_dir();
+    $upload_dir = $upload_dir['basedir'];
+    // If the entry is array, json_encode.
+    if ( is_array( $entry ) ) { 
+      $entry = json_encode( $entry ); 
+    } 
+    // Write the log file.
+    $file  = $upload_dir . '/' . $file . '.log';
+    $file  = fopen( $file, $mode );
+    $bytes = fwrite( $file, current_time( 'mysql' ) . "::" . $entry . "\n" ); 
+    fclose( $file ); 
+    return $bytes;
+  }

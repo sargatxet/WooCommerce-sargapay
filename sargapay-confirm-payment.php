@@ -21,13 +21,13 @@
 class Sargapay_ConfirmPayment
 {
 
-    function check_all_pendding_orders()
+    function sargapay_check_all_pendding_orders()
     {
         global $wpdb;
         $table = $wpdb->prefix . 'wc_sargapay_address';
         $orders = $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT id, pay_address, order_id, order_amount, testnet FROM {$wpdb->prefix}wc_sargapay_address WHERE WHERE status_order = 'on-hold' OR status_order = 'validation'",
+                "SELECT id, pay_address, order_id, order_amount, testnet FROM {$wpdb->prefix}wc_sargapay_address WHERE status_order = 'on-hold' OR status_order = 'validation'",
             )
         );
         if ($wpdb->last_error === "" && count($orders) !== 0) {
@@ -96,6 +96,8 @@ class Sargapay_ConfirmPayment
                     }
                 }
             }
+        }else{
+            sargapay_plugin_log("SARGAPAY::Error Payment Validation:: ". $wpdb->last_error);
         }
     }
 
