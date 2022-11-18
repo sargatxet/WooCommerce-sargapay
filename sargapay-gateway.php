@@ -237,7 +237,7 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
                                                         $order_id
                                                     )
                                                 );
-                                                if ($wpdb->last_error === "" || count($query_result) === 0) {
+                                                if ($wpdb->last_error === "" && count($query_result) === 0) {
                                                     $ada_amount = "Error";
                                                 } else {
                                                     $ada_amount = $query_result[0]->order_amount;
