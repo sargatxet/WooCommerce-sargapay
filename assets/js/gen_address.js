@@ -19,12 +19,12 @@ import * as Cardano from "./cardano-serialization-lib-asmjs/cardano_serializatio
 import { bech32 } from "./bech32.js"
 import { Buffer } from "./buffer-es6/index.js"
 
-export function sargapay_generate_payment_address(
+export const sargapay_generate_payment_address = (
     xpub,
     lastindex,
     num_address,
     network_param
-) {
+) => {
     const result = []
         // Testnet = 0 Mainnet = 1
     const network =
