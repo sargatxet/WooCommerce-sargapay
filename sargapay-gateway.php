@@ -182,6 +182,8 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
             parent::admin_options();
         } else {
             if ('orders' === $get_key) {
+                global $hide_save_button;
+                $hide_save_button    = true;
         ?>
                 <h2>
                     <a href="<?php echo esc_url(admin_url('admin.php?page=wc-settings&tab=checkout&section=sargapay')); ?>"><?php echo esc_html($this->method_title); ?>
@@ -264,8 +266,9 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
     function process_admin_options()
     {
 
-        $get_key = sanitize_text_field($_GET['screen']);
-        if (isset($get_key) && '' !== $get_key) {
+        #sanitize 
+        $get_key =  isset($_GET['screen']) ? sanitize_text_field($_GET['screen']) : false;
+        if ($get_key || '' !== $get_key) {
         } else {
             parent::process_admin_options();
             $errors = 0;
