@@ -41,7 +41,7 @@ function sargapay_view_order_cancel_notice($order_id)
                 if ($query_address[0]->testnet) {
                     $testnet_msg  = __("BE AWARE THIS IS A TESTNET PAYMENT ADDRESS", 'sargapay');
                 ?>
-                    <p style='background:red; font-weight:bold; color:white; text-align:center;'><?php echo esc_html($testnet_msg); ?> </p>
+                    <h3 style='background:red; font-weight:bold; color:white; text-align:center;'><?php echo esc_html($testnet_msg); ?> </h3>
                 <?php
                 }
                 // Get order amount in ada
@@ -52,9 +52,8 @@ function sargapay_view_order_cancel_notice($order_id)
                 // Get the timestamp in seconds
                 $date_created_ts = $date_created_dt->getTimestamp();
                 $text = __("Time left to make the payment ", 'sargapay');
-                $qr = GenerateQR::getInstance();
-                ?>
-                <p style="text-align: center;"><?php echo esc_html($text); ?></p>
+                $qr = Sargapay_GenerateQR::getInstance();
+                ?> <p style="text-align: center;"><?php echo esc_html($text); ?></p>
                 <p id='sarga-timestamp' style='display:none;'><?php echo esc_html($date_created_ts) ?></p>
                 <p id="sarga-countdown" style="text-align: center;"></p>
                 <p style="text-align: center;"><b><?php echo esc_html(__('Payment Address', 'sargapay')); ?></b><br><span id="pay_add_p_field_tk_plugin"><?php echo esc_html($payment_address); ?></span>
