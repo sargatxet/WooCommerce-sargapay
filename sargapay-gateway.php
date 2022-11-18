@@ -265,10 +265,10 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
 
     function process_admin_options()
     {
-
         #sanitize 
         $get_key =  isset($_GET['screen']) ? sanitize_text_field($_GET['screen']) : false;
-        if ($get_key || '' !== $get_key) {
+        if ($get_key && '' !== $get_key) {
+            return false;
         } else {
             parent::process_admin_options();
             $errors = 0;
@@ -302,8 +302,7 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
                 $errors = $this->check_API_KEY($_POST['woocommerce_sargapay_testmode'], $_POST['woocommerce_sargapay_blockfrost_test_key']);
             }
             return $errors === 0;
-        }
-        return false;
+        }       
     }
 
     // API KEY CHECK

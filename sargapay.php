@@ -64,7 +64,7 @@ function sargapay_activate()
 function sargapay_cron_hook($schedules)
 {
     $schedules['every_ten_minutes'] = array(
-        'interval'  => 60 * 2,
+        'interval'  => 60 * 10,
         'display'   => __('Every 10 Minutes', 'sargapay')
     );
     return $schedules;
