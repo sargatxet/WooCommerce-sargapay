@@ -123,7 +123,7 @@ class Sargapay_WC_Gateway extends WC_Payment_Gateway
             'confirmations' => array(
                 'title'       => __('Confirmations', 'sargapay'),
                 'type'        => 'select',
-                'description' => __('Confirmations needed to accept a trasaction as valid.', 'sargapay'),
+                'description' => __('Confirmations needed to accept a transaction as valid.', 'sargapay'),
                 'options' => array(
                     '1' => '1',
                     '2' => '2',

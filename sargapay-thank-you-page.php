@@ -36,7 +36,7 @@ function sargapay_thank_you_text($thank_you_title, $order)
             ));
             //ERROR DB
             if ($wpdb->last_error === "" && count($query_address) === 0) {
-                $message = "<p>" . esc_html(__('ERROR PLEASE CONTACT ADMIN TO PROCCED WITH THE ORDER', 'sargapay')) . "</p>";
+                $message = "<p>" . esc_html(__('ERROR PLEASE CONTACT ADMIN TO PROCEED WITH THE ORDER', 'sargapay')) . "</p>";
                 return $thank_you_title . "<br>" . $message . '<br><br>';
             } else if ($wpdb->last_error === "") {
                 if ($query_address[0]->testnet) {

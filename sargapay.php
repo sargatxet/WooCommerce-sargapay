@@ -2,7 +2,7 @@
 /*
  * Plugin Name: Sargapay
  * Plugin URI: https://github.com/sargatxet/WooCommerce-sargapay/
- * Description: Recive payments using Cardano ADA
+ * Description: Receive payments using Cardano ADA
  * Author: Sargatxet
  * Author URI: https://cardano.sargatxet.cloud/
  * Text Domain: sargapay
@@ -49,7 +49,7 @@ function sargapay_activate()
         die(__('Plugin NOT activated: WooCommerce is required', 'sargapay'));
     }
     if (PHP_VERSION_ID <= 70399) {
-        die(__('Plugin NOT activated: Minimun PHP version required  is 7.4', 'sargapay'));
+        die(__('Plugin NOT activated: Minimum PHP version required is 7.4', 'sargapay'));
     }
     //Register verification 
     if (!wp_next_scheduled('sargapay_cron_hook')) {

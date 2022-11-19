@@ -100,7 +100,7 @@ function sargapay_save_address()
                                     $last_index += 1;
                                 }
                             }
-                            wp_send_json(__(' Adresses Generated and Saved in Database.', 'sargapay'));
+                            wp_send_json(__(' Addresses Generated and Saved in Database.', 'sargapay'));
                         }
                     }
                 }
