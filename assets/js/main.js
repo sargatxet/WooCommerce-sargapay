@@ -15,30 +15,11 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-import { generate_payment_address } from "./gen_address.js"
+import { sargapay_generate_payment_address } from "./gen_address.js"
 
 window.onload = function() {
-    const btn = document.getElementById("genButton")
-    if (btn) {
-        btn.addEventListener("click", function(event) {
-            event.preventDefault()
-            const selected_option = document.getElementById("num_address")
-                //validate the seleccted option value is a number
-            if (!isNaN(selected_option.value)) {
-                //show loading
-                show_loader()
-                    /* Set Amount of address to be generated
-                     * if option value is more than 400 the value
-                     * will be set to 400 to prevent the browser to hang*/
-                const address_amount =
-                    selected_option.value > 400 ? 400 : selected_option.value
-                    //Generate pay addresses for network enabled
-                ajax_gen_address(address_amount)
-            }
-        })
-    }
     //Generate Check Button
-    const input = document.getElementById("woocommerce_sargapay-plugin_mpk")
+    const input = document.getElementById("woocommerce_sargapay_mpk")
     if (input) {
         let pay_address_mainet = null
         let pay_address_testnet = null
@@ -69,114 +50,62 @@ window.onload = function() {
             button.textContent = "Test Public Key"
         }
         //Generate Check Button 
-        gen_extra_fields();
+        sargapay_gen_extra_fields();
+        sargapay_ajax_gen_address(1)
     }
 }
 
-function ajax_gen_address(num_address) {
+function sargapay_ajax_gen_address() {
     jQuery.ajax({
         type: "post",
-        url: wp_ajax_save_address_vars.ajax_url,
+        url: wp_ajax_sargapay_save_address.ajax_url,
         data: {
-            action: "save_address",
+            action: "sargapay_save_address",
             action_type: "get_xpub"
         },
         error: function(response) {
             console.log(response)
-            hide_loader()
         },
         success: function(response) {
             // Get xpub and data needed to generate payment addresses
-            let lastIndex = response.last_unused
-            if (lastIndex == null) {
-                lastIndex = 0
-            } else if (lastIndex != 0) {
-                lastIndex = parseInt(lastIndex) + 1
-            }
+            const unused = response.unused === null ? 0 : response.unused
             const xpub = response.xpub
             const testnet = response.network
-            const addresses = generate_payment_address(
-                xpub,
-                lastIndex,
-                num_address,
-                testnet
-            )
-            if (addresses.length > 0 && !addresses[0].includes("Error:")) {
-                jQuery.ajax({
-                    type: "post",
-                    url: wp_ajax_save_address_vars.ajax_url,
-                    data: {
-                        action: "save_address",
-                        addresses: addresses,
-                        action_type: "save_address"
-                    },
-                    error: function(response) {
-                        console.log(response)
-                            //hide loading
-                        hide_loader()
-                    },
-                    success: function(response) {
-                        //hide loading
-                        hide_loader()
-                        alert(response)
-                    }
-                })
+            let lastIndex = response.last_unused
+
+            // No address ever generated
+            if (lastIndex === null) {
+                lastIndex = 0
             } else {
-                alert(addresses)
+                lastIndex = parseInt(response.last_unused)
+                if (lastIndex === 0) {
+                    // first address generated
+                    lastIndex = 1
+                } else {
+                    // more than one addresses were generated
+                    lastIndex += 1
+                }
+            }
+            // IF you have less than 20 unused address you will generate a new one
+            if (parseInt(unused) < 20) {
+                sargapay_add_index(xpub, lastIndex, testnet)
             }
         }
     })
 }
 
-function show_loader() {
-    const button = document.getElementById("genButton")
-    button.disabled = true
-    if (!document.getElementById("loader_cardano")) {
-        //Create Loading
-        const div = document.createElement("div")
-        div.id = "loader_cardano"
-        div.style.position = "absolute"
-        div.style.zIndex = "1000"
-        div.style.marginLeft = "40%"
-        div.style.border = "16px solid #b3b3cc"
-        div.style.borderRadius = "50%"
-        div.style.borderTop = "16px solid #3498db"
-        div.style.width = "50px"
-        div.style.height = "50px"
-        div.style.animation = "spin 2s linear infinite"
-        div.animate(
-            [
-                // keyframes
-                { transform: "rotate(0deg)" },
-                { transform: "rotate(360deg)" }
-            ], {
-                // timing options
-                duration: 2000,
-                iterations: Infinity
-            }
-        )
-        button.after(div)
-    }
-}
 
-function hide_loader() {
-    const button = document.getElementById("genButton");
-    button.disabled = false;
-    const div = document.getElementById("loader_cardano");
-    div.remove();
-}
-
-function gen_extra_fields() {
-    const input = document.getElementById('woocommerce_sargapay-plugin_mpk');
-    const ap_k_main = document.getElementById('woocommerce_sargapay-plugin_blockfrost_key');
-    const ap_k_test = document.getElementById('woocommerce_sargapay-plugin_blockfrost_test_key');
+function sargapay_gen_extra_fields() {
+    const input = document.getElementById('woocommerce_sargapay_mpk');
+    const ap_k_main = document.getElementById('woocommerce_sargapay_blockfrost_key');
+    const ap_k_test = document.getElementById('woocommerce_sargapay_blockfrost_test_key');
     let pay_address_mainet = null;
     let pay_address_testnet = null;
-    if (ap_k_main) show_p(ap_k_main);
-    if (ap_k_test) show_p(ap_k_test);
+    if (ap_k_main) sargapay_show_p(ap_k_main);
+    if (ap_k_test) sargapay_show_p(ap_k_test);
     if (input) {
         // Show Password btn        
-        show_p(input);
+        sargapay_show_p(input);
         // Add Div to Public Key input
         const div = document.createElement("div");
         input.after(div);
@@ -223,9 +152,9 @@ function gen_extra_fields() {
                 }
                 const xpub = input.value.trim();
                 //Generate Payment Address Mainet
-                pay_address_mainet = generate_payment_address(xpub, index_value, 1, 1);
+                pay_address_mainet = sargapay_generate_payment_address(xpub, index_value, 1, 1);
                 //Generate Payment Address Testnet
-                pay_address_testnet = generate_payment_address(xpub, index_value, 1, 0);
+                pay_address_testnet = sargapay_generate_payment_address(xpub, index_value, 1, 0);
                 if (!document.getElementById('address_testnet_p')) {
                     const address_testnet = document.createElement("p");
                     address_testnet.style.fontWeight = 'bold';
@@ -253,7 +182,7 @@ function gen_extra_fields() {
     }
 }
 
-function show_p(input) {
+function sargapay_show_p(input) {
     const btn = document.createElement("span");
     btn.className = "button dashicons dashicons-visibility";
     btn.style.paddingRight = "25px";
@@ -268,4 +197,30 @@ function show_p(input) {
             btn.className = "button dashicons dashicons-visibility";
         }
     });
+}
+
+function sargapay_add_index(xpub, lastIndex, testnet) {
+
+    const url = wp_ajax_sargapay_save_address.ajax_url
+    console.log("add index")
+
+    // Generate New Address
+    const address = sargapay_generate_payment_address(xpub, lastIndex, 1, testnet)
+
+    console.dir(address)
+
+    // Save New Address on DB
+    if (address.length > 0 && !address[0].includes("Error:")) {
+        jQuery.ajax({
+            type: "post",
+            url: url,
+            data: {
+                action: "sargapay_save_address",
+                addresses: address,
+                action_type: "save_address",
+            },
+        })
+    } else {
+        console.log("error address")
+    }
 }

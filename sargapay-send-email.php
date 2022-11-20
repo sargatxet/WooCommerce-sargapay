@@ -17,14 +17,14 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-function SARGAPAY_add_content_wc_order_email($order, $sent_to_admin, $plain_text, $email)
+function sargapay_add_content_wc_order_email($order, $sent_to_admin, $plain_text, $email)
 {
   if ($email->id == 'customer_on_hold_order') {
-    if ($order->get_payment_method() === "sargapay-plugin") {
+    if ($order->get_payment_method() === "sargapay") {
       if ($plain_text === false) {
-        echo "<p>." . esc_html(__('Instructions for payment will be send soon!', 'sargapay-plugin')) . "</p>";
+        echo "<p>." . esc_html(__('Instructions for payment will be send soon!', 'sargapay')) . "</p>";
       } else {
-        echo esc_html(__("Instructions for payment will be send soon!\n", 'sargapay-plugin'));
+        echo esc_html(__("Instructions for payment will be send soon!", 'sargapay')) . '\n';
       }
     }
   }
@@ -36,7 +36,7 @@ function SARGAPAY_add_content_wc_order_email($order, $sent_to_admin, $plain_text
 // @heading - Heading to place inside of the woocommerce template
 // @message - Body content (can be HTML)
 // @attachments - Attach Files
-function send_email_woocommerce_style($email, $subject, $testnet_bool, $total, $address, $path, $name)
+function sargapay_send_email_woocommerce_style($email, $subject, $testnet_bool, $total, $address, $path, $name)
 {
 
   // Define headers html emails
@@ -60,22 +60,21 @@ function send_email_woocommerce_style($email, $subject, $testnet_bool, $total, $
     // Load QR Img
     $attachment = array($path);
   } else {
-    write_log("Error: QR File doesn't Exist");
     $attachment = array();
   }
 
-  $subject = __("Payment Instructions ", 'sargapay-plugin') . get_bloginfo('name');
-  $heading = __("Payment Instructions ", 'sargapay-plugin');
-  $message =  "<h2 style='overflow-wrap:anywhere;'>" . __("You have 24hrs to pay before the order is cancelled", 'sargapay-plugin') . "<h2>";
-  $message .= "</h2><h2>" . esc_html(__('Total Amount in ADA ', 'sargapay-plugin')) . $total . "</h2>";
+  $subject = __("Payment Instructions ", 'sargapay') . get_bloginfo('name');
+  $heading = __("Payment Instructions ", 'sargapay');
+  $message =  "<h2 style='overflow-wrap:anywhere;'>" . __("You have 24hrs to pay before the order is cancelled", 'sargapay') . "<h2>";
+  $message .= "</h2><h2>" . esc_html(__('Total Amount in ADA ', 'sargapay')) . $total . "</h2>";
   if ($testnet_bool) {
-    $message .= "<h3>" . esc_html(__(' TESTNET ADDRESS', 'sargapay-plugin')) . "</h3>";
+    $message .= "<h3>" . esc_html(__(' TESTNET ADDRESS', 'sargapay')) . "</h3>";
   } else {
-    $message .= "<h3>" . esc_html(__("Address", 'sargapay-plugin')) . "</h3>";
+    $message .= "<h3>" . esc_html(__("Address", 'sargapay')) . "</h3>";
   }
   $message .= '<div><img src="cid:qrimg" style="margin-left: auto; margin-right: auto;"></div>';
-  $message .= "<p style='font-weight: bold;'>" . adrress_break($address) . "</p>";
-  $message .= "<p>" . esc_html(__('You can verify the payment address and amount if you login and go to my-account/orders', 'sargapay-plugin')) . "</p>";
+  $message .= "<p style='font-weight: bold;'>" . sargapay_adrress_break($address) . "</p>";
+  $message .= "<p>" . esc_html(__('You can verify the payment address and amount if you login and go to my-account/orders', 'sargapay')) . "</p>";
   $message .= $ad;
   // Get woocommerce mailer from instance
   $mailer = WC()->mailer();
@@ -90,22 +89,22 @@ function send_email_woocommerce_style($email, $subject, $testnet_bool, $total, $
   $html_message = $wc_email->style_inline($wrapped_message);
 
   // Send the email using wordpress mail function
-  add_filter('wp_mail_content_type', 'my_custom_email_content_type');
+  add_filter('wp_mail_content_type', 'sargapay_custom_email_content_type');
   wp_mail($email, $subject, $html_message, $headers, $attachment);
   // Clean Attachments and header
-  remove_filter('wp_mail_content_type', 'my_custom_email_content_type');
+  remove_filter('wp_mail_content_type', 'sargapay_custom_email_content_type');
   if (file_exists($path)) {
     remove_action('phpmailer_init', $phpmailerInitAction);
     unlink($path);
   }
 }
 
-function my_custom_email_content_type()
+function sargapay_custom_email_content_type()
 {
   return 'text/html';
 }
 
-function adrress_break($address)
+function sargapay_adrress_break($address)
 {
   $new_address = '';
   $address_1 = explode('>', $address);

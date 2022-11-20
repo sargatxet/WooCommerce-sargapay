@@ -18,17 +18,17 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
+class Sargapay_WC_Gateway extends WC_Payment_Gateway
 {
 
     public function __construct()
     {
 
-        $this->id = 'sargapay-plugin';
+        $this->id = 'sargapay';
         $this->icon = plugin_dir_url(__FILE__) . '/assets/img/ada_logo.png';
         $this->has_fields = true;
         $this->method_title = 'Sargapay Gateway';
-        $this->method_description = __('Allow customers to pay using Cardano ADA', 'sargapay-plugin'); //traducir
+        $this->method_description = __('Allow customers to pay using Cardano ADA', 'sargapay'); //traducir
         $this->supports = array(
             'products'
         );
@@ -51,93 +51,26 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
     }
     public function generate_screen_button_html($key, $value)
     {
-        if (true) {
 ?>
-            <!-- Banner Config Panel TODO: text and check for license -->
-            <style>
-                .ad-container {
-                    display: flex;
-                    justify-content: space-between;
-                    padding: 25px 0;
-                }
-
-                .banner-container {
-                    display: flex;
-                    flex-direction: column;
-                }
-
-                .banner {
-                    background-image: linear-gradient(135deg, #3C8CE7 10%, #00EAFF 100%);
-                    color: white;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-around;
-                    width: 50vw;
-                    height: 10vh;
-                    padding: 10px;
-                    border-radius: 10px;
-                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                }
-
-                .img-container {
-                    width: 40%;
-                    display: flex;
-                    justify-content: center;
-                }
-
-                .header-subtitle {
-                    text-align: left;
-                    font-weight: bold;
-                }
-
-                .banner-logo {
-                    height: 20vh;
-                    width: 30vh;
-                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-                }
-
-                .banner-link {
-                    text-decoration: none;
-                    color: #fff;
-                    font-size: 2vw;
-                    font-weight: bold;
-                }
-
-                .banner-link:after,
-                .banner-link:hover,
-                .banner-link:active {
-                    color: #fff;
-                }
-
-                .discord-logo {
-                    height: 40px;
-                }
-
-                .icono-link {
-                    font-size: 2vw;
-                    padding-right: 5px;
-                }
-            </style>
-            <tr valign="top">
-                <td colspan="2" class="forminp forminp-<?php echo sanitize_title($value['type']) ?>">
-                    <div class="ad-container">
-                        <div class="banner-container">
-                            <span class="header-subtitle">Delega en el pool de Cardano Sargatxet</span>
-                            <div class="banner">
-                                <a class="banner-link" href="https://cardano.sargatxet.cloud/" target="_blank"><span class="dashicons dashicons-admin-site-alt3 icono-link"></span> Website</a>
-                                <a class="banner-link" href="https://discord.gg/X6Ruku9q42" target="_blank"><img class="discord-logo" src="<?php echo plugin_dir_url(__FILE__) . '/assets/img/discord.png';  ?>" alt="Discord Logo" /></a>
-                            </div>
-                        </div>
-                        <div class="img-container">
-                            <img class="banner-logo" src="<?php echo plugin_dir_url(__FILE__) . '/assets/img/banner.png';  ?>" alt="Sargatxet Logo" />
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        <?php } ?>
         <tr valign="top">
             <td colspan="2" class="forminp forminp-<?php echo sanitize_title($value['type']) ?>">
-                <a href="<?php echo admin_url('admin.php?page=wc-settings&tab=checkout&section=sargapay-plugin&screen=orders'); ?>" class="button"><?php _e('Orders Paid with this plugin', 'sargapay-plugin'); ?></a>
+                <div class="ad-container">
+                    <div class="banner-container">
+                        <span class="header-subtitle">Delega en el pool de Cardano Sargatxet</span>
+                        <div class="banner">
+                            <a class="banner-link" href="https://cardano.sargatxet.cloud/" target="_blank"><span class="dashicons dashicons-admin-site-alt3 icono-link"></span> Website</a>
+                            <a class="banner-link" href="https://discord.gg/X6Ruku9q42" target="_blank"><img class="discord-logo" src="<?php echo plugin_dir_url(__FILE__) . 'assets/img/discord.png';  ?>" alt="Discord Logo" /></a>
+                        </div>
+                    </div>
+                    <div class="img-container">
+                        <img class="banner-logo" src="<?php echo plugin_dir_url(__FILE__) . 'assets/img/banner.png';  ?>" alt="Sargatxet Logo" />
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr valign="top">
+            <td colspan="2" class="forminp forminp-<?php echo sanitize_title($value['type']) ?>">
+                <a href="<?php echo admin_url('admin.php?page=wc-settings&tab=checkout&section=sargapay&screen=orders'); ?>" class="button"><?php _e('Orders Paid with this plugin', 'sargapay'); ?></a>
             </td>
         </tr>
         <?php
@@ -155,42 +88,42 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
                 'title' => 'Other Settings',
             ),
             'enabled' => array(
-                'title'       => __('Enable/Disable', 'sargapay-plugin'),
-                'label'       => __('Enable Sargapay Gateway', 'sargapay-plugin'),
+                'title'       => __('Enable/Disable', 'sargapay'),
+                'label'       => __('Enable Sargapay Gateway', 'sargapay'),
                 'type'        => 'checkbox',
                 'description' => '',
-                'default'     => __('no', 'sargapay-plugin'),
+                'default'     => __('no', 'sargapay'),
             ),
             'title' => array(
-                'title'       => __('Title', 'sargapay-plugin'),
+                'title'       => __('Title', 'sargapay'),
                 'type'        => 'text',
-                'description' => __('This controls the title which the user sees during checkout.', 'sargapay-plugin'),
-                'default'     => __('Pay with Cardano ADA', 'sargapay-plugin'),
+                'description' => __('This controls the title which the user sees during checkout.', 'sargapay'),
+                'default'     => __('Pay with Cardano ADA', 'sargapay'),
                 'desc_tip'    => true,
             ),
             'description' => array(
-                'title'       => __('Description', 'sargapay-plugin'),
+                'title'       => __('Description', 'sargapay'),
                 'type'        => 'textarea',
-                'description' => __('This controls the description which the user sees during checkout.', 'sargapay-plugin'),
-                'default'     => __('Pay using Cardano ADA via our super-cool payment gateway. You have 24 hrs to pay or the order will be cancelled.', 'sargapay-plugin'),
+                'description' => __('This controls the description which the user sees during checkout.', 'sargapay'),
+                'default'     => __('Pay using Cardano ADA via our super-cool payment gateway. You have 24 hrs to pay or the order will be cancelled.', 'sargapay'),
             ),
             'testmode' => array(
-                'title'       => __('Test mode', 'sargapay-plugin'),
-                'label'       => __('Enable Test Mode', 'sargapay-plugin'),
+                'title'       => __('Test mode', 'sargapay'),
+                'label'       => __('Enable Test Mode', 'sargapay'),
                 'type'        => 'checkbox',
-                'description' => __('Place the payment gateway in test mode to use TESTNET.', 'sargapay-plugin'),
-                'default'     => __('yes', 'sargapay-plugin'),
+                'description' => __('Place the payment gateway in test mode to use TESTNET.', 'sargapay'),
+                'default'     => __('yes', 'sargapay'),
                 'desc_tip'    => true,
             ),
             'mpk' => array(
-                'title'       => __('Public Adress Key for Cardano', 'sargapay-plugin'),
+                'title'       => __('Public Address Key for Cardano', 'sargapay'),
                 'type'        => 'password',
-                'description' => __('Place the Public Adress Key to generate Payment Addresses.', 'sargapay-plugin'),
+                'description' => __('Place the Public Address Key to generate Payment Addresses.', 'sargapay'),
             ),
             'confirmations' => array(
-                'title'       => __('Confirmations', 'sargapay-plugin'),
+                'title'       => __('Confirmations', 'sargapay'),
                 'type'        => 'select',
-                'description' => __('Confirmations needed to accept a trasaction as valid.', 'sargapay-plugin'),
+                'description' => __('Confirmations needed to accept a transaction as valid.', 'sargapay'),
                 'options' => array(
                     '1' => '1',
                     '2' => '2',
@@ -210,27 +143,27 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
                 'desc_tip'    => true,
             ),
             'markup' => array(
-                'title'       => __('Markup/Markdown %', 'sargapay-plugin'),
+                'title'       => __('Markup/Markdown %', 'sargapay'),
                 'type'        => 'float',
-                'description' => __('This only increases the crypto amount owed, the original fiat value will still be displayed to the customer. 3.8 = 3.8% markup, -10.0 = 10.0% markdown', 'sargapay-plugin'),
+                'description' => __('This only increases the crypto amount owed, the original fiat value will still be displayed to the customer. 3.8 = 3.8% markup, -10.0 = 10.0% markdown', 'sargapay'),
                 'desc_tip'    => false,
             ),
             'blockfrost_key' => array(
-                'title'       => '<a href="https://blockfrost.io/">' . __('Blockfrost API Key for Mainnet', 'sargapay-plugin') . '</a>',
+                'title'       => '<a href="https://blockfrost.io/">' . __('Blockfrost API Key for Mainnet', 'sargapay') . '</a>',
                 'type'        => 'password',
-                'description' => __('Place the API KEY to use BlockFrost to verify transactions on Mainnet.', 'sargapay-plugin'),
+                'description' => __('Place the API KEY to use BlockFrost to verify transactions on Mainnet.', 'sargapay'),
                 'desc_tip'    => true,
             ),
             'blockfrost_test_key' => array(
-                'title'       => '<a href="https://blockfrost.io/">' . __('Blockfrost API Key for Testnet.', 'sargapay-plugin') . '</a>',
+                'title'       => '<a href="https://blockfrost.io/">' . __('Blockfrost API Key for Testnet.', 'sargapay') . '</a>',
                 'type'        => 'password',
-                'description' => __('Place the API KEY to use BlockFrost to verify transactions on Testnet.', 'sargapay-plugin'),
+                'description' => __('Place the API KEY to use BlockFrost to verify transactions on Testnet.', 'sargapay'),
                 'desc_tip'    => true,
             ),
             'currency' => array(
-                'title'       => __('Currency', 'sargapay-plugin'),
+                'title'       => __('Currency', 'sargapay'),
                 'type'        => 'select',
-                'description' => __('Currency used in case default currency is not supported.', 'sargapay-plugin'),
+                'description' => __('Currency used in case default currency is not supported.', 'sargapay'),
                 'default'     => 'USD',
                 'options' => array(
                     'EUR' => 'EUR',
@@ -243,12 +176,21 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
 
     public function admin_options()
     {
-        if (!isset($_GET['screen']) || '' === $_GET['screen']) {
+        #sanitize 
+        $get_key =  isset($_GET['screen']) ? sanitize_text_field($_GET['screen']) : false;
+        if (!$get_key || '' === $get_key) {
             parent::admin_options();
         } else {
-            if ('orders' === $_GET['screen']) {
-                echo '<h2><a href="' . admin_url('admin.php?page=wc-settings&tab=checkout&section=sargapay-plugin') . '">' . $this->method_title . '</a> > ' . __('Orders done with Sargapay Gateway', 'sargapay-plugin') . '</h2>';
-                $hide_save_button = true; // Remove the submit button need to be fixed.
+            if ('orders' === $get_key) {
+                global $hide_save_button;
+                $hide_save_button    = true;
+        ?>
+                <h2>
+                    <a href="<?php echo esc_url(admin_url('admin.php?page=wc-settings&tab=checkout&section=sargapay')); ?>"><?php echo esc_html($this->method_title); ?>
+                    </a>
+                    <?php echo __('Orders done with Sargapay Gateway', 'sargapay'); ?>
+                </h2>
+                <?php
                 $orders = wc_get_orders(array(
                     'limit' => '-1',
                     'payment_method' => $this->id,
@@ -288,15 +230,15 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
                                             <?php elseif ('order-total' === $column_id) : ?>
                                                 <?php
                                                 global $wpdb;
-                                                $table = $wpdb->prefix . 'wc_sarga_address';
                                                 $order_id = $order->get_id();
-                                                $query_result = $wpdb->get_results("SELECT order_amount FROM $table WHERE order_id=$order_id");
-                                                if ($wpdb->last_error) {
-                                                    //LOG Error
-                                                    write_log($wpdb->last_error);
-                                                } else if (count($query_result) === 0) {
+                                                $query_result = $wpdb->get_results(
+                                                    $wpdb->prepare(
+                                                        "SELECT order_amount FROM {$wpdb->prefix}wc_sargapay_address WHERE order_id=%d",
+                                                        $order_id
+                                                    )
+                                                );
+                                                if ($wpdb->last_error === "" && count($query_result) === 0) {
                                                     $ada_amount = "Error";
-                                                    write_log("Error ADA AMOUNT is empty for order #$order_id");
                                                 } else {
                                                     $ada_amount = $query_result[0]->order_amount;
                                                 }
@@ -311,8 +253,11 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-<?php               } else {
-                    echo '<p>' . __('No orders done yet with this gateway', 'sargapay-plugin') . '</p>';
+                <?php
+                } else {
+                ?>
+                    <p> <?php echo __('No orders done yet with this gateway', 'sargapay'); ?> </p>
+                <?php
                 }
             }
         }
@@ -320,42 +265,44 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
 
     function process_admin_options()
     {
-        if (isset($_GET['screen']) && '' !== $_GET['screen']) {
+        #sanitize 
+        $get_key =  isset($_GET['screen']) ? sanitize_text_field($_GET['screen']) : false;
+        if ($get_key && '' !== $get_key) {
+            return false;
         } else {
             parent::process_admin_options();
             $errors = 0;
-            if (empty($_POST['woocommerce_sargapay-plugin_mpk'])) {
-                WC_Admin_Settings::add_error(__('Error: You require a Master Public Key to generate  payment addresses.', 'sargapay-plugin'));
+            if (empty($_POST['woocommerce_sargapay_mpk'])) {
+                WC_Admin_Settings::add_error(__('Error: You require a Master Public Key to generate  payment addresses.', 'sargapay'));
                 $errors = 1;
             }
-            if (!preg_match("/^[A-Za-z0-9_]+$/", $_POST['woocommerce_sargapay-plugin_mpk'])) {
-                WC_Admin_Settings::add_error(__('Error: Invalid Character in Publick Key.', 'sargapay-plugin'));
+            if (!preg_match("/^[A-Za-z0-9_]+$/", $_POST['woocommerce_sargapay_mpk'])) {
+                WC_Admin_Settings::add_error(__('Error: Invalid Character in Public Key.', 'sargapay'));
                 $errors = 1;
             }
-            if (empty($_POST['woocommerce_sargapay-plugin_testmode'])) {
-                if (!preg_match("/^[A-Za-z0-9]+$/", $_POST['woocommerce_sargapay-plugin_blockfrost_key'])) {
-                    WC_Admin_Settings::add_error(__('Error: Invalid Character in BLOCKFROST API KEY for MAINNET.', 'sargapay-plugin'));
+            if (empty($_POST['woocommerce_sargapay_testmode'])) {
+                if (!preg_match("/^[A-Za-z0-9]+$/", $_POST['woocommerce_sargapay_blockfrost_key'])) {
+                    WC_Admin_Settings::add_error(__('Error: Invalid Character in BLOCKFROST API KEY for MAINNET.', 'sargapay'));
                     $errors = 1;
                 }
-                if (empty($_POST['woocommerce_sargapay-plugin_blockfrost_key'])) {
-                    WC_Admin_Settings::add_error(__('Error: You need a BLOCKFROST API KEY for MAINNET to validate transactions.', 'sargapay-plugin'));
+                if (empty($_POST['woocommerce_sargapay_blockfrost_key'])) {
+                    WC_Admin_Settings::add_error(__('Error: You need a BLOCKFROST API KEY for MAINNET to validate transactions.', 'sargapay'));
                     $errors = 1;
                 }
-                $errors = $this->check_API_KEY(0, $_POST['woocommerce_sargapay-plugin_blockfrost_key']);
-            } else if ($_POST['woocommerce_sargapay-plugin_testmode'] == 1) {
-                if (!preg_match("/^[A-Za-z0-9]+$/", $_POST['woocommerce_sargapay-plugin_blockfrost_test_key'])) {
-                    WC_Admin_Settings::add_error(__('Error: Invalid Character in BLOCKFROST API KEY for TESTNET.', 'sargapay-plugin'));
+                $errors = $this->check_API_KEY(0, $_POST['woocommerce_sargapay_blockfrost_key']);
+            } else if ($_POST['woocommerce_sargapay_testmode'] == 1) {
+                if (!preg_match("/^[A-Za-z0-9]+$/", $_POST['woocommerce_sargapay_blockfrost_test_key'])) {
+                    WC_Admin_Settings::add_error(__('Error: Invalid Character in BLOCKFROST API KEY for TESTNET.', 'sargapay'));
                     $errors = 1;
                 }
-                if (empty($_POST['woocommerce_sargapay-plugin_blockfrost_test_key'])) {
-                    WC_Admin_Settings::add_error(__('Error: You need a BLOCKFROST API KEY for TESTNET to validate transactions.', 'sargapay-plugin'));
+                if (empty($_POST['woocommerce_sargapay_blockfrost_test_key'])) {
+                    WC_Admin_Settings::add_error(__('Error: You need a BLOCKFROST API KEY for TESTNET to validate transactions.', 'sargapay'));
                     $errors = 1;
                 }
-                $errors = $this->check_API_KEY($_POST['woocommerce_sargapay-plugin_testmode'], $_POST['woocommerce_sargapay-plugin_blockfrost_test_key']);
-            }            
+                $errors = $this->check_API_KEY($_POST['woocommerce_sargapay_testmode'], $_POST['woocommerce_sargapay_blockfrost_test_key']);
+            }
             return $errors === 0;
-        }
-        return false;
+        }       
     }
 
     // API KEY CHECK
@@ -368,24 +315,31 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
             $url = "https://cardano-mainnet.blockfrost.io/api/v0/";
             $network = "MAINNET";
         }
-        // API KEY TEST
-        $apicall = curl_init();
-        curl_setopt($apicall, CURLOPT_URL, $url);
-        curl_setopt($apicall, CURLOPT_HTTPHEADER, array(
-            'project_id: ' . $apikey,
-        ));
-        curl_setopt($apicall, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($apicall, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        $result = json_decode(curl_exec($apicall), true);
-        if (!$result) {
+
+        $headers = array('project_id' => $apikey, 'Content-Type' => 'application/json',);
+
+        $args = array(
+            'body'        => array(),
+            'timeout'     => '5',
+            'redirection' => '5',
+            'httpversion' => '1.0',
+            'blocking'    => true,
+            'headers'     => $headers,
+            'cookies'     => array(),
+        );
+
+        $response  = wp_remote_get($url, $args);
+        $body      = wp_remote_retrieve_body($response);
+        $body_json = json_decode($body);
+
+        if (!isset($body_json->version)) {
             // API CALL CONECTION FAILED
-            WC_Admin_Settings::add_error(__('Error: Connection Failed', 'sargapay-plugin'));
+            WC_Admin_Settings::add_error(__('Error: Connection Failed', 'sargapay'));
             return 1;
         }
-        curl_close($apicall);
-        if (isset($result["status_code"])) {
+        if (isset($body_json->status_code)) {
             // ERROR API CALL
-            WC_Admin_Settings::add_error($network . " API KEY Code: " . $result["status_code"] . " Error: " . $result["error"] . " Message: " . $result["message"]);
+            WC_Admin_Settings::add_error($network . " API KEY Code: " . $body_json->status_code . " Error: " . $body_json->error . " Message: " . $body_json->message);
             return 1;
         }
         return 0;
@@ -393,8 +347,9 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
 
     public function payment_fields()
     {
-        // Get supported currencies 
-        $supported_currencies = json_decode(file_get_contents('https://api.coingecko.com/api/v3/simple/supported_vs_currencies'), true);
+        // Get supported currencies
+        $request = wp_remote_retrieve_body(wp_remote_get('https://api.coingecko.com/api/v3/simple/supported_vs_currencies'));
+        $supported_currencies = json_decode($request, true);
         // check if the wc currency is supported if is not we remplace it with the plugin options currency            
         if (in_array(strtolower(get_woocommerce_currency()), $supported_currencies)) {
             $currency = get_woocommerce_currency();
@@ -403,10 +358,15 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
             $currency = $this->currency;
             $currency === "USD" ? $symbol = "$" : $symbol = "€";
         }
-        $data = json_decode(file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=' . $currency), true);
+        $request = wp_remote_retrieve_body(wp_remote_get('https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=' . $currency));
+        $data = json_decode($request, true);
         if (count($data) == 1) {
             if ($this->testmode) {
-                echo "<h3 style='text-align:center; background:red; color:white; font-weight:bold;'>" . __("TEST MODE", 'sargapay-plugin') . "</h3>";
+                ?>
+                <h3 style='text-align:center; background:red; color:white; font-weight:bold;'>
+                    <?php echo __("TEST MODE", 'sargapay'); ?>
+                </h3>
+            <?php
             }
             $instrucciones = $this->description;
 
@@ -414,22 +374,28 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
             if (!is_numeric($cryptoMarkupPercent)) {
                 $cryptoMarkupPercent = 0.0;
             }
-            $cryptoMarkup = $cryptoMarkupPercent / 100.0;            
-            $cryptoPriceRatio = 1.0 + $cryptoMarkup;            
+            $cryptoMarkup = $cryptoMarkupPercent / 100.0;
+            $cryptoPriceRatio = 1.0 + $cryptoMarkup;
             $fiat = $data['cardano'][array_key_first($data['cardano'])];
             $fiat_total_order = WC()->cart->get_totals()["total"];
-            $cryptoTotalPreMarkup = round($fiat_total_order / $fiat, 6, PHP_ROUND_HALF_UP);            
+            $cryptoTotalPreMarkup = round($fiat_total_order / $fiat, 6, PHP_ROUND_HALF_UP);
             $total_ada = number_format((float)($cryptoTotalPreMarkup * $cryptoPriceRatio), 6, '.', '');
-
-            echo "<p>$instrucciones</p>";
-            echo "<div style='text-align:center;'>";
-            echo "<p>" . __("Currency", 'sargapay-plugin') . " = " . $currency . "</p>";
-            echo "<p>" . __("ADA Price", 'sargapay-plugin') . " = $symbol $fiat</p>";
-            echo "<p>" . __("ADA Total", 'sargapay-plugin') . " = " . $total_ada . "*</p>";
-            echo "</div>";
-            echo "<p style='text-align: center; font-size:1rem'>* " . __("ADA exchange rate is calculated at the time the order is made", 'sargapay-plugin') . "</p>";
+            ?>
+            <p><?php echo esc_html($instrucciones); ?></p>
+            <div style='text-align:center;'>
+                <p><?php echo __("Currency", 'sargapay') . " = " . esc_html($currency); ?></p>
+                <p><?php echo __("ADA Price", 'sargapay') . " = " . esc_html($symbol) . " " . esc_html($fiat); ?></p>
+                <p><?php echo __("ADA Total", 'sargapay') . " = " . esc_html($total_ada); ?>*</p>
+            </div>
+            <p style='text-align: center; font-size:1rem'>
+                <?php echo "* " . __("ADA exchange rate is calculated at the time the order is made", 'sargapay') ?>
+            </p>
+        <?php
         } else {
-            echo "<br>" . __("Contact the admin to provide you with a payment address.", 'sargapay-plugin');
+        ?>
+
+            <br><?php echo __("Contact the admin to provide you with a payment address.", 'sargapay'); ?>
+<?php
         }
     }
 
@@ -446,32 +412,34 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
     {
         global $woocommerce;
         $order = new WC_Order($order_id);
-
+        sargapay_plugin_log("INIT PROCESS PAYMENT");
         // Mark as on-hold (we're awaiting the confirmations)
         $order->update_status('on-hold', __('Awaiting valid payment', 'woocommerce'));
 
-        // GENERATE PAYMENT ADRESS
+        // GENERATE PAYMENT ADDRESS
         $total_ada = 0;
         // Get supported currencies 
-        $supported_currencies = json_decode(file_get_contents('https://api.coingecko.com/api/v3/simple/supported_vs_currencies'), true);
+        $request = wp_remote_retrieve_body(wp_remote_get('https://api.coingecko.com/api/v3/simple/supported_vs_currencies'));
+        $supported_currencies = json_decode($request, true);
         // check if the wc currency is supported if is not we remplace it with the plugin options currency            
         if (in_array(strtolower(get_woocommerce_currency()), $supported_currencies)) {
             $currency = get_woocommerce_currency();
         } else {
             $currency = $this->currency;
         }
-        $data = json_decode(file_get_contents('https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=' . $currency), true);
+        $request = wp_remote_retrieve_body(wp_remote_get('https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=' . $currency));
+        $data = json_decode($request, true);
         if (count($data) == 1) {
 
             $cryptoMarkupPercent = $this->markup;
             if (!is_numeric($cryptoMarkupPercent)) {
                 $cryptoMarkupPercent = 0.0;
             }
-            $cryptoMarkup = $cryptoMarkupPercent / 100.0;            
-            $cryptoPriceRatio = 1.0 + $cryptoMarkup;            
+            $cryptoMarkup = $cryptoMarkupPercent / 100.0;
+            $cryptoPriceRatio = 1.0 + $cryptoMarkup;
             $fiat = $data['cardano'][array_key_first($data['cardano'])];
             $fiat_total_order = WC()->cart->get_totals()["total"];
-            $cryptoTotalPreMarkup = round($fiat_total_order / $fiat, 6, PHP_ROUND_HALF_UP);            
+            $cryptoTotalPreMarkup = round($fiat_total_order / $fiat, 6, PHP_ROUND_HALF_UP);
             $total_ada = number_format((float)($cryptoTotalPreMarkup * $cryptoPriceRatio), 6, '.', '');
 
             // Get xpub from settings                
@@ -480,12 +448,16 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
             $this->testmode == 1 ? $network = 1 : $network = 0;
             // GET IT AND UPDATE IT
             global $wpdb;
-            $table = $wpdb->prefix . 'wc_sarga_address';
-            $get_key = $wpdb->get_results("SELECT id, pay_address FROM $table WHERE testnet=$network AND status = 'unused' ORDER BY id ASC LIMIT 1");
+            $table = $wpdb->prefix . 'wc_sargapay_address';
+            $get_key =  $wpdb->get_results(
+                $wpdb->prepare(
+                    "SELECT id, pay_address FROM {$wpdb->prefix}wc_sargapay_address WHERE testnet=%d AND status_order =%s ORDER BY id ASC LIMIT 1",
+                    $network,
+                    'unused'
+                )
+            );
             //LOG ERROR DB
-            if ($wpdb->last_error) {
-                write_log($wpdb->last_error);
-            } else {
+            if ($wpdb->last_error === "" && isset($get_key[0]->pay_address)) {
                 $pay_address = $get_key[0]->pay_address;
                 $id = $get_key[0]->id;
                 // Update data                 
@@ -493,7 +465,7 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
                     array(
                         'mpk' => $mpk,
                         'pay_address' => $pay_address,
-                        'status' => 'on-hold',
+                        'status_order' => 'on-hold',
                         'last_checked' => 0,
                         'assigned_at' => $order->get_date_created()->getTimestamp(),
                         'order_id' => $order_id,
@@ -505,13 +477,9 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
                 $format = array('%s',  '%s', '%s', '%d', '%d', '%d', '%f', '%f', '%s');
                 $wpdb->update($table, $dataDB, array('id' => $id), $format);
                 //LOG ERROR UPDATE
-                if ($wpdb->last_error) {
-                    //LOG Error             
-                    write_log($wpdb->last_error);
-                } else {
+                if ($wpdb->last_error === "") {
                     // Remove cart
                     $woocommerce->cart->empty_cart();
-
                     return array(
                         'result' => 'success',
                         'redirect' => $this->get_return_url($order)
@@ -519,6 +487,15 @@ class SARGAPAY_WC_Gateway extends WC_Payment_Gateway
                     );
                 }
             }
+
+            $order->update_status('failed', __('Payment error:', 'woocommerce') . $this->get_option('error_message'));
+            wc_add_notice($payment_status['message'], 'error');
+            // Remove cart
+            WC()->cart->empty_cart();
+            return array(
+                'result'   => 'failure',
+                'redirect' => WC()->cart->get_checkout_url()
+            );
         } else {
             $order->update_status('failed', __('Payment error:', 'woocommerce') . $this->get_option('error_message'));
             wc_add_notice($payment_status['message'], 'error');

@@ -1,164 +1,158 @@
-# Copyright (C) 2022 Sargatxet
-# This file is distributed under the MIT.
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: WooCommerce Sargapay 0.1.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/WooCommerce-"
-"sargapay\n"
+"Project-Id-Version: Sargapay\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-19 04:10+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-10-29 00:36+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Domain: sargapay-plugin\n"
-"Language: \n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;"
+"X-Loco-Version: 2.6.3; wp-6.1.1\n"
+"X-Domain: sargapay"
 
-#: SARGA_saveAddress.php:96
-msgid " Adresses Generated and Saved in Database."
+#: sargapay-save-address.php:103
+msgid " Addresses Generated and Saved in Database."
 msgstr ""
 
-#: SARGA_sendEmail.php:72
+#: sargapay-send-email.php:71
 msgid " TESTNET ADDRESS"
 msgstr ""
 
-#: SARGA_cancelOrder.php:86
+#: sargapay-cancel-order.php:86
 msgid ""
 "24 hours have passed and your order was canceled, the payment address is no "
 "longer valid."
 msgstr ""
 
-#: SARGA_gateway.php:430
+#: sargapay-gateway.php:391
 msgid "ADA exchange rate is calculated at the time the order is made"
 msgstr ""
 
-#: SARGA_gateway.php:427
+#: sargapay-gateway.php:387
 msgid "ADA Price"
 msgstr ""
 
-#: SARGA_gateway.php:428 SARGA_thankYouPage.php:101
+#: sargapay-gateway.php:388 sargapay-thank-you-page.php:98
 msgid "ADA Total"
 msgstr ""
 
-#: SARGA_sendEmail.php:74
+#: sargapay-send-email.php:73
 msgid "Address"
 msgstr ""
 
-#: SARGA_gateway.php:31
+#: sargapay-gateway.php:31
 msgid "Allow customers to pay using Cardano ADA"
 msgstr ""
 
-#: SARGA_thankYouPage.php:97
+#: sargapay-thank-you-page.php:93
 msgid "Amount Copied!"
 msgstr ""
 
-#: SARGA_cancelOrder.php:40 SARGA_thankYouPage.php:45
+#: sargapay-cancel-order.php:42 sargapay-thank-you-page.php:45
 msgid "BE AWARE THIS IS A TESTNET PAYMENT ADDRESS"
 msgstr ""
 
-#: SARGA_gateway.php:219
+#: sargapay-gateway.php:152
 msgid "Blockfrost API Key for Mainnet"
 msgstr ""
 
-#: SARGA_gateway.php:225
+#: sargapay-gateway.php:158
 msgid "Blockfrost API Key for Testnet."
 msgstr ""
 
-#: SARGA_plugin.php:187
-msgid "Cardano Wallet Not Found!"
-msgstr ""
-
-#: SARGA_gateway.php:191
+#: sargapay-gateway.php:124
 msgid "Confirmations"
 msgstr ""
 
-#: SARGA_gateway.php:193
-msgid "Confirmations needed to accept a trasaction as valid."
+#: sargapay-gateway.php:126
+msgid "Confirmations needed to accept a transaction as valid."
 msgstr ""
 
-#: SARGA_gateway.php:432
+#: sargapay-gateway.php:397
 msgid "Contact the admin to provide you with a payment address."
 msgstr ""
 
-#: SARGA_thankYouPage.php:103
+#: sargapay-thank-you-page.php:106
 msgid "Copy Amount"
 msgstr ""
 
-#: SARGA_thankYouPage.php:103
+#: sargapay-thank-you-page.php:103
 msgid "Copy Payment Address"
 msgstr ""
 
-#: SARGA_gateway.php:231 SARGA_gateway.php:426
+#: sargapay-gateway.php:164 sargapay-gateway.php:386
 msgid "Currency"
 msgstr ""
 
-#: SARGA_gateway.php:233
+#: sargapay-gateway.php:166
 msgid "Currency used in case default currency is not supported."
 msgstr ""
 
-#: SARGA_gateway.php:172
+#: sargapay-gateway.php:105
 msgid "Description"
 msgstr ""
 
-#: SARGA_gateway.php:159
+#: sargapay-gateway.php:92
 msgid "Enable Sargapay Gateway"
 msgstr ""
 
-#: SARGA_gateway.php:179
+#: sargapay-gateway.php:112
 msgid "Enable Test Mode"
 msgstr ""
 
-#: SARGA_gateway.php:158
+#: sargapay-gateway.php:91
 msgid "Enable/Disable"
 msgstr ""
 
-#: SARGA_saveAddress.php:61
+#: sargapay-save-address.php:66
 msgid "Error no request sent :("
 msgstr ""
 
-#: SARGA_thankYouPage.php:40
-msgid "ERROR PLEASE CONTACT ADMIN TO PROCCED WITH THE ORDER"
+#: sargapay-thank-you-page.php:39
+msgid "ERROR PLEASE CONTACT ADMIN TO PROCEED WITH THE ORDER"
 msgstr ""
 
-#: SARGA_cancelOrder.php:36
-msgid "ERROR PLEASE CONTACT THE ADMIN TO PROCCED WITH THE ORDER"
+#: sargapay-cancel-order.php:38
+msgid "ERROR PLEASE CONTACT THE ADMIN TO PROCEED WITH THE ORDER"
 msgstr ""
 
-#: SARGA_gateway.php:382
+#: sargapay-gateway.php:337
 msgid "Error: Connection Failed"
 msgstr ""
 
-#: SARGA_gateway.php:337
+#: sargapay-gateway.php:285
 msgid "Error: Invalid Character in BLOCKFROST API KEY for MAINNET."
 msgstr ""
 
-#: SARGA_gateway.php:347
+#: sargapay-gateway.php:295
 msgid "Error: Invalid Character in BLOCKFROST API KEY for TESTNET."
 msgstr ""
 
-#: SARGA_gateway.php:332
-msgid "Error: Invalid Character in Publick Key."
+#: sargapay-gateway.php:280
+msgid "Error: Invalid Character in Public Key."
 msgstr ""
 
-#: SARGA_gateway.php:341
+#: sargapay-gateway.php:289
 msgid ""
 "Error: You need a BLOCKFROST API KEY for MAINNET to validate transactions."
 msgstr ""
 
-#: SARGA_gateway.php:351
+#: sargapay-gateway.php:299
 msgid ""
 "Error: You need a BLOCKFROST API KEY for TESTNET to validate transactions."
 msgstr ""
 
-#: SARGA_gateway.php:328
+#: sargapay-gateway.php:276
 msgid "Error: You require a Master Public Key to generate  payment addresses."
 msgstr ""
 
-#: SARGA_plugin.php:68
+#: sargapay.php:68
 msgid "Every 10 Minutes"
 msgstr ""
 
@@ -170,98 +164,90 @@ msgstr ""
 msgid "https://github.com/sargatxet/WooCommerce-sargapay/"
 msgstr ""
 
-#: SARGA_sendEmail.php:25
+#: sargapay-send-email.php:25 sargapay-send-email.php:27
 msgid "Instructions for payment will be send soon!"
 msgstr ""
 
-#: SARGA_sendEmail.php:27
-msgid ""
-"Instructions for payment will be send soon!\n"
-msgstr ""
-
-#: SARGA_gateway.php:213
+#: sargapay-gateway.php:146
 msgid "Markup/Markdown %"
 msgstr ""
 
-#: SARGA_gateway.php:162
+#: sargapay-gateway.php:95
 msgid "no"
 msgstr ""
 
-#: SARGA_gateway.php:315
+#: sargapay-gateway.php:259
 msgid "No orders done yet with this gateway"
 msgstr ""
 
-#: SARGA_gateway.php:250
+#: sargapay-gateway.php:191
 msgid "Orders done with Sargapay Gateway"
 msgstr ""
 
-#: SARGA_gateway.php:140
+#: sargapay-gateway.php:73
 msgid "Orders Paid with this plugin"
 msgstr ""
 
-#: SARGA_plugin.php:189
-msgid "Paid"
-msgstr ""
-
-#: SARGA_cancelOrder.php:61 SARGA_thankYouPage.php:69
+#: sargapay-cancel-order.php:66 sargapay-thank-you-page.php:72
 msgid "Pay Now"
 msgstr ""
 
-#: SARGA_gateway.php:175
+#: sargapay-gateway.php:108
 msgid ""
 "Pay using Cardano ADA via our super-cool payment gateway. You have 24 hrs to "
 "pay or the order will be cancelled."
 msgstr ""
 
-#: SARGA_gateway.php:168
+#: sargapay-gateway.php:101
 msgid "Pay with Cardano ADA"
 msgstr ""
 
-#: SARGA_cancelOrder.php:55 SARGA_thankYouPage.php:62
+#: sargapay-cancel-order.php:59 sargapay-thank-you-page.php:64
 msgid "Payment Address"
 msgstr ""
 
-#: SARGA_thankYouPage.php:57
+#: sargapay-thank-you-page.php:60
 msgid "Payment Address Copied!"
 msgstr ""
 
-#: SARGA_sendEmail.php:67 SARGA_sendEmail.php:68 SARGA_thankYouPage.php:111
+#: sargapay-send-email.php:66 sargapay-send-email.php:67
+#: sargapay-thank-you-page.php:115
 msgid "Payment Instructions "
 msgstr ""
 
-#: SARGA_gateway.php:221
+#: sargapay-gateway.php:154
 msgid "Place the API KEY to use BlockFrost to verify transactions on Mainnet."
 msgstr ""
 
-#: SARGA_gateway.php:227
+#: sargapay-gateway.php:160
 msgid "Place the API KEY to use BlockFrost to verify transactions on Testnet."
 msgstr ""
 
-#: SARGA_gateway.php:181
+#: sargapay-gateway.php:114
 msgid "Place the payment gateway in test mode to use TESTNET."
 msgstr ""
 
-#: SARGA_gateway.php:188
-msgid "Place the Public Adress Key to generate Payment Addresses."
+#: sargapay-gateway.php:121
+msgid "Place the Public Address Key to generate Payment Addresses."
 msgstr ""
 
-#: SARGA_plugin.php:52
-msgid "Plugin NOT activated: Minimun PHP version required  is 7.4"
+#: sargapay.php:52
+msgid "Plugin NOT activated: Minimum PHP version required is 7.4"
 msgstr ""
 
-#: SARGA_plugin.php:49
+#: sargapay.php:49
 msgid "Plugin NOT activated: WooCommerce is required"
 msgstr ""
 
-#: SARGA_gateway.php:186
-msgid "Public Adress Key for Cardano"
+#: sargapay-gateway.php:119
+msgid "Public Address Key for Cardano"
 msgstr ""
 
 #. Description of the plugin
-msgid "Recive payments using Cardano ADA"
+msgid "Receive payments using Cardano ADA"
 msgstr ""
 
-#: SARGA_thankYouPage.php:30
+#: sargapay-thank-you-page.php:30
 msgid ""
 "Remember that you have 24 hours to pay for your order before it's "
 "automatically canceled."
@@ -275,62 +261,54 @@ msgstr ""
 msgid "Sargatxet"
 msgstr ""
 
-#: SARGA_plugin.php:188
-msgid "Something Went Wrong!"
-msgstr ""
-
-#: SARGA_gateway.php:409
+#: sargapay-gateway.php:367
 msgid "TEST MODE"
 msgstr ""
 
-#: SARGA_gateway.php:178
+#: sargapay-gateway.php:111
 msgid "Test mode"
 msgstr ""
 
-#: SARGA_gateway.php:174
+#: sargapay-gateway.php:107
 msgid "This controls the description which the user sees during checkout."
 msgstr ""
 
-#: SARGA_gateway.php:167
+#: sargapay-gateway.php:100
 msgid "This controls the title which the user sees during checkout."
 msgstr ""
 
-#: SARGA_gateway.php:215
+#: sargapay-gateway.php:148
 msgid ""
 "This only increases the crypto amount owed, the original fiat value will "
 "still be displayed to the customer. 3.8 = 3.8% markup, -10.0 = 10.0% markdown"
 msgstr ""
 
-#: SARGA_cancelOrder.php:50
+#: sargapay-cancel-order.php:54
 msgid "Time left to make the payment "
 msgstr ""
 
-#: SARGA_gateway.php:165
+#: sargapay-gateway.php:98
 msgid "Title"
 msgstr ""
 
-#: SARGA_cancelOrder.php:58
+#: sargapay-cancel-order.php:64
 msgid "Total ADA"
 msgstr ""
 
-#: SARGA_sendEmail.php:70
+#: sargapay-send-email.php:69
 msgid "Total Amount in ADA "
 msgstr ""
 
-#: SARGA_plugin.php:191
-msgid "Wrong Network, Please Select the Correct Network"
-msgstr ""
-
-#: SARGA_gateway.php:182
+#: sargapay-gateway.php:115
 msgid "yes"
 msgstr ""
 
-#: SARGA_sendEmail.php:78
+#: sargapay-send-email.php:77
 msgid ""
 "You can verify the payment address and amount if you login and go to my-"
 "account/orders"
 msgstr ""
 
-#: SARGA_sendEmail.php:69
+#: sargapay-send-email.php:68
 msgid "You have 24hrs to pay before the order is cancelled"
 msgstr ""

@@ -15,13 +15,13 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-import { generate_payment_address } from "./gen_address.js"
+import { sargapay_generate_payment_address } from "./gen_address.js"
 
-window.onload = () => wp_gen()
+window.onload = () => sargapay_gen()
 
-copy_text()
+sargapay_copy_text()
 
-function copy_text() {
+function sargapay_copy_text() {
     // Copy Address
     if (
         document.getElementById("pay_add_p_field_tk_plugin") &&
@@ -73,30 +73,38 @@ function copy_text() {
     }
 }
 
-function wp_gen() {
+function sargapay_gen() {
+    const url = window.hasOwnProperty('wp_ajax_nopriv_sargapay_save_address') ?
+        wp_ajax_nopriv_sargapay_save_address.ajax_url :
+        wp_ajax_sargapay_save_address.ajax_url
+
     //Get How many addresses have left
     const unused = null
     jQuery.ajax({
         type: "post",
-        url: wp_ajax_save_address_vars.ajax_url,
+        url: url,
         data: {
-            action: "save_address",
+            action: "sargapay_save_address",
             action_type: "get_unused",
         },
         error: function(response) {
             console.log(response)
         },
         success: function(response) {
-            const unused = response.unused
+            const unused = response.unused === null ? 0 : response.unused
             const xpub = response.xpub
             const testnet = response.network
             let lastIndex = response.last_unused
-                // No address ever generated
+            console.log("unused", unused)
+            console.dir(response)
+            console.log(":D")
+
+            // No address ever generated
             if (lastIndex === null) {
                 lastIndex = 0
             } else {
                 lastIndex = parseInt(response.last_unused)
-                if (lastIndex === 0) {
+                if (lastIndex == 0) {
                     // first address generated
                     lastIndex = 1
                 } else {
@@ -106,25 +114,37 @@ function wp_gen() {
             }
             // IF you have less than 20 unused address you will generate a new one
             if (parseInt(unused) < 20) {
-                wp_add_index(xpub, lastIndex, testnet)
+                console.log("last index", lastIndex)
+                sargapay_add_index(xpub, lastIndex, testnet)
             }
         },
     })
 }
 
-function wp_add_index(xpub, lastIndex, testnet) {
+function sargapay_add_index(xpub, lastIndex, testnet) {
+
+    const url = window.hasOwnProperty('wp_ajax_nopriv_sargapay_save_address') ?
+        wp_ajax_nopriv_sargapay_save_address.ajax_url :
+        wp_ajax_sargapay_save_address.ajax_url
+    console.log("add index")
+
     // Generate New Address
-    const address = generate_payment_address(xpub, lastIndex, 1, testnet)
-        // Save New Address on DB
+    const address = sargapay_generate_payment_address(xpub, lastIndex, 1, testnet)
+
+    console.dir(address)
+
+    // Save New Address on DB
     if (address.length > 0 && !address[0].includes("Error:")) {
         jQuery.ajax({
             type: "post",
-            url: wp_ajax_save_address_vars.ajax_url,
+            url: url,
             data: {
-                action: "save_address",
+                action: "sargapay_save_address",
                 addresses: address,
                 action_type: "save_address",
             },
         })
+    } else {
+        console.log("error address")
     }
 }

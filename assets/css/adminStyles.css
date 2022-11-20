@@ -1,0 +1,62 @@
+.ad-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 0;
+}
+
+.banner-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.banner {
+    background-image: linear-gradient(135deg, #3c8ce7 10%, #00eaff 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 50vw;
+    height: 10vh;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.img-container {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+}
+
+.header-subtitle {
+    text-align: left;
+    font-weight: bold;
+}
+
+.banner-logo {
+    height: 20vh;
+    width: 30vh;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.banner-link {
+    text-decoration: none;
+    color: #fff;
+    font-size: 2vw;
+    font-weight: bold;
+}
+
+.banner-link:after,
+.banner-link:hover,
+.banner-link:active {
+    color: #fff;
+}
+
+.discord-logo {
+    height: 40px;
+}
+
+.icono-link {
+    font-size: 2vw;
+    padding-right: 5px;
+}

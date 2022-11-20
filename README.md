@@ -1,13 +1,15 @@
-# WOOCOMMERCE SARGAPAY
+# SARGAPAY
  
-WooCommerce plugin para pagar usando Cardano ADA.
+Wocommerce payment gateway plugin para pagar usando Cardano ADA.
 
 ## Requisitos
- - PHP v7.3+
+ - PHP v7.4+
  - WooCommerce
+ - WASM MIME type
+ - PHP ext-gd
 ## Instalación
 
-[Descarga el archivo zip](https://github.com/sargatxet/WooCommerce-sargapay/releases/tag/v1.0.0 "WooCommerce-Sargapay Link de descarga") y usa el panel de administración de Wordpress para instalarlo.
+[Descarga el archivo zip](https://wordpress.org/plugins/sargapay "Sargapay Link de descarga") y usa el panel de administración de Wordpress para instalarlo.
  
 ## ¿Cómo obtener la xpub? [extended public key]
  
@@ -21,7 +23,7 @@ Formato de xpub hexadecimal
 Selecciona la opción Advanced  y copia la Shelley extended public key.
 Formato de xpub hexadecimal
  
-### Dedalus
+### Daedalus
  
 Selecciona la opción de More y selecciona la opción de Settings en la sección de Wallet Public Key click en el ojo para revelar la xpub.
 Formato de xpub acct_xvk

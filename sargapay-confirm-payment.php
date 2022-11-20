@@ -18,100 +18,89 @@
 */
 
 
-class ConfirmPayment
+class Sargapay_ConfirmPayment
 {
 
-    function check_all_pendding_orders()
+    function sargapay_check_all_pendding_orders()
     {
         global $wpdb;
-        $table = $wpdb->prefix . 'wc_sarga_address';
-        $orders = $wpdb->get_results("SELECT id, pay_address, order_id, order_amount, testnet FROM $table WHERE status='on-hold' OR status = 'validation'");
-        if ($wpdb->last_error) {
-            //LOG Error
-            write_log($wpdb->last_error);
-        } else {
-            if (count($orders) !== 0) {
-                for ($i = 0; $i < count($orders); $i++) {
-                    $network = $orders[$i]->testnet == 1 ? 0 : 1;
-                    $order = wc_get_order($orders[$i]->order_id);
-                    // TIME SINCE ORDER WAS CREATED
-                    // Get order date created
-                    $date_created_dt = $order->get_date_created();
-                    // Get the timezone
-                    $timezone = $date_created_dt->getTimezone();
-                    // Get the timestamp in seconds
-                    $date_created_ts = $date_created_dt->getTimestamp();
-                    // Get current WC_DateTime object instance
-                    $now_dt = new WC_DateTime();
-                    // Set the same time zone
-                    $now_dt->setTimezone($timezone);
-                    // Get the current timestamp in seconds
-                    $now_ts = $now_dt->getTimestamp();
-                    // 24hours in seconds            
-                    $twenty_four_hours = 24 * 60 * 60;
-                    // Get the difference (in seconds)
-                    $diff_in_seconds = $now_ts - $date_created_ts;
-                    $confirmation_obj = $this->get_confirmations(
-                        $orders[$i]->pay_address,
-                        $orders[$i]->order_amount,
-                        $network,
-                        $date_created_ts
-                    );
-                    // if error = 0 and confirmations greater than 0 update confirmations 
-                    if ($confirmation_obj->error === 0) {
-                        //update confirmation  
-                        if ($confirmation_obj->confirmations > 0) {
-                            if ($confirmation_obj->confirmations > WC()->payment_gateways->payment_gateways()['sargapay-plugin']->confirmations) {
-                                $data = ['status' => 'paid', 'last_checked' => $now_ts];
-                                $order->update_status('completed');
-                            } else {
-                                $data = ['status' => 'validation', 'last_checked' => $now_ts];
-                            }
-                            $where = ['id' => $orders[$i]->id];
-                            $updated = $wpdb->update($table, $data, $where);
-                            if (false === $updated) {
-                                // DB LOG ERROR.
-                                write_log($wpdb->last_error);
-                            }
+        $table = $wpdb->prefix . 'wc_sargapay_address';
+        $orders = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT id, pay_address, order_id, order_amount, testnet FROM {$wpdb->prefix}wc_sargapay_address WHERE status_order = 'on-hold' OR status_order = 'validation'",
+            )
+        );
+        if ($wpdb->last_error === "" && count($orders) !== 0) {
+            for ($i = 0; $i < count($orders); $i++) {
+                $network = $orders[$i]->testnet == 1 ? 0 : 1;
+                $order = wc_get_order($orders[$i]->order_id);
+                // TIME SINCE ORDER WAS CREATED
+                // Get order date created
+                $date_created_dt = $order->get_date_created();
+                // Get the timezone
+                $timezone = $date_created_dt->getTimezone();
+                // Get the timestamp in seconds
+                $date_created_ts = $date_created_dt->getTimestamp();
+                // Get current WC_DateTime object instance
+                $now_dt = new WC_DateTime();
+                // Set the same time zone
+                $now_dt->setTimezone($timezone);
+                // Get the current timestamp in seconds
+                $now_ts = $now_dt->getTimestamp();
+                // 24hours in seconds            
+                $twenty_four_hours = 24 * 60 * 60;
+                // Get the difference (in seconds)
+                $diff_in_seconds = $now_ts - $date_created_ts;
+                $confirmation_obj = $this->get_confirmations(
+                    $orders[$i]->pay_address,
+                    $orders[$i]->order_amount,
+                    $network,
+                    $date_created_ts
+                );
+                // if error = 0 and confirmations greater than 0 update confirmations 
+                if ($confirmation_obj->error === 0) {
+                    //update confirmation  
+                    if ($confirmation_obj->confirmations > 0) {
+                        if ($confirmation_obj->confirmations > WC()->payment_gateways->payment_gateways()['sargapay']->confirmations) {
+                            $data = ['status_order' => 'paid', 'last_checked' => $now_ts];
+                            $order->update_status('completed');
                         } else {
-                            if ($diff_in_seconds > $twenty_four_hours) {
-                                $order->update_status('cancelled');
-                                $data = ['status' => 'cancelled', 'last_checked' => $now_ts];
-                            } else {
-                                $data = ['last_checked' => $now_ts];
-                            }
-                            $where = ['id' => $orders[$i]->id];
-                            $updated = $wpdb->update($table, $data, $where);
-                            if (false === $updated) {
-                                // DB LOG ERROR.
-                                write_log($wpdb->last_error);
-                            }
+                            $data = ['status_order' => 'validation', 'last_checked' => $now_ts];
                         }
-                    } else if ($confirmation_obj->error == 404) {
+                        $where = ['id' => $orders[$i]->id];
+                        $updated = $wpdb->update($table, $data, $where);
+                    } else {
                         if ($diff_in_seconds > $twenty_four_hours) {
                             $order->update_status('cancelled');
-                            $data = ['status' => 'cancelled', 'last_checked' => $now_ts];
+                            $data = ['status_order' => 'cancelled', 'last_checked' => $now_ts];
                         } else {
                             $data = ['last_checked' => $now_ts];
                         }
                         $where = ['id' => $orders[$i]->id];
                         $updated = $wpdb->update($table, $data, $where);
-                        if (false === $updated) {
-                            // DB LOG ERROR.
-                            write_log($wpdb->last_error);
-                        }
+                    }
+                } else if ($confirmation_obj->error == 404) {
+                    if ($diff_in_seconds > $twenty_four_hours) {
+                        $order->update_status('cancelled');
+                        $data = ['status_order' => 'cancelled', 'last_checked' => $now_ts];
                     } else {
-                        //LOG ERROR
-                        if ($diff_in_seconds > $twenty_four_hours) {
-                            $order->update_status('cancelled');
-                            $data = ['status' => 'cancelled', 'last_checked' => $now_ts];
-                        }
-                        write_log("Error Call BLockForst API " . $confirmation_obj->error);
+                        $data = ['last_checked' => $now_ts];
+                    }
+                    $where = ['id' => $orders[$i]->id];
+                    $updated = $wpdb->update($table, $data, $where);
+                } else {
+                    //LOG ERROR
+                    if ($diff_in_seconds > $twenty_four_hours) {
+                        $order->update_status('cancelled');
+                        $data = ['status_order' => 'cancelled', 'last_checked' => $now_ts];
                     }
                 }
             }
+        } else if ($wpdb->last_error !== '') {
+            sargapay_plugin_log("SARGAPAY::Error Payment Validation:: " . $wpdb->last_error);
         }
     }
+
 
     function get_confirmations($payment_address, $payment_amount, $network, $order_was_made)
     {
@@ -121,17 +110,17 @@ class ConfirmPayment
         // GET ALL TRANSACTIONS OF THE ADDRESS
         if ($network == 1) {
             $url_network = 'https://cardano-mainnet.blockfrost.io/api/v0/';
-            $api_key = WC()->payment_gateways->payment_gateways()['sargapay-plugin']->blockfrost_key;
+            $api_key = WC()->payment_gateways->payment_gateways()['sargapay']->blockfrost_key;
             $stake_key = substr($payment_address, 53, -6);
         } else {
             $url_network = 'https://cardano-testnet.blockfrost.io/api/v0/';
-            $api_key = WC()->payment_gateways->payment_gateways()['sargapay-plugin']->blockfrost_test_key;
+            $api_key = WC()->payment_gateways->payment_gateways()['sargapay']->blockfrost_test_key;
             $stake_key = substr($payment_address, 58, -6);
         }
         $result = new stdClass;
         // First Api call to see if address is in cardano blockchain
         $url = $url_network . 'addresses/' . $payment_address;
-        $response_data = $this->curl_api_call($url, $api_key);
+        $response_data = $this->sargapay_api_call($url, $api_key);
         // Check if the api key
         if (isset($response_data->status_code)) {
             // 404 Error means there is not register on blockchain
@@ -149,7 +138,7 @@ class ConfirmPayment
             if ($has_ada) {
                 // Get all Transactions  
                 $url = $url_network . 'addresses/' . $payment_address . '/transactions?order=desc';
-                $response_data = $this->curl_api_call($url, $api_key);
+                $response_data = $this->sargapay_api_call($url, $api_key);
                 // Api Return tx_hash - Hash de la transacción                               
                 // loop for every transaction to get tx hash
                 // Iterar cada transacción para obtener el hash 
@@ -157,20 +146,20 @@ class ConfirmPayment
                     // Get Block for each transactions 
                     // Obtenemos el bloque de cada transacción
                     $url = $url_network . 'txs/' . $key->tx_hash;
-                    $response_data = $this->curl_api_call($url, $api_key);
+                    $response_data = $this->sargapay_api_call($url, $api_key);
                     // get the time each block was created
                     // obtener el tiempo de creación de los bloques
                     $url = $url_network . 'blocks/' . $response_data->block;
-                    $response_data = $this->curl_api_call($url, $api_key);
+                    $response_data = $this->sargapay_api_call($url, $api_key);
                     $confirmations = $response_data->confirmations;
                     // Check if the transaction was made after the order
                     // Revisa si la transacción fue hecha despues de la orden                
                     if ($order_was_made <= $response_data->time) {
                         $url = $url_network . 'txs/' . $key->tx_hash . "/utxos";
-                        $response_data = $this->curl_api_call($url, $api_key);
+                        $response_data = $this->sargapay_api_call($url, $api_key);
                         $internal_deposit = false;
                         // Loop for each input to find if the imput came from the same wallet
-                        foreach ($response_data->inputs as $key) {                            
+                        foreach ($response_data->inputs as $key) {
                             if (
                                 $key->address === $payment_address ||
                                 $stake_key === substr($key->address, 53, -6) ||
@@ -185,11 +174,11 @@ class ConfirmPayment
                             // iterar cada salida para encontrar los depositos a la dirección de pago 
                             foreach ($response_data->outputs as $key) {
                                 if ($key->address === $payment_address) {
-                                    foreach($key->amount as $asset){
-                                        if($asset->unit === "lovelace"){
+                                    foreach ($key->amount as $asset) {
+                                        if ($asset->unit === "lovelace") {
                                             $transaction_amount += round(intval($asset->quantity) / 1000000, 6);
                                         }
-                                    }                                    
+                                    }
                                     // check if current amount is the same or more than the order amount
                                     // Revisar si el monto de las transacciones superan el de la orden                        
                                     if ($transaction_amount >= $payment_amount) {
@@ -212,17 +201,24 @@ class ConfirmPayment
         }
     }
 
-    function curl_api_call($url, $api_key)
+    function sargapay_api_call($url, $api_key)
     {
-        $curl_confirmations = curl_init();
-        curl_setopt($curl_confirmations, CURLOPT_URL, $url);
-        curl_setopt($curl_confirmations, CURLOPT_HTTPHEADER, array(
-            'project_id: ' . $api_key
-        ));
-        curl_setopt($curl_confirmations, CURLOPT_RETURNTRANSFER, true);
-        $curl_data = curl_exec($curl_confirmations);
-        $response_data = json_decode($curl_data);
-        curl_close($curl_confirmations);
-        return $response_data;
+        $headers = array('project_id' => $api_key, 'Content-Type' => 'application/json',);
+
+        $args = array(
+            'body'        => array(),
+            'timeout'     => '5',
+            'redirection' => '5',
+            'httpversion' => '1.0',
+            'blocking'    => true,
+            'headers'     => $headers,
+            'cookies'     => array(),
+        );
+
+        $response  = wp_remote_get($url, $args);
+        $body      = wp_remote_retrieve_body($response);
+        $body_json = json_decode($body);
+
+        return $body_json;
     }
 }

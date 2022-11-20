@@ -21,7 +21,7 @@ use chillerlan\QRCode\{QRCode, QROptions};
 
 require_once('vendor/autoload.php');
 
-class GenerateQR
+class Sargapay_GenerateQR
 {
     private $options;
 
@@ -41,7 +41,7 @@ class GenerateQR
     {
         throw new \Exception("Cannot unserialize a singleton.");
     }
-    public static function getInstance(): GenerateQR
+    public static function getInstance(): Sargapay_GenerateQR
     {
         $cls = static::class;
         if (!isset(self::$instances[$cls])) {
@@ -54,9 +54,12 @@ class GenerateQR
     {
         try {
             $url = WP_CONTENT_DIR . "/uploads/$payAdress.png";
-            $im = (new QRCode($this->options))->render($payAdress, $url);
-            return  "<div style='display:flex; justify-content:center; padding:10px 0; '><img style='width:10vw;
-            height: 10vw;' src=" . $im . " /></div>";
+            $img_url = (new QRCode($this->options))->render($payAdress, $url);
+?>
+            <div style="display:flex; justify-content:center; padding:10px 0;">
+                <img style="width:10vw; height: 10vw;" src="<?php echo esc_url($img_url) ?>" />
+            </div>
+<?php
         } catch (Throwable $e) {
             exit($e->getMessage());
         }
@@ -67,7 +70,7 @@ class GenerateQR
         try {
             $url = WP_CONTENT_DIR . "/uploads/$payAdress.png";
             if (!file_exists($url)) {
-                $im = (new QRCode($this->options))->render($payAdress, $url);
+                (new QRCode($this->options))->render($payAdress, $url);
             }
             return $url;
         } catch (Throwable $e) {
