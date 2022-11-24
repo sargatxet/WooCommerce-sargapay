@@ -18,6 +18,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+if (!defined('WPINC')) {
+    die;
+}
+
 // Add Payment Method to Woocommerce
 
 function sargapay_plugin_add_gateway_class($gateways)

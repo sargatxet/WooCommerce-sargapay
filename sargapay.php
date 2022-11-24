@@ -31,6 +31,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+if (!defined('WPINC')) {
+    die;
+}
 
 register_activation_hook(__FILE__, 'sargapay_activate');
 register_deactivation_hook(__FILE__, 'sargapay_deactivate');

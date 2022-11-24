@@ -17,6 +17,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+if (!defined('WPINC')) {
+    die;
+}
+
 function sargapay_save_address()
 {
     $addresses  = isset($_POST['addresses']) ? sargapay_recursive_sanitize_text_field($_POST['addresses']) : false;

@@ -23,6 +23,10 @@
  * Add Warning header if testmode is on
  **/
 
+if (!defined('WPINC')) {
+    die;
+}
+
 function sargapay_thank_you_text($thank_you_title, $order)
 {
     if (isset($order)) {

@@ -17,6 +17,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+if (!defined('WPINC')) {
+  die;
+}
+
 function sargapay_add_content_wc_order_email($order, $sent_to_admin, $plain_text, $email)
 {
   if ($email->id == 'customer_on_hold_order') {

@@ -17,6 +17,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+if (!defined('WPINC')) {
+    die;
+}
+
 function sargapay_view_order_cancel_notice($order_id)
 {
     //add pending status and show confirmations

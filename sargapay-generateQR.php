@@ -21,6 +21,10 @@ use chillerlan\QRCode\{QRCode, QROptions};
 
 require_once('vendor/autoload.php');
 
+if (!defined('WPINC')) {
+    die;
+}
+
 class Sargapay_GenerateQR
 {
     private $options;
