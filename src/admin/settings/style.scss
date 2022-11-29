@@ -1,0 +1,246 @@
+/**
+ * Replace them with your own styles or remove the file completely.
+ */
+
+//variables
+$prefixClass:'wp-sargapay-plugin';
+$white:#fff;
+$header-left-space:180px;
+$borderColor:#c3c4c7;
+$textColor:#1d2327;
+$navItemActiveColor:#646970;
+$navItemGapBetween:25px;
+$max_small: 782px;
+$min_medium: 783px;
+$max_medium: 960px;
+.#{wp-sargapay-plugin} {
+    margin-right: 20px;
+    margin-top: 100px;
+    * {
+        box-sizing: border-box;
+    }
+    &-main {
+        min-height: 100vh;
+    }
+    &-header {
+        @media screen and (max-width: $max_small) {
+            margin-left: 0;
+            left: 0;
+            top: 45px;
+        }
+        @media screen and (min-width: $min_medium) and (max-width: $max_medium) {
+            left: 40px;
+            margin-left: 0px;
+        }
+        background-color: $white;
+        margin-left: -20px;
+        padding: 10px 20px;
+        position: fixed;
+        width: auto;
+        left: $header-left-space;
+        right: 0;
+        top: 35px;
+        z-index: 2000000;
+        &-sticky {
+            @media screen and (max-width: $max_small) {
+                top: 0px;
+            }
+        }
+    }
+    &-title {
+        @media screen and (max-width: $max_small) {
+            font-size: .6rem;
+        }
+    }
+    &-ad-container {
+        display: flex;
+        justify-content: space-between;
+        padding: 25px 0;
+    }
+    &-banner-container {
+        display: flex;
+        flex-direction: column;
+    }
+    &-banner {
+        background-image: linear-gradient(135deg, #3C8CE7 10%, #00EAFF 100%);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 50vw;
+        height: 10vh;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    &-img-container {
+        width: 40%;
+        display: flex;
+        justify-content: center;
+    }
+    &-header-subtitle {
+        text-align: left;
+        font-weight: bold;
+    }
+    &-banner-logo {
+        height: 20vh;
+        width: 30vh;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    &-banner-link {
+        text-decoration: none;
+        color: #fff;
+        font-size: 2vw;
+        font-weight: bold;
+    }
+    &-banner-link:after,
+    &-banner-link:hover,
+    &-banner-link:active {
+        color: #fff;
+    }
+    &-discord-logo {
+        height: 40px;
+    }
+    &-icono-link {
+        font-size: 2vw;
+        padding-right: 5px;
+    }
+    &-testmpk {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        @media screen and (max-width: $max_small) {
+            flex-wrap: wrap;
+        }
+    }
+    &-addrs {
+        @media screen and (max-width: $max_medium) {
+            word-wrap: break-word;
+        }
+    }
+    &-navigation {
+        padding: 0 10px;
+        width: 100%;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+        border: 1px solid $borderColor;
+        background: $white;
+        ul {
+            gap: $navItemGapBetween;
+            margin: 0;
+            padding: 0 15px;
+            li {
+                margin: 0;
+                padding: 0;
+                a {
+                    padding: 15px 0;
+                    border-width: 0 0 4px 0;
+                    border-style: solid;
+                    border-color: transparent;
+                    display: inline-block;
+                    text-decoration: none;
+                    color: $textColor;
+                    opacity: 0.5;
+                    font-weight: 600;
+                    transition: all 0.5s ease-in-out 0s;
+                    box-shadow: none;
+                    &:hover,
+                    &:focus {
+                        opacity: 1;
+                        box-shadow: none;
+                        outline: 0;
+                    }
+                    &.#{wp-sargapay-plugin} {
+                        &-nav-active {
+                            border-color: $navItemActiveColor;
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &-field {
+        &-wrap {
+            background: $white;
+            border: 1px solid $borderColor;
+            padding: 20px;
+            margin-block-start: 30px;
+            .components {
+                &-base {
+                    &-control {
+                        &__label {
+                            font-weight: 600;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &-multifield {
+        &-wrap {
+            background: $white;
+            border: 1px solid $borderColor;
+            padding: 20px;
+            margin-block-start: 30px;
+            display: flex;
+            justify-content: space-around;
+            @media screen and (max-width: $max_small) {
+                flex-direction: column;
+            }
+            .components {
+                &-base {
+                    &-control {
+                        min-width: 30%;
+                        &__label {
+                            font-weight: 600;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &-footer {
+        p {
+            font-size: 14px;
+            font-weight: 600;
+        }
+    }
+    &-popover {
+        z-index: 220000000;
+    }
+    &-notice {
+        margin: 0;
+        padding-right: 20px !important;
+        width: 300px;
+        z-index: 220000000;
+        .components-notice__content {
+            p {
+                margin: 0;
+            }
+        }
+    }
+    &-page-loader {
+        position: fixed !important;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 30px !important;
+        height: 30px !important;
+    }
+    &-addr-count-container {
+        display: flex;
+        justify-content: space-around;
+        text-align: center;
+        @media screen and (max-width: $max_small) {
+            flex-wrap: wrap;
+        }
+    }
+}
+
+body {
+    &.toplevel_page_wp-sargapay-plugin {
+        #wpfooter {
+            display: none;
+        }
+    }
+}

@@ -1,0 +1,37 @@
+{
+    "name": "sargapay",
+    "version": "1.0.0",
+    "description": "Sargapay - WordPress payment gateway for crypto",
+    "author": "trakadev",
+    "license": "MIT",
+    "main": "build/index.js",
+    "scripts": {
+        "build": "wp-scripts build src/settings.js --output-path=build/admin",
+        "format": "wp-scripts format",
+        "lint:css": "wp-scripts lint-style",
+        "lint:js": "wp-scripts lint-js",
+        "start": "wp-scripts start src/settings.js --output-path=build/admin",
+        "packages-update": "wp-scripts packages-update"
+    },
+    "devDependencies": {
+        "@types/wordpress__components": "^19.10.3",
+        "@wordpress/scripts": "^24.6.0"
+    },
+    "dependencies": {
+        "@emotion/react": "^11.10.5",
+        "@emotion/styled": "^11.10.5",
+        "@mui/material": "^5.10.13",
+        "@mui/x-data-grid": "^5.17.11",
+        "@wordpress/components": "^22.1.0",
+        "@wordpress/url": "^3.23.0",
+        "autoprefixer": "^10.4.7",
+        "bech32": "^2.0.0",
+        "lodash": "^4.17.21",
+        "lucid-cardano": "^0.6.6",
+        "react-router-dom": "^6.3.0"
+    },
+    "browserslist": [
+        "last 3 versions",
+        "> 1%"
+    ]
+}
