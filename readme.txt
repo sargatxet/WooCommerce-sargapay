@@ -4,7 +4,7 @@ Donate link: https://sargatxet.cloud/
 Tags: paymentGateway, Crypto, Cardano
 Requires at least: 4.7
 Tested up to: 6.1
-Stable tag: 1.0.0
+Stable tag: 2.0.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -67,6 +67,10 @@ Finally we have to activate the plugin and verify the network that we are going 
 3. Order Made
 
 == Changelog ==
+
+= 2.0 =
+* Admin Dashboard UI
+* Enable - Disable Light Wallets
 
 = 1.0 =
 * Cardano ADA support

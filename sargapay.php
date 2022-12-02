@@ -1,16 +1,29 @@
 <?php
-/*
- * Plugin Name: Sargapay
- * Plugin URI: https://github.com/sargatxet/WooCommerce-sargapay/
- * Description: Receive payments using Cardano ADA
- * Author: Sargatxet
- * Author URI: https://cardano.sargatxet.cloud/
- * Text Domain: sargapay
- * Domain Path: /languages
- * Version: 1.0.0
- * Requires PHP: 7.4
+
+/**
+ * The plugin bootstrap file
+ *
+ * This file is read by WordPress to generate the plugin information in the plugin
+ * admin area. This file also includes all of the dependencies used by the plugin,
+ * registers the activation and deactivation functions, and defines a function
+ * that starts the plugin.
+ *
+ * @link              https://sargatxet.cloud/
+ * @since             1.0.0
+ * @package           Sargapay
+ *
+ * @wordpress-plugin
+ * Plugin Name:       Sargapay
+ * Plugin URI:        https://sargatxet.cloud/sargapay-cardano/
+ * Description:       WordPress payment gateway for crypto.
+ * Version:           2.0.0
+ * Author:            Jorge Jaime
+ * Author URI:        https://sargatxet.cloud/
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:       sargapay
+ * Domain Path:       /languages/
+ * Requires PHP: 	  7.4
  */
 
 /*
@@ -31,20 +44,32 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
+// If this file is called directly, abort.
 if (!defined('WPINC')) {
     die;
 }
 
-register_activation_hook(__FILE__, 'sargapay_activate');
-register_deactivation_hook(__FILE__, 'sargapay_deactivate');
-add_action('plugins_loaded', 'sargapay_plugin_init_gateway_class');
+/**
+ * Current plugin path.
+ * Current plugin url.
+ * Current plugin version.
+ *
+ * Rename these constants for your plugin
+ * Update version as you release new versions.
+ */
 
+define('SARGAPAY_PATH', plugin_dir_path(__FILE__));
+define('SARGAPAY_URL', plugin_dir_url(__FILE__));
+define('SARGAPAY_VERSION', '2.0.0');
 
 add_filter('cron_schedules', 'sargapay_cron_hook');
 add_action('sargapay_cron_hook', 'sargapay_check_confirmations_cardano');
 
-
-// Actions after plugin is activated
+/**
+ * The code that runs during plugin activation.
+ * This action is documented in includes/class-sargapay-activator.php
+ */
 function sargapay_activate()
 {
     // Check if woocommerce is active.
@@ -54,13 +79,17 @@ function sargapay_activate()
     if (PHP_VERSION_ID <= 70399) {
         die(__('Plugin NOT activated: Minimum PHP version required is 7.4', 'sargapay'));
     }
+    require_once SARGAPAY_PATH . 'includes/class-sargapay-activator.php';
+    Sargapay_Activator::activate();
+
+    // Create DB for Addresses, if it doesn't exist.
+    require_once SARGAPAY_PATH . 'paymentGateway/cardano/functions/sargapay-createDB.php';
+    sargapay_create_address_table();
+
     //Register verification 
     if (!wp_next_scheduled('sargapay_cron_hook')) {
         wp_schedule_event(time(), 'every_ten_minutes', 'sargapay_cron_hook');
     }
-    // Create DB for Addresses, if it doesn't exist.
-    require_once(plugin_basename("sargapay-createDB.php"));
-    sargapay_create_address_table();
 }
 
 // Register 10 min interval for cronjobs
@@ -76,236 +105,65 @@ function sargapay_cron_hook($schedules)
 // Hook for transactions check, that'll fire every 10 minutes
 function sargapay_check_confirmations_cardano()
 {
+    require_once SARGAPAY_PATH . 'paymentGateway/cardano/class-sargapay-confirm-payment.php';
     $check_confirm = new Sargapay_ConfirmPayment();
-    $check_confirm->sargapay_check_all_pendding_orders(); 
+    $check_confirm->sargapay_check_all_pendding_orders();
 }
 
-/* Deactivate Actions
- * Cronjobs
+/**
+ * The code that runs during plugin deactivation.
+ * This action is documented in includes/class-sargapay-pro-plugin-deactivator.php
  */
 function sargapay_deactivate()
 {
+    require_once SARGAPAY_PATH . 'includes/class-sargapay-deactivator.php';
+    Sargapay_Deactivator::deactivate();
     // REMOVE CRONJOB to verify paymanets
     wp_clear_scheduled_hook('sargapay_cron_hook');
 }
 
+register_activation_hook(__FILE__, 'sargapay_activate');
+register_deactivation_hook(__FILE__, 'sargapay_deactivate');
 
-// PLugin Init
-function sargapay_plugin_init_gateway_class()
+/**
+ * The core plugin class that is used to define internationalization,
+ * admin-specific hooks, and public-facing site hooks.
+ */
+require SARGAPAY_PATH . 'includes/class-sargapay.php';
+
+/**
+ * Begins execution of the plugin.
+ *
+ * Since everything within the plugin is registered via hooks,
+ * then kicking off the plugin from this point in the file does
+ * not affect the page life cycle.
+ *
+ * @since    1.0.0
+ */
+function run_sargapay()
 {
-    if (!class_exists('WC_Payment_Gateway')) {
-        deactivate_plugins(plugin_basename(__FILE__));
-        return;
-    }
-
-    require_once(plugin_basename("sargapay-gateway.php"));
-    require_once(plugin_basename("sargapay-thank-you-page.php"));
-    require_once(plugin_basename("sargapay-cancel-order.php"));
-    require_once(plugin_basename("sargapay-generateQR.php"));
-    require_once(plugin_basename("sargapay-send-email.php"));
-    require_once(plugin_basename("sargapay-settings.php"));
-    require_once(plugin_basename("sargapay-save-address.php"));
-    require_once(plugin_basename("sargapay-confirm-payment.php"));
-
-    // Init Plugin Class
-    add_filter('woocommerce_payment_gateways', 'sargapay_plugin_add_gateway_class');
-
     // Add Settings link
     add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'sargapay_settings_link');
-
-    // Load Transalations
-    add_action('init', 'sargapay_load_textdomain');
-
-    // Add QR and Payment Address to thank you page
-    add_filter('woocommerce_thankyou_order_received_text', 'sargapay_thank_you_text', 20, 2);
-
-    if (is_user_logged_in()) {
-        add_action('wp_ajax_sargapay_save_address', 'sargapay_save_address');
-        # Get APIKEY and Network for hotwallets
-        add_action('wp_ajax_sargapay_get_settings_vars', 'sargapay_get_settings_vars');
-    } else {
-        add_action('wp_ajax_nopriv_sargapay_save_address', 'sargapay_save_address');
-        # Get APIKEY and Network for hotwallets
-        add_action('wp_ajax_nopriv_sargapay_get_settings_vars', 'sargapay_get_settings_vars');
-    }
-    add_action('admin_enqueue_scripts', 'sargapay_admin_load_gen_addressjs');
-    add_action('admin_enqueue_scripts',  'sargapay_admin_load_styles');
-
-    add_action('wp_enqueue_scripts', 'sargapay_load_wp_gen_address');
-
-    // Woocommerce Mail QR and Payment Address
-    add_action('woocommerce_email_before_order_table', 'sargapay_add_content_wc_order_email', 20, 4);
-
-    // Show cancel time for orders without payment
-    add_action('woocommerce_view_order', 'sargapay_view_order_cancel_notice');
-
-    add_action('init', 'sargapay_register_styles');
-
-    add_action('wp_enqueue_scripts', 'sargapay_enqueue_styles');
-
-    function sargapay_register_styles()
-    {
-        wp_register_style('wallet_btn', plugins_url('/assets/css/walletsBtns.css', __FILE__));
-        wp_register_style('modals_thanks', plugins_url('/assets/css/modalThankYou.css', __FILE__));
-        wp_register_style('sargapay_admin_styles', plugins_url('/assets/css/adminStyles.css', __FILE__));
-    }
-
-
-    function sargapay_enqueue_styles()
-    {
-        #check if is thankyou page
-        if (is_checkout() && !empty(is_wc_endpoint_url('order-received'))) {
-            wp_enqueue_style('modals_thanks');
-        }
-        if ((is_checkout() && !empty(is_wc_endpoint_url('order-received'))) || is_account_page()) {
-            wp_enqueue_style('wallet_btn');
-        }
-    }
-
-    function sargapay_admin_load_styles()
-    {
-        wp_enqueue_style('sargapay_admin_styles');
-    }
-
-    // Load JS to Gen Cardano Address
-    function sargapay_admin_load_gen_addressjs()
-    {
-        wp_localize_script('jquery', 'wp_ajax_sargapay_save_address', array(
-            'ajax_url' => admin_url('admin-ajax.php')
-        ));
-
-        wp_print_script_tag(
-            array(
-                'id' => 'gen_address',
-                'src' => esc_url(plugin_dir_url(__FILE__) . 'assets/js/main.js'),
-                'defer' => true,
-                'type' => 'module'
-            )
-        );
-
-        wp_print_script_tag(
-            array(
-                'id' => 'cardano_serialization_lib',
-                'src' => esc_url(plugin_dir_url(__FILE__) . 'assets/js/cardano-serialization-lib-asmjs/cardano_serialization_lib.js'),
-                'defer' => true,
-                'type' => 'module'
-            )
-        );
-
-        wp_print_script_tag(
-            array(
-                'id' => 'cardano_asm',
-                'src' => esc_url(plugin_dir_url(__FILE__) . 'assets/js/cardano-serialization-lib-asmjs/cardano_serialization_lib.asm.js'),
-                'defer' => true,
-                'type' => 'module'
-            )
-        );
-
-        wp_print_script_tag(
-            array(
-                'id' => 'cardano_lib_bg',
-                'src' => esc_url(plugin_dir_url(__FILE__) . 'assets/js/cardano-serialization-lib-asmjs/cardano_serialization_lib_bg.js'),
-                'defer' => true,
-                'type' => 'module'
-            )
-        );
-
-        wp_print_script_tag(
-            array(
-                'id' => 'bech32',
-                'src' => esc_url(plugin_dir_url(__FILE__) . 'assets/js/bech32.js'),
-                'defer' => true,
-                'type' => 'module'
-            )
-        );
-    }
-
-    // Load JS to Gen Cardano Address when a loged in user visit the site
-    function sargapay_load_wp_gen_address()
-    {
-
-        wp_print_script_tag(
-            array(
-                'id' => 'wp_gen_address',
-                'src' => esc_url(plugin_dir_url(__FILE__) . 'assets/js/main_index.js'),
-                'defer' => true,
-                'type' => 'module'
-            )
-        );
-
-        if (is_user_logged_in()) {
-            wp_localize_script('jquery', 'wp_ajax_sargapay_save_address', array(
-                'ajax_url' => admin_url('admin-ajax.php')
-            ));
-            wp_localize_script('jquery', 'wp_ajax_sargapay_get_settings_vars', array(
-                'ajax_url' => admin_url('admin-ajax.php'),
-                'noWallet_txt' => esc_html(__('Cardano Wallet Not Found!', "sargapay-plugin")),
-                'unknown_txt' => esc_html(__('Something Went Wrong!', 'sargapay-plugin')),
-                'paid_txt' => esc_html(__('Paid', 'sargapay-plugin')),
-                'is_user_logged_in' => is_user_logged_in(),
-                'error_wrong_network_txt' => esc_html(__('Wrong Network, Please Select the Correct Network', 'sargapay-plugin'))
-            ));
-        } else {
-            wp_localize_script('jquery', 'wp_ajax_nopriv_sargapay_save_address', array(
-                'ajax_url' => admin_url('admin-ajax.php')
-            ));
-            wp_localize_script('jquery', 'wp_ajax_nopriv_sargapay_get_settings_vars', array(
-                'ajax_url' => admin_url('admin-ajax.php'),
-                'noWallet_txt' => esc_html(__('Cardano Wallet Not Found!', "sargapay-plugin")),
-                'unknown_txt' => esc_html(__('Something Went Wrong!', 'sargapay-plugin')),
-                'paid_txt' => esc_html(__('Paid', 'sargapay-plugin')),
-                'is_user_logged_in' => is_user_logged_in(),
-                'error_wrong_network_txt' => esc_html(__('Wrong Network, Please Select the Correct Network', 'sargapay-plugin'))
-            ));
-        }
-
-        if ((is_checkout() && !empty(is_wc_endpoint_url('order-received'))) || is_account_page()) {
-            wp_print_script_tag(
-                array(
-                    'id' => 'wp_sarga_hot_wallets',
-                    'src' => esc_url(plugin_dir_url(__FILE__) . 'assets/js/hotWallets.js'),
-                    'defer' => true,
-                    'type' => 'module'
-                )
-            );
-
-            wp_enqueue_script('wp_sarga_alerts', plugin_dir_url(__FILE__) . 'assets/js/sweetalert2.all.min.js', array('jquery'));
-        }
-
-        if (is_account_page()) {
-            wp_enqueue_script('sargapay_countdown', plugins_url('assets/js/countDown.js', __FILE__), array('jquery'));
-        }
-    }
-
-    /**
-     * Load plugin textdomain.
-     */
-    function sargapay_load_textdomain()
-    {
-        load_plugin_textdomain('sargapay', false, dirname(plugin_basename(__FILE__)) . '/languages');
-    }
-
-    // we add data protocol to render qr img on emails
-    add_filter('kses_allowed_protocols', function ($protocols) {
-        $protocols[] = 'data';
-        return $protocols;
-    });
+    $plugin = new Sargapay();
+    $plugin->run();
 }
+run_sargapay();
 
-function sargapay_plugin_log( $entry, $mode = 'a', $file = 'sargapay' ) { 
+function sargapay_plugin_log($entry, $mode = 'a', $file = 'sargapay')
+{
     // Get WordPress uploads directory.
     $upload_dir = wp_upload_dir();
     $upload_dir = $upload_dir['basedir'];
     // If the entry is array, json_encode.
-    if ( is_array( $entry ) ) { 
-      $entry = sanitize_text_field(json_encode( $entry )); 
-    } else{
+    if (is_array($entry)) {
+        $entry = sanitize_text_field(json_encode($entry));
+    } else {
         $entry = sanitize_text_field($entry);
     }
     // Write the log file.
     $file  = $upload_dir . '/' . $file . '.log';
-    $file  = fopen( $file, $mode );
-    $bytes = fwrite( $file, current_time( 'mysql' ) . "::" . esc_html($entry) . "\n" ); 
-    fclose( $file ); 
+    $file  = fopen($file, $mode);
+    $bytes = fwrite($file, current_time('mysql') . "::" . $entry . "\n");
+    fclose($file);
     return $bytes;
-  }
+}
