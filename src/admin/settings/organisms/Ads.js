@@ -1,11 +1,10 @@
 import { __ } from "@wordpress/i18n"
-/*
+
 import discrod_logo from "../../../assets/discord.png"
 import banner_logo from "../../../assets/banner.png"
-import ada_logo from "../../../assets/ada_logo.png"
-*/
+
 const Ads = () => {
-  /*
+
   return (
     <div class="wp-sargapay-plugin-ad-container">
       <div class="wp-sargapay-plugin-banner-container">
@@ -43,7 +42,7 @@ const Ads = () => {
       </div>
     </div>
   )
-  */
+
 }
 
 export default Ads

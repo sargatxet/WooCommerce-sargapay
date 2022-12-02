@@ -186,7 +186,7 @@ class Sargapay_Admin
     }
 
     public function add_translation_json(){
-        wp_set_script_translations($this->plugin_name, $this->plugin_name, plugin_dir_path( __FILE__ ) . 'languages');
+        wp_set_script_translations($this->plugin_name, $this->plugin_name, plugin_dir_path( dirname(__FILE__) ) . 'languages/');
     }
 
     public function check_permission()

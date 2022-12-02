@@ -19,6 +19,7 @@ import { HashRouter, Route, Routes, Navigate } from "react-router-dom"
 /*Inbuilt Components*/
 import { General, Advanced, Keys, Orders } from "./pages"
 import { SettingsHeader, SettingsFooter } from "./organisms"
+import Ads from "./organisms/Ads"
 
 const SettingRouters = () => {
   const { useSettings } = useContext(SettingsContext)
@@ -30,6 +31,7 @@ const SettingRouters = () => {
     <>
       <div className="wp-sargapay-plugin">
         <SettingsHeader />
+        <Ads />
         <main className="wp-sargapay-plugin-main">
           <Routes>
             <Route exact path="/general" element={<General />} />

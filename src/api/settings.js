@@ -44,13 +44,7 @@ export const updateSettings = async(data) => {
             path: path,
             method: 'POST'
         });
-        console.log("saved")
-        console.dir(options)
-        console.log('query')
-        console.dir(queryArgs)
     } catch (error) {
-        console.log('query')
-        console.dir(queryArgs)
         console.log('updateSettings Errors:', error);
         return {
             sargapay_settings_update_settings_errors: true,
