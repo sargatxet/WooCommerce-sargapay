@@ -223,7 +223,7 @@ class Sargapay_Cardano_Gateway extends WC_Payment_Gateway
     public function check_API_KEY($testmode, $apikey)
     {
         if ($testmode == 1) {
-            $url = "https://cardano-testnet.blockfrost.io/api/v0/";
+            $url = "https://cardano-preview.blockfrost.io/api/v0/";
             $network = "TESTNET";
         } else {
             $url = "https://cardano-mainnet.blockfrost.io/api/v0/";
@@ -259,22 +259,52 @@ class Sargapay_Cardano_Gateway extends WC_Payment_Gateway
         return 0;
     }
 
-    public function payment_fields()
+    private function getCurrency()
     {
-        // Get supported currencies
+        $result = new stdClass();
+
+        if (strtolower(get_woocommerce_currency()) === "sargacardano") {
+            $result->currency = "ADA";
+            $result->symbol = get_woocommerce_currency_symbol();
+            return $result;
+        }
+
+        // Get supported currencies coingeeko
         $request = wp_remote_retrieve_body(wp_remote_get('https://api.coingecko.com/api/v3/simple/supported_vs_currencies'));
         $supported_currencies = json_decode($request, true);
-        // check if the wc currency is supported if is not we remplace it with the plugin options currency            
+
+        // check if the wc currency is supported if is not we remplace it with the plugin options currency
         if (in_array(strtolower(get_woocommerce_currency()), $supported_currencies)) {
-            $currency = get_woocommerce_currency();
-            $symbol = get_woocommerce_currency_symbol();
+            $result->currency = get_woocommerce_currency();
+            $result->symbol = get_woocommerce_currency_symbol();
         } else {
             $currency = $this->currency;
-            $currency === "USD" ? $symbol = "$" : $symbol = "€";
+            switch ($currency) {
+                case "ADA":
+                    $result->symbol = "₳";
+                    break;
+                case "EUR":
+                    $result->symbol = "€";
+                    break;
+                default:
+                    $result->symbol = "$";
+                    break;
+            }
         }
-        $request = wp_remote_retrieve_body(wp_remote_get('https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=' . $currency));
-        $data = json_decode($request, true);
-        if (count($data) == 1) {
+
+        return $result;
+    }
+
+    public function payment_fields()
+    {
+        $currencyObj = $this->getCurrency();
+        $currency = $currencyObj->currency;
+        $symbol = $currencyObj->symbol;
+        if ($currency !== "ADA") {
+            $request = wp_remote_retrieve_body(wp_remote_get('https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=' . $currency));
+            $data = json_decode($request, true);
+        }
+        if ($currency === "ADA" || count($data) == 1) {
             if ($this->testmode) {
         ?>
                 <h3 style='text-align:center; background:red; color:white; font-weight:bold;'>
@@ -289,13 +319,14 @@ class Sargapay_Cardano_Gateway extends WC_Payment_Gateway
             }
             $cryptoMarkup = $cryptoMarkupPercent / 100.0;
             $cryptoPriceRatio = 1.0 + $cryptoMarkup;
-            $fiat = $data['cardano'][array_key_first($data['cardano'])];
+
+            $fiat = $currency === "ADA" ? 1 : $data['cardano'][array_key_first($data['cardano'])];
             global $wp;
-            if(isset($wp->query_vars['order-pay'])){
+            if (isset($wp->query_vars['order-pay'])) {
                 $order_id = $wp->query_vars['order-pay'];
                 $order = new WC_Order($order_id);
                 $fiat_total_order = $order->get_total();
-            }else{
+            } else {
                 $fiat_total_order = WC()->cart->get_totals()["total"];
             }
             $cryptoTotalPreMarkup = round($fiat_total_order / $fiat, 6, PHP_ROUND_HALF_UP);
@@ -303,8 +334,10 @@ class Sargapay_Cardano_Gateway extends WC_Payment_Gateway
             ?>
             <p><?php echo esc_html($instrucciones); ?></p>
             <div style='text-align:center;'>
-                <p><?php echo __("Currency", 'sargapay') . " = " . esc_html($currency); ?></p>
-                <p><?php echo __("ADA Price", 'sargapay') . " = " . esc_html($symbol) . " " . esc_html($fiat); ?></p>
+                <?php if ($currency !== "ADA") { ?>
+                    <p><?php echo __("Currency", 'sargapay') . " = " . esc_html($currency); ?></p>
+                    <p><?php echo __("ADA Price", 'sargapay') . " = " . esc_html($symbol) . " " . esc_html($fiat); ?></p>
+                <?php } ?>
                 <p><?php echo __("ADA Total", 'sargapay') . " = " . esc_html($total_ada) . "*"; ?></p>
             </div>
             <p style='text-align: center; font-size:1rem'>
@@ -331,24 +364,19 @@ class Sargapay_Cardano_Gateway extends WC_Payment_Gateway
     public function process_payment($order_id)
     {
         global $woocommerce;
-        $order = new WC_Order($order_id);        
+        $order = new WC_Order($order_id);
         // Mark as on-hold (we're awaiting the confirmations)
         $order->update_status('on-hold', __('Awaiting valid payment', 'woocommerce'));
 
         // GENERATE PAYMENT ADDRESS
         $total_ada = 0;
-        // Get supported currencies 
-        $request = wp_remote_retrieve_body(wp_remote_get('https://api.coingecko.com/api/v3/simple/supported_vs_currencies'));
-        $supported_currencies = json_decode($request, true);
-        // check if the wc currency is supported if is not we remplace it with the plugin options currency            
-        if (in_array(strtolower(get_woocommerce_currency()), $supported_currencies)) {
-            $currency = get_woocommerce_currency();
-        } else {
-            $currency = $this->currency;
+        $currencyObj = $this->getCurrency();
+        $currency = $currencyObj->currency;
+        if ($currency !== "ADA") {
+            $request = wp_remote_retrieve_body(wp_remote_get('https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=' . $currency));
+            $data = json_decode($request, true);
         }
-        $request = wp_remote_retrieve_body(wp_remote_get('https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=' . $currency));
-        $data = json_decode($request, true);
-        if (count($data) == 1) {
+        if ($currency === "ADA" || count($data) == 1) {
 
             $cryptoMarkupPercent = $this->markup;
 
@@ -358,7 +386,7 @@ class Sargapay_Cardano_Gateway extends WC_Payment_Gateway
 
             $cryptoMarkup = $cryptoMarkupPercent / 100.0;
             $cryptoPriceRatio = 1.0 + $cryptoMarkup;
-            $fiat = $data['cardano'][array_key_first($data['cardano'])];
+            $fiat = $currency === "ADA" ? 1 : $data['cardano'][array_key_first($data['cardano'])];
             $fiat_total_order = WC()->cart->get_totals()["total"];
             $cryptoTotalPreMarkup = round($fiat_total_order / $fiat, 6, PHP_ROUND_HALF_UP);
             $total_ada = number_format((float)($cryptoTotalPreMarkup * $cryptoPriceRatio), 6, '.', '');
@@ -381,7 +409,6 @@ class Sargapay_Cardano_Gateway extends WC_Payment_Gateway
             );
 
             if ($wpdb->last_error === "" && isset($get_key[0]->pay_address)) {
-                $pay_address = $get_key[0]->pay_address;
                 $id = $get_key[0]->id;
                 // Update data                 
                 $dataDB =
