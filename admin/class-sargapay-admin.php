@@ -336,7 +336,7 @@ class Sargapay_Admin
                 return __('Error: blockforst testnet api key can\'t be empty', 'sargapay');
             } else {
                 $api_call = $gateway->check_API_KEY(1, $blockfrost_test_key);
-                if ($api_call === 1) return __('Error: blockforst testnet api call failed', 'sargapay');
+                if ($api_call === 1) return __('Error: blockforst testnet api call failed >>>' . $api_call, 'sargapay');
             }
         } else {
 
@@ -366,16 +366,14 @@ class Sargapay_Admin
         }
 
         $markup = $request->get_param('markup');
-        if (empty($markup)) {
-            return __('Error: markup can\'t be empty', 'sargapay');
-        } else if (!is_numeric($markup)) {
+        if (!is_numeric($markup)) {
             return __('Error: markup is not a number', 'sargapay');
         }
 
         $time_wait = $request->get_param('time_wait');
         if (empty($time_wait)) {
             return __('Error: time to wait can\'t be empty', 'sargapay');
-        } else if (!is_numeric($markup)) {
+        } else if (!is_numeric($time_wait)) {
             return __('Error: time to wait is not a number', 'sargapay');
         }
 
