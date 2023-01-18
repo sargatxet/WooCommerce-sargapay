@@ -60,7 +60,7 @@ const sargapay_walletAPI = async(apikey, network, walllet = "nami") => {
         const address = addr_p.innerText
         const amount = BigInt(amount_span.innerText * 1000000)
 
-        const net = network == 1 ? "Mainnet" : "Testnet"
+        const net = network == 1 ? "Mainnet" : "Preview"
         const url = `https://cardano-${net.toLowerCase()}.blockfrost.io/api/v0`
         const lucid = await Lucid.new(new Blockfrost(url, apikey), net)
         if (window.hasOwnProperty('cardano')) {
@@ -83,7 +83,7 @@ const sargapay_walletAPI = async(apikey, network, walllet = "nami") => {
                 sargapay_hideLoader()
 
                 console.log(txHash)
-                const explorerUrl = network == 1 ? "https://cexplorer.io/tx/" : "https://testnet.cexplorer.io/tx/"
+                const explorerUrl = network == 1 ? "https://cexplorer.io/tx/" : "https://preview.cexplorer.io/tx/"
 
                 //Notify Success
                 Swal.fire({
