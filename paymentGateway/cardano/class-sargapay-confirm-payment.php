@@ -118,7 +118,7 @@ class Sargapay_ConfirmPayment
             $api_key = WC()->payment_gateways->payment_gateways()['sargapay_cardano']->blockfrost_key;
             $stake_key = substr($payment_address, 53, -6);
         } else {
-            $url_network = 'https://cardano-testnet.blockfrost.io/api/v0/';
+            $url_network = "https://cardano-preview.blockfrost.io/api/v0/";
             $api_key = WC()->payment_gateways->payment_gateways()['sargapay_cardano']->blockfrost_test_key;
             $stake_key = substr($payment_address, 58, -6);
         }

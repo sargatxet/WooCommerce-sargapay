@@ -143,10 +143,13 @@ class Sargapay
 		require_once SARGAPAY_PATH . 'paymentGateway/cardano/functions/sargapay-settings.php';
 		require_once SARGAPAY_PATH . 'paymentGateway/cardano/functions/sargapay-thank-you-page.php';
 		require_once SARGAPAY_PATH . 'paymentGateway/cardano/functions/sargapay-cancel-order.php';
+		require_once SARGAPAY_PATH . 'paymentGateway/cardano/functions/sargapay-cardano-currency.php';
 
 		add_action('plugins_loaded', [$this, 'sargapay_init_gateway_class']);
 		// Add QR and Payment Address to thank you page
 		add_filter('woocommerce_thankyou_order_received_text', 'sargapay_thank_you_text', 20, 2);
+		add_filter('woocommerce_currencies', 'add_sarga_cardano_currency');
+		add_filter('woocommerce_currency_symbol', 'add_sarga_cardano_currency_symbol', 10, 2);
 	}
 
 
@@ -226,7 +229,7 @@ class Sargapay
 
 		$this->loader->add_action('admin_menu', $plugin_admin, 'add_admin_menu');
 		$this->loader->add_action('wp_register_script', $plugin_admin, 'register_admin_resources');
-		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_resources');		
+		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_resources');
 		$this->loader->add_action('init', $plugin_admin, 'register_admin_resources');
 		$this->loader->add_action('init', $plugin_admin, 'add_translation_json');
 

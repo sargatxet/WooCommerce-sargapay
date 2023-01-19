@@ -68,6 +68,11 @@ Finally we have to activate the plugin and verify the network that we are going 
 
 == Changelog ==
 
+= 2.1 =
+* Add Cardano Currency to WooCommerce
+* Fix markup error
+* Update Testnet to Preview Testnet Network
+
 = 2.0 =
 * Admin Dashboard UI
 * Enable - Disable Light Wallets
