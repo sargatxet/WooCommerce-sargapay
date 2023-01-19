@@ -1,0 +1,608 @@
+# Copyright (C) 2023 Sargatxet
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Sargapay 2.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sargapay\n"
+"Last-Translator: TrakaDev <trakadev@protonmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-01-19T07:45:37+01:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.7.1\n"
+"X-Domain: sargapay\n"
+
+#. Plugin Name of the plugin
+#: admin/class-sargapay-admin.php:69
+#: admin/class-sargapay-admin.php:70
+msgid "Sargapay"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://sargatxet.cloud/sargapay-cardano/"
+msgstr ""
+
+#. Description of the plugin
+msgid "WordPress payment gateway for crypto."
+msgstr ""
+
+#. Author of the plugin
+msgid "Sargatxet"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://sargatxet.cloud/"
+msgstr ""
+
+#: admin/class-sargapay-admin.php:325
+msgid "Error: master public key can't be empty"
+msgstr ""
+
+#: admin/class-sargapay-admin.php:327
+msgid "Error: master public key has invalid characters"
+msgstr ""
+
+#: admin/class-sargapay-admin.php:336
+msgid "Error: blockforst testnet api key can't be empty"
+msgstr ""
+
+#: admin/class-sargapay-admin.php:339
+msgid "Error: blockforst testnet api call failed"
+msgstr ""
+
+#: admin/class-sargapay-admin.php:346
+msgid "Error: blockforst mainnet api key can't be empty"
+msgstr ""
+
+#: admin/class-sargapay-admin.php:349
+msgid "Error: blockforst mainnet api call failed"
+msgstr ""
+
+#: admin/class-sargapay-admin.php:354
+msgid "Error: confirmations can't be empty"
+msgstr ""
+
+#: admin/class-sargapay-admin.php:356
+msgid "Error: confirmations is not a number"
+msgstr ""
+
+#: admin/class-sargapay-admin.php:358
+msgid "Error: confirmations should be 1 or more"
+msgstr ""
+
+#: admin/class-sargapay-admin.php:363
+msgid "Error: currency can't be empty"
+msgstr ""
+
+#: admin/class-sargapay-admin.php:365
+msgid "Error: currency is not supported select USD, EUR or ADA"
+msgstr ""
+
+#: admin/class-sargapay-admin.php:370
+msgid "Error: markup is not a number"
+msgstr ""
+
+#: admin/class-sargapay-admin.php:375
+msgid "Error: time to wait can't be empty"
+msgstr ""
+
+#: admin/class-sargapay-admin.php:377
+msgid "Error: time to wait is not a number"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:43
+msgid "Allow customers to pay using Cardano ADA"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:72
+msgid "Enable/Disable"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:73
+msgid "Enable Sargapay Gateway"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:76
+msgid "no"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:79
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/general.js:97
+msgid "Title"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:81
+msgid "This controls the title which the user sees during checkout."
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:82
+msgid "Pay with Cardano ADA"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:86
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/general.js:105
+msgid "Description"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:88
+msgid "This controls the description which the user sees during checkout."
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:89
+msgid "Pay using Cardano ADA via our super-cool payment gateway."
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:92
+msgid "Test mode"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:93
+msgid "Enable Test Mode"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:95
+msgid "Place the payment gateway in test mode to use TESTNET."
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:96
+#: paymentGateway/cardano/class-sargapay-gateway.php:104
+msgid "yes"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:100
+msgid "Light Wallets"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:101
+msgid "Enable Light Wallets Buttons"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:103
+msgid "Enable light wallets buttons to pay"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:108
+msgid "Public Address Key for Cardano"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:110
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/Keys.js:98
+msgid "Place the Public Address Key to generate Payment Addresses."
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:113
+msgid "Confirmations"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:116
+msgid "Confirmations needed to accept a transaction as valid."
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:136
+msgid "Blockfrost API Key for Mainnet"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:138
+msgid "Place the API KEY to use BlockFrost to verify transactions on Mainnet."
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:142
+msgid "Blockfrost API Key for Testnet."
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:144
+msgid "Place the API KEY to use BlockFrost to verify transactions on Testnet."
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:148
+#: paymentGateway/cardano/class-sargapay-gateway.php:338
+#: build/admin/settings.js:151
+#: src/admin/settings/pages/orders.js:36
+msgid "Currency"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:150
+msgid "Currency used in case default currency is not supported."
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:159
+msgid "Markup"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:161
+msgid "Add a premium to price calculation"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:166
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/advanced.js:43
+msgid "# of hours of waiting for payment"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:168
+msgid "Select the max number of hours to wait for payments"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:192
+msgid "Error: You require a Master Public Key to generate  payment addresses."
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:196
+msgid "Error: Invalid Character in Public Key."
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:201
+msgid "Error: Invalid Character in BLOCKFROST API KEY for MAINNET."
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:205
+msgid "Error: You need a BLOCKFROST API KEY for MAINNET to validate transactions."
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:211
+msgid "Error: Invalid Character in BLOCKFROST API KEY for TESTNET."
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:215
+msgid "Error: You need a BLOCKFROST API KEY for TESTNET to validate transactions."
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:251
+msgid "Error: Connection Failed"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:311
+msgid "TEST MODE"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:339
+msgid "ADA Price"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:341
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:108
+msgid "ADA Total"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:344
+msgid "ADA exchange rate is calculated at the time the order is made"
+msgstr ""
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:350
+msgid "Contact the admin to provide you with a payment address."
+msgstr ""
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:42
+msgid "ERROR PLEASE CONTACT THE ADMIN TO PROCEED WITH THE ORDER"
+msgstr ""
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:46
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:52
+msgid "BE AWARE THIS IS A TESTNET PAYMENT ADDRESS"
+msgstr ""
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:58
+msgid "Time left to make the payment "
+msgstr ""
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:65
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:70
+#: build/admin/settings.js:151
+#: src/admin/settings/pages/orders.js:47
+msgid "Payment Address"
+msgstr ""
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:75
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:81
+msgid "Pay Now"
+msgstr ""
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:83
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:90
+msgid "Building Transaction"
+msgstr ""
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:93
+#: build/admin/settings.js:151
+#: src/admin/settings/pages/orders.js:41
+msgid "Total ADA"
+msgstr ""
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:97
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:66
+msgid "Payment Address Copied!"
+msgstr ""
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:103
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:103
+msgid "Amount Copied!"
+msgstr ""
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:108
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:113
+msgid "Copy Payment Address"
+msgstr ""
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:111
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:116
+msgid "Copy Amount"
+msgstr ""
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:120
+msgctxt "Number of Hours"
+msgid "%d hour has passed and your order was canceled, the payment address is no longer valid."
+msgid_plural "%d hours have passed and your order was canceled, the payment address is no longer valid."
+msgstr[0] ""
+msgstr[1] ""
+
+#: paymentGateway/cardano/functions/sargapay-cardano-currency.php:28
+msgid "Cardano"
+msgstr ""
+
+#: paymentGateway/cardano/functions/sargapay-save-address.php:70
+msgid "Error no request sent :("
+msgstr ""
+
+#: paymentGateway/cardano/functions/sargapay-save-address.php:104
+msgid " Addresses Generated and Saved in Database."
+msgstr ""
+
+#: paymentGateway/cardano/functions/sargapay-send-email.php:30
+msgid "Instructions for payment will be send soon!"
+msgstr ""
+
+#: paymentGateway/cardano/functions/sargapay-send-email.php:32
+msgid ""
+"Instructions for payment will be send soon!\n"
+""
+msgstr ""
+
+#: paymentGateway/cardano/functions/sargapay-send-email.php:73
+#: paymentGateway/cardano/functions/sargapay-send-email.php:74
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:130
+msgid "Payment Instructions "
+msgstr ""
+
+#: paymentGateway/cardano/functions/sargapay-send-email.php:75
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:121
+msgctxt "Number of Hours"
+msgid "Remember that you have %d hour to pay for your order before it's automatically canceled."
+msgid_plural "Remember that you have %d hours to pay for your order before it's automatically canceled."
+msgstr[0] ""
+msgstr[1] ""
+
+#: paymentGateway/cardano/functions/sargapay-send-email.php:76
+msgid "Total Amount in ADA "
+msgstr ""
+
+#: paymentGateway/cardano/functions/sargapay-send-email.php:78
+msgid " TESTNET ADDRESS"
+msgstr ""
+
+#: paymentGateway/cardano/functions/sargapay-send-email.php:80
+msgid "Address"
+msgstr ""
+
+#: paymentGateway/cardano/functions/sargapay-send-email.php:84
+msgid "You can verify the payment address and amount if you login and go to my-account/orders"
+msgstr ""
+
+#: paymentGateway/cardano/functions/sargapay-settings.php:57
+msgid "Settings"
+msgstr ""
+
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:45
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:139
+msgid "ERROR PLEASE CONTACT ADMIN TO PROCEED WITH THE ORDER"
+msgstr ""
+
+#: public/class-sargapay-public.php:115
+#: public/class-sargapay-public.php:127
+msgid "Cardano Wallet Not Found!"
+msgstr ""
+
+#: public/class-sargapay-public.php:116
+#: public/class-sargapay-public.php:128
+msgid "Something Went Wrong!"
+msgstr ""
+
+#: public/class-sargapay-public.php:117
+#: public/class-sargapay-public.php:129
+msgid "Paid"
+msgstr ""
+
+#: public/class-sargapay-public.php:119
+#: public/class-sargapay-public.php:131
+msgid "Wrong Network, Please Select the Correct Network"
+msgstr ""
+
+#: sargapay.php:74
+msgid "Plugin NOT activated: WooCommerce is required"
+msgstr ""
+
+#: sargapay.php:77
+msgid "Plugin NOT activated: Minimum PHP version required is 7.4"
+msgstr ""
+
+#: sargapay.php:97
+msgid "Every 10 Minutes"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/utils/get-nav.js:7
+msgid "General"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/utils/get-nav.js:11
+msgid "Keys"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/utils/get-nav.js:15
+msgid "Advanced"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/utils/get-nav.js:19
+msgid "Orders"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/atoms/save-btn.js:25
+msgid "Save Settings"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/atoms/save-btn.js:25
+msgid "Saved"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/organisms/SettingsHeader.js:26
+msgid "Sargapay Settings"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/advanced.js:17
+msgid "Add a % to exchange rate from fiat to crypto calculation"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/advanced.js:26
+msgid "Add Markup"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/advanced.js:48
+msgid "Unused Addresses Mainnet"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/advanced.js:52
+msgid "Unused Addresses Testnet"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/general.js:23
+msgid "Enable Plugin"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/general.js:27
+msgid "Check to Enable Sargapay Gateway"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/general.js:47
+msgid "Enable Light Wallets"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/general.js:51
+msgid "Check to Enable Light Wallets Buttons"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/general.js:71
+msgid "Enable Testnet Mode"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/general.js:75
+msgid "Check to Enable Testmode"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/general.js:98
+msgid "Title showing on checkout"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/general.js:106
+msgid "Description show on checkout"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/general.js:113
+msgid "Confirmations needed to valid payment"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/general.js:179
+msgid "Default Fiat Currency"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/Keys.js:97
+#: src/admin/settings/pages/Keys.js:103
+msgid "Public Master Key"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/Keys.js:113
+#: src/admin/settings/pages/Keys.js:114
+msgid "Select Index"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/Keys.js:134
+msgid "Invalid Public Key"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/Keys.js:163
+#: src/admin/settings/pages/Keys.js:164
+msgid "Blockfrost Key"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/Keys.js:168
+msgid "Place your Mainnet Api Key from Blockfrost"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/Keys.js:185
+#: src/admin/settings/pages/Keys.js:186
+msgid "Blockfrost Testnet Key"
+msgstr ""
+
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/Keys.js:192
+msgid "Place your Testnet Api Key from Blockfrost"
+msgstr ""
+
+#: build/admin/settings.js:151
+#: src/admin/settings/pages/orders.js:26
+msgid "Status"
+msgstr ""
+
+#: build/admin/settings.js:151
+#: src/admin/settings/pages/orders.js:27
+msgid "Date"
+msgstr ""
+
+#: build/admin/settings.js:151
+#: src/admin/settings/pages/orders.js:30
+msgid "Price ADA"
+msgstr ""
+
+#: build/admin/settings.js:151
+#: src/admin/settings/pages/orders.js:63
+msgid "No Orders Done With This Payment Gateway"
+msgstr ""
+
+#: build/admin/settings.js:151
+#: src/reducer/settings-reducer.js:20
+msgid "An error occurred."
+msgstr ""
+
+#: build/admin/settings.js:151
+#: src/reducer/settings-reducer.js:35
+msgid "Saved Successfully."
+msgstr ""

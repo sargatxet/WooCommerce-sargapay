@@ -73,7 +73,6 @@ class Sargapay
 		$this->plugin_name = 'sargapay';
 
 		$this->load_dependencies();
-		$this->set_locale();
 		$this->define_include_hooks();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
@@ -85,7 +84,6 @@ class Sargapay
 	 * Include the following files that make up the plugin:
 	 *
 	 * - Sargapay_Loader. Orchestrates the hooks of the plugin.
-	 * - Sargapay_i18n. Defines internationalization functionality.
 	 * - Sargapay_Admin. Defines all hooks for the admin area.
 	 * - Sargapay_Public. Defines all hooks for the public side of the site.
 	 *
@@ -108,12 +106,6 @@ class Sargapay
 		 * core plugin.
 		 */
 		require_once SARGAPAY_PATH . 'includes/class-sargapay-loader.php';
-
-		/**
-		 * The class responsible for defining internationalization functionality
-		 * of the plugin.
-		 */
-		require_once SARGAPAY_PATH . 'includes/class-sargapay-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in both admin and public-facing areas.
@@ -181,23 +173,6 @@ class Sargapay
 			$gateways[] = 'Sargapay_Cardano_Gateway';
 			return $gateways;
 		}
-	}
-
-	/**
-	 * Define the locale for this plugin for internationalization.
-	 *
-	 * Uses the Wp_React_Plugin_Boilerplate_i18n class in order to set the domain and to register the hook
-	 * with WordPress.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function set_locale()
-	{
-
-		$plugin_i18n = new Sargapay_i18n();
-
-		$this->loader->add_action('init', $plugin_i18n, 'load_plugin_textdomain', 100);
 	}
 
 	/**
