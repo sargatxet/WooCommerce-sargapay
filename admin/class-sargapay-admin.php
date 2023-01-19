@@ -361,8 +361,8 @@ class Sargapay_Admin
         $currency = $request->get_param('currency');
         if (empty($currency)) {
             return __('Error: currency can\'t be empty', 'sargapay');
-        } else if (!($currency === 'USD' || $currency === 'EUR')) {
-            return __('Error: currency is not supported select USD or EUR', 'sargapay');
+        } else if (!($currency === 'USD' || $currency === 'EUR' || $currency === 'ADA')) {
+            return __('Error: currency is not supported select USD, EUR or ADA', 'sargapay');
         }
 
         $markup = $request->get_param('markup');
