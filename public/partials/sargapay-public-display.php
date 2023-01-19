@@ -8,8 +8,8 @@
  * @link       https://sargatxet.cloud/
  * @since      1.0.0
  *
- * @package    Sargapay
- * @subpackage Sargapay/public/partials
+ * @package    sargapay
+ * @subpackage sargapay/public/partials
  */
 ?>
 

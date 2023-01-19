@@ -6,8 +6,8 @@
  * @link       https://sargatxet.cloud/
  * @since      1.0.0
  *
- * @package    Sargapay
- * @subpackage Sargapay/includes
+ * @package    sargapay
+ * @subpackage sargapay/includes
  */
 
 /**
@@ -16,8 +16,8 @@
  * This class defines all code necessary to run during the plugin's deactivation.
  *
  * @since      1.0.0
- * @package    Sargapay
- * @subpackage Sargapay/includes
+ * @package    sargapay
+ * @subpackage sargapay/includes
  * @author     trakadev <trakadev@protonmail.com>
  */
 class Sargapay_Deactivator {

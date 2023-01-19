@@ -20,8 +20,8 @@
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    Sargapay
- * @subpackage Sargapay/includes
+ * @package    sargapay
+ * @subpackage sargapay/includes
  * @author     trakadev <trakadev@protonmail.com>
  */
 class Sargapay_i18n {
@@ -38,7 +38,7 @@ class Sargapay_i18n {
 		load_plugin_textdomain(
 			'sargapay',
 			false,
-			dirname(plugin_basename(__FILE__)) . '/languages/'
+			plugin_dir_path( dirname(__FILE__) ) . 'languages/'
 		);
 	}
 }

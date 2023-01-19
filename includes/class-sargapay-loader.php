@@ -6,8 +6,8 @@
  * @link       https://sargatxet.cloud/
  * @since      1.0.0
  *
- * @package    Sargapay
- * @subpackage Sargapay/includes
+ * @package    sargapay
+ * @subpackage sargapay/includes
  */
 
 /**
@@ -17,8 +17,8 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    Sargapay
- * @subpackage Sargapay/includes
+ * @package    sargapay
+ * @subpackage sargapay/includes
  * @author     trakadev <trakadev@protonmail.com>
  */
 class Sargapay_Loader {

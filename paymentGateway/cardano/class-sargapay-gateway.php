@@ -6,8 +6,8 @@
  * @link       https://sargatxet.cloud/
  * @since      1.0.0
  *
- * @package    Sargapay
- * @subpackage Sargapay/paymentGateway
+ * @package    sargapay
+ * @subpackage sargapay/paymentGateway
  */
 
 /**
@@ -16,8 +16,8 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Sargapay_Pro_Plugin
- * @subpackage Sargapay_Pro_Plugin/paymentGateway
+ * @package    sargapay
+ * @subpackage sargapay/paymentGateway
  * @author     trakadev <trakadev@protonmail.com>
  */
 

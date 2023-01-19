@@ -22,7 +22,7 @@
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       sargapay
- * Domain Path:       /languages/
+ * Domain Path:       /languages
  * Requires PHP: 	  7.4
  */
 
@@ -54,9 +54,6 @@ if (!defined('WPINC')) {
  * Current plugin path.
  * Current plugin url.
  * Current plugin version.
- *
- * Rename these constants for your plugin
- * Update version as you release new versions.
  */
 
 define('SARGAPAY_PATH', plugin_dir_path(__FILE__));

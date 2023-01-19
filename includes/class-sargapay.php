@@ -9,8 +9,8 @@
  * @link       https://sargatxet.cloud/
  * @since      1.0.0
  *
- * @package    Sargapay
- * @subpackage Sargapay/includes
+ * @package    sargapay
+ * @subpackage sargapay/includes
  */
 
 /**
@@ -23,8 +23,8 @@
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    Sargapay
- * @subpackage Sargapay/includes
+ * @package    sargapay
+ * @subpackage sargapay/includes
  * @author     trakadev <trakadev@protonmail.com>
  */
 class Sargapay
@@ -197,7 +197,7 @@ class Sargapay
 
 		$plugin_i18n = new Sargapay_i18n();
 
-		$this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain', 100);
+		$this->loader->add_action('init', $plugin_i18n, 'load_plugin_textdomain', 100);
 	}
 
 	/**

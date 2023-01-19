@@ -54,7 +54,7 @@ function sargapay_settings_link($links)
         get_admin_url() . 'admin.php'
     ));
     // Create the link.
-    $settings_link = "<a href='$url'>" . __('Settings') . '</a>';
+    $settings_link = "<a href='$url'>" . __('Settings', "sargapay") . '</a>';
     // Adds the link to the end of the array.
     array_push(
         $links,
