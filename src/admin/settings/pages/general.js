@@ -187,6 +187,10 @@ const General = () => {
               label: "€ EUR",
               value: "EUR",
             },
+            {
+              label: "₳ ADA",
+              value: "ADA",
+            },
           ]}
           onChange={newVal => useUpdateStateSettings("currency", newVal)}
         />
