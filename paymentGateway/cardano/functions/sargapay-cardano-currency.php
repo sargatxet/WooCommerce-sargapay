@@ -25,7 +25,7 @@ if (!defined('WPINC')) {
 }
 
 function add_sarga_cardano_currency( $currencies ) {
-     $currencies['SARGACARDANO'] = __( 'Cardano', 'woocommerce' );
+     $currencies['SARGACARDANO'] = __( 'Cardano', 'sargapay' );
      return $currencies;
 }
 

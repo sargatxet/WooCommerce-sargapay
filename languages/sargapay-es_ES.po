@@ -1,0 +1,435 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Sargapay 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sargapay\n"
+"Last-Translator: \n"
+"Language-Team: Español\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2022-11-29T04:33:50+01:00\n"
+"PO-Revision-Date: 2023-01-19 07:11+0000\n"
+"Language: es_ES\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Domain: sargapay\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Loco-Version: 2.6.3; wp-6.1.1\n"
+
+#: paymentGateway/cardano/functions/sargapay-save-address.php:104
+msgid " Addresses Generated and Saved in Database."
+msgstr "Direcciones generadas y guardadas en la base de datos."
+
+#: paymentGateway/cardano/functions/sargapay-send-email.php:78
+msgid " TESTNET ADDRESS"
+msgstr "DIRECCIÓN DE RED DE PRUEBA"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:166
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/advanced.js:43
+msgid "# of hours of waiting for payment"
+msgstr "# de horas de espera para el pago"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:344
+msgid "ADA exchange rate is calculated at the time the order is made"
+msgstr "El tipo de cambio de ADA se calcula en el momento en que se realiza el pedido"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:339
+msgid "ADA Price"
+msgstr "Precio ADA"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:341
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:108
+msgid "ADA Total"
+msgstr "Total ADA"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:161
+msgid "Add a premium to price calculation"
+msgstr "Agregar una prima al cálculo del precio"
+
+#: paymentGateway/cardano/functions/sargapay-send-email.php:80
+msgid "Address"
+msgstr "Dirección"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:43
+msgid "Allow customers to pay using Cardano ADA"
+msgstr "Permitir a los clientes pagar con Cardano ADA"
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:103
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:103
+msgid "Amount Copied!"
+msgstr "¡Cantidad copiada!"
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:46
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:52
+msgid "BE AWARE THIS IS A TESTNET PAYMENT ADDRESS"
+msgstr "TENGA EN CUENTA QUE ESTA ES UNA DIRECCIÓN DE PAGO DE TESTNET"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:136
+msgid "Blockfrost API Key for Mainnet"
+msgstr "Clave API de Blockfrost para Mainnet"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:142
+msgid "Blockfrost API Key for Testnet."
+msgstr "Clave API de Blockfrost para Testnet."
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:83
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:90
+msgid "Building Transaction"
+msgstr "Transacción de construcción"
+
+#: paymentGateway/cardano/functions/sargapay-cardano-currency.php:28
+msgid "Cardano"
+msgstr "Cardano"
+
+#: public/class-sargapay-public.php:115
+#: public/class-sargapay-public.php:127
+msgid "Cardano Wallet Not Found!"
+msgstr "Cartera Cardano no encontrada!"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:113
+msgid "Confirmations"
+msgstr "Confirmaciones"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:116
+msgid "Confirmations needed to accept a transaction as valid."
+msgstr "Confirmaciones necesarias para aceptar una transacción como válida."
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:350
+msgid "Contact the admin to provide you with a payment address."
+msgstr "Póngase en contacto con el administrador para proporcionarle una dirección de pago."
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:111
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:116
+msgid "Copy Amount"
+msgstr "Copiar Monto"
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:108
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:113
+msgid "Copy Payment Address"
+msgstr "Copiar dirección de pago"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:148
+#: paymentGateway/cardano/class-sargapay-gateway.php:338
+#: build/admin/settings.js:151
+#: src/admin/settings/pages/orders.js:36
+msgid "Currency"
+msgstr "Moneda"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:150
+msgid "Currency used in case default currency is not supported."
+msgstr "Moneda utilizada en caso de que no se admita la moneda predeterminada."
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:86
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/general.js:105
+msgid "Description"
+msgstr "Descripción"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:101
+msgid "Enable Light Wallets Buttons"
+msgstr "Habilitar botones de billeteras ligeras"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:103
+msgid "Enable light wallets buttons to pay"
+msgstr "Habilitar botones de billeteras ligeras para pagar"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:73
+msgid "Enable Sargapay Gateway"
+msgstr "Habilitar pasarela de pago Sargapay "
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:93
+msgid "Enable Test Mode"
+msgstr "Habilitar modo de prueba"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:72
+msgid "Enable/Disable"
+msgstr "Habilitar/Deshabilitar"
+
+#: paymentGateway/cardano/functions/sargapay-save-address.php:70
+msgid "Error no request sent :("
+msgstr "Error sin solicitud enviada :("
+
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:45
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:139
+msgid "ERROR PLEASE CONTACT ADMIN TO PROCEED WITH THE ORDER"
+msgstr "ERROR, CONTACTE AL ADMINISTRADOR PARA CONTINUAR CON EL PEDIDO"
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:42
+msgid "ERROR PLEASE CONTACT THE ADMIN TO PROCEED WITH THE ORDER"
+msgstr "ERROR POR FAVOR CONTACTE AL ADMINISTRADOR PARA CONTINUAR CON EL PEDIDO"
+
+#: admin/class-sargapay-admin.php:349
+msgid "Error: blockforst mainnet api call failed"
+msgstr "Error: la llamada a la API de mainnet blockforst falló"
+
+#: admin/class-sargapay-admin.php:346
+msgid "Error: blockforst mainnet api key can't be empty"
+msgstr "Error: la clave api de mainnet de blockfrost no puede estar vacía"
+
+#: admin/class-sargapay-admin.php:339
+msgid "Error: blockforst testnet api call failed"
+msgstr "Error: la llamada a la API de testnet de blockforst falló"
+
+#: admin/class-sargapay-admin.php:336
+msgid "Error: blockforst testnet api key can't be empty"
+msgstr "Error: la clave api de blockforst testnet no puede estar vacía"
+
+#: admin/class-sargapay-admin.php:354
+msgid "Error: confirmations can't be empty"
+msgstr "Error: las confirmaciones no pueden estar vacías"
+
+#: admin/class-sargapay-admin.php:356
+msgid "Error: confirmations is not a number"
+msgstr "Error: las confirmaciones no son un número"
+
+#: admin/class-sargapay-admin.php:358
+msgid "Error: confirmations should be 1 or more"
+msgstr "Error: las confirmaciones deben ser 1 o más"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:251
+msgid "Error: Connection Failed"
+msgstr "Error: Conexión fallida"
+
+#: admin/class-sargapay-admin.php:363
+msgid "Error: currency can't be empty"
+msgstr "Error: la moneda no puede estar vacía"
+
+#: admin/class-sargapay-admin.php:365
+msgid "Error: currency is not supported select USD, EUR or ADA"
+msgstr "Error: la moneda no es compatible, seleccione USD o EUR o ADA"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:201
+msgid "Error: Invalid Character in BLOCKFROST API KEY for MAINNET."
+msgstr "Error: carácter no válido en la CLAVE API BLOCKFROST para MAINNET."
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:211
+msgid "Error: Invalid Character in BLOCKFROST API KEY for TESTNET."
+msgstr "Error: carácter no válido en la CLAVE API BLOCKFROST para TESTNET."
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:196
+msgid "Error: Invalid Character in Public Key."
+msgstr "Error: carácter no válido en la clave pública."
+
+#: admin/class-sargapay-admin.php:370
+msgid "Error: markup is not a number"
+msgstr "Error: el margen no es un número"
+
+#: admin/class-sargapay-admin.php:325
+msgid "Error: master public key can't be empty"
+msgstr "Error: la clave pública maestra no puede estar vacía"
+
+#: admin/class-sargapay-admin.php:327
+msgid "Error: master public key has invalid characters"
+msgstr "Error: la clave pública maestra tiene caracteres no válidos"
+
+#: admin/class-sargapay-admin.php:375
+msgid "Error: time to wait can't be empty"
+msgstr "Error: el tiempo de espera no puede estar vacío"
+
+#: admin/class-sargapay-admin.php:377
+msgid "Error: time to wait is not a number"
+msgstr "Error: el tiempo de espera no es un número"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:205
+msgid "Error: You need a BLOCKFROST API KEY for MAINNET to validate transactions."
+msgstr "Error: necesita una CLAVE API BLOCKFROST para MAINNET para validar transacciones."
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:215
+msgid "Error: You need a BLOCKFROST API KEY for TESTNET to validate transactions."
+msgstr "Error: necesita una CLAVE API BLOCKFROST para que TESTNET valide las transacciones."
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:192
+msgid "Error: You require a Master Public Key to generate  payment addresses."
+msgstr "Error: necesita una clave pública maestra para generar direcciones de pago."
+
+#: sargapay.php:97
+msgid "Every 10 Minutes"
+msgstr "Cada 10 minutos"
+
+#. Author URI of the plugin
+msgid "https://sargatxet.cloud/"
+msgstr "https://sargatxet.cloud/"
+
+#. Plugin URI of the plugin
+msgid "https://sargatxet.cloud/sargapay-cardano/"
+msgstr "https://sargatxet.cloud/sargapay-cardano/"
+
+#: paymentGateway/cardano/functions/sargapay-send-email.php:30
+msgid "Instructions for payment will be send soon!"
+msgstr "¡Las instrucciones para el pago serán enviadas pronto!"
+
+#: paymentGateway/cardano/functions/sargapay-send-email.php:32
+msgid ""
+"Instructions for payment will be send soon!\n"
+""
+msgstr "¡Las instrucciones para el pago serán enviadas pronto!"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:100
+msgid "Light Wallets"
+msgstr "Billeteras Ligeras"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:159
+msgid "Markup"
+msgstr "Margen"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:76
+msgid "no"
+msgstr "no"
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:120
+msgctxt "Number of Hours"
+msgid "%d hour has passed and your order was canceled, the payment address is no longer valid."
+msgid_plural "%d hours have passed and your order was canceled, the payment address is no longer valid."
+msgstr[0] "Ha pasado %d hora y su pedido fue cancelado, la dirección de pago ya no es válida."
+msgstr[1] "Han pasado %d horas y su pedido fue cancelado, la dirección de pago ya no es válida."
+
+#: paymentGateway/cardano/functions/sargapay-send-email.php:75
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:121
+msgctxt "Number of Hours"
+msgid "Remember that you have %d hour to pay for your order before it's automatically canceled."
+msgid_plural "Remember that you have %d hours to pay for your order before it's automatically canceled."
+msgstr[0] "Recuerda que tienes %d hora para pagar tu pedido antes de que se cancele automáticamente."
+msgstr[1] "Recuerda que tienes %d horas para pagar tu pedido antes de que se cancele automáticamente."
+
+#: public/class-sargapay-public.php:117
+#: public/class-sargapay-public.php:129
+msgid "Paid"
+msgstr "Pagado"
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:75
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:81
+msgid "Pay Now"
+msgstr "Pagar Ahora"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:89
+msgid "Pay using Cardano ADA via our super-cool payment gateway."
+msgstr "Pague con Cardano ADA a través de nuestra genial pasarela de pago."
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:82
+msgid "Pay with Cardano ADA"
+msgstr "Paga con Cardano ADA"
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:65
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:70
+#: build/admin/settings.js:151
+#: src/admin/settings/pages/orders.js:47
+msgid "Payment Address"
+msgstr "Dirección de Pago"
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:97
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:66
+msgid "Payment Address Copied!"
+msgstr "¡Dirección de pago copiada!"
+
+#: paymentGateway/cardano/functions/sargapay-send-email.php:73
+#: paymentGateway/cardano/functions/sargapay-send-email.php:74
+#: paymentGateway/cardano/functions/sargapay-thank-you-page.php:130
+msgid "Payment Instructions "
+msgstr "Instrucciones de pago"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:138
+msgid "Place the API KEY to use BlockFrost to verify transactions on Mainnet."
+msgstr "Coloque la CLAVE API para usar BlockFrost para verificar transacciones en Mainnet."
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:144
+msgid "Place the API KEY to use BlockFrost to verify transactions on Testnet."
+msgstr "Coloque la CLAVE API para usar BlockFrost para verificar transacciones en Testnet."
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:95
+msgid "Place the payment gateway in test mode to use TESTNET."
+msgstr "Coloque la pasarela de pago en modo de prueba para usar TESTNET."
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:110
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/Keys.js:98
+msgid "Place the Public Address Key to generate Payment Addresses."
+msgstr "Coloque la clave de dirección pública para generar direcciones de pago."
+
+#: sargapay.php:77
+msgid "Plugin NOT activated: Minimum PHP version required is 7.4"
+msgstr "Plugin NO activado: la versión mínima de PHP requerida es 7.4"
+
+#: sargapay.php:74
+msgid "Plugin NOT activated: WooCommerce is required"
+msgstr "Plugin NO activado: se requiere WooCommerce"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:108
+msgid "Public Address Key for Cardano"
+msgstr "Dirección Publica para Cardano"
+
+#. Plugin Name of the plugin
+#: admin/class-sargapay-admin.php:69
+#: admin/class-sargapay-admin.php:70
+msgid "Sargapay"
+msgstr "Sargapay"
+
+#. Author of the plugin
+msgid "Sargatxet"
+msgstr "Sargatxet"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:168
+msgid "Select the max number of hours to wait for payments"
+msgstr "Seleccione el número máximo de horas para esperar los pagos"
+
+#: paymentGateway/cardano/functions/sargapay-settings.php:57
+msgid "Settings"
+msgstr "Ajustes"
+
+#: public/class-sargapay-public.php:116
+#: public/class-sargapay-public.php:128
+msgid "Something Went Wrong!"
+msgstr "¡Algo salió mal!"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:311
+msgid "TEST MODE"
+msgstr "MODO DE PRUEBA"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:92
+msgid "Test mode"
+msgstr "Modo de prueba"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:88
+msgid "This controls the description which the user sees during checkout."
+msgstr "Esto controla la descripción que el usuario ve durante el pago."
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:81
+msgid "This controls the title which the user sees during checkout."
+msgstr "Esto controla el título que el usuario ve durante el pago."
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:58
+msgid "Time left to make the payment "
+msgstr "Tiempo restante para realizar el pago"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:79
+#: build/admin/settings.js:1
+#: src/admin/settings/pages/general.js:97
+msgid "Title"
+msgstr "Título"
+
+#: paymentGateway/cardano/functions/sargapay-cancel-order.php:93
+#: build/admin/settings.js:151
+#: src/admin/settings/pages/orders.js:41
+msgid "Total ADA"
+msgstr "Total ADA"
+
+#: paymentGateway/cardano/functions/sargapay-send-email.php:76
+msgid "Total Amount in ADA "
+msgstr "Importe total en ADA"
+
+#. Description of the plugin
+msgid "WordPress payment gateway for crypto."
+msgstr "Pasarela de pago de WordPress para criptomonedas."
+
+#: public/class-sargapay-public.php:119
+#: public/class-sargapay-public.php:131
+msgid "Wrong Network, Please Select the Correct Network"
+msgstr "Red incorrecta, seleccione la red correcta"
+
+#: paymentGateway/cardano/class-sargapay-gateway.php:96
+#: paymentGateway/cardano/class-sargapay-gateway.php:104
+msgid "yes"
+msgstr "si"
+
+#: paymentGateway/cardano/functions/sargapay-send-email.php:84
+msgid "You can verify the payment address and amount if you login and go to my-account/orders"
+msgstr "Puede verificar la dirección de pago y el monto si inicia sesión y va a mi cuenta/pedidos"

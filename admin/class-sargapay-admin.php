@@ -6,8 +6,8 @@
  * @link       https://sargatxet.cloud/
  * @since      1.0.0
  *
- * @package    Sargapay
- * @subpackage Sargapay/admin
+ * @package    sargapay
+ * @subpackage sargapay/admin
  */
 
 /**
@@ -16,8 +16,8 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Sargapay
- * @subpackage Sargapay/includes
+ * @package    sargapay
+ * @subpackage sargapay/includes
  * @author     trakadev <trakadev@protonmail.com>
  */
 class Sargapay_Admin
@@ -336,14 +336,14 @@ class Sargapay_Admin
                 return __('Error: blockforst testnet api key can\'t be empty', 'sargapay');
             } else {
                 $api_call = $gateway->check_API_KEY(1, $blockfrost_test_key);
-                if ($api_call === 1) return __('Error: blockforst testnet api call failed >>>' . $api_call, 'sargapay');
+                if ($api_call === 1) return __('Error: blockforst testnet api call failed', 'sargapay');
             }
         } else {
 
             #check apikey for mainnet
             $blockfrost_key = $request->get_param('blockfrost_key');
             if (empty($blockfrost_key)) {
-                return __('Error: blockforst mainnet api key can\'t be empty', 'sargapay-pro-plugin');
+                return __('Error: blockforst mainnet api key can\'t be empty', 'sargapay');
             } else {
                 $api_call = $gateway->check_API_KEY(0, $blockfrost_key);
                 if ($api_call === 1) return __('Error: blockforst mainnet api call failed', 'sargapay');

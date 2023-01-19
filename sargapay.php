@@ -54,9 +54,6 @@ if (!defined('WPINC')) {
  * Current plugin path.
  * Current plugin url.
  * Current plugin version.
- *
- * Rename these constants for your plugin
- * Update version as you release new versions.
  */
 
 define('SARGAPAY_PATH', plugin_dir_path(__FILE__));
@@ -65,6 +62,7 @@ define('SARGAPAY_VERSION', '2.1.0');
 
 add_filter('cron_schedules', 'sargapay_cron_hook');
 add_action('sargapay_cron_hook', 'sargapay_check_confirmations_cardano');
+add_action('plugins_loaded', 'sargapay_load_plugin_textdomain');
 
 /**
  * The code that runs during plugin activation.
@@ -90,6 +88,15 @@ function sargapay_activate()
     if (!wp_next_scheduled('sargapay_cron_hook')) {
         wp_schedule_event(time(), 'every_ten_minutes', 'sargapay_cron_hook');
     }
+}
+
+function sargapay_load_plugin_textdomain()
+{
+    load_plugin_textdomain(
+        'sargapay',
+        false,
+        dirname(plugin_basename(__FILE__)) . '/languages/'
+    );
 }
 
 // Register 10 min interval for cronjobs

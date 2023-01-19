@@ -6,8 +6,8 @@
  * @link       https://sargatxet.cloud/
  * @since      1.0.0
  *
- * @package    Sargapay
- * @subpackage Sargapay/public
+ * @package    sargapay
+ * @subpackage sargapay/public
  */
 
 /**
@@ -17,8 +17,8 @@
  * enqueue the public-facing stylesheet and JavaScript.
  *
  * @since      1.0.0
- * @package    Sargapay
- * @subpackage Sargapay/Public
+ * @package    sargapay
+ * @subpackage sargapay/Public
  * @author     trakadev <trakadev@protonmail.com>
  */
 class Sargapay_Public
