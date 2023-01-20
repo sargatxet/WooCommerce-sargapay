@@ -16,7 +16,7 @@
  * Plugin Name:       Sargapay
  * Plugin URI:        https://sargatxet.cloud/sargapay-cardano/
  * Description:       WordPress payment gateway for crypto.
- * Version:           2.1.0
+ * Version:           2.1.1
  * Author:            Sargatxet
  * Author URI:        https://sargatxet.cloud/
  * License: GPLv2 or later
@@ -58,7 +58,7 @@ if (!defined('WPINC')) {
 
 define('SARGAPAY_PATH', plugin_dir_path(__FILE__));
 define('SARGAPAY_URL', plugin_dir_url(__FILE__));
-define('SARGAPAY_VERSION', '2.1.0');
+define('SARGAPAY_VERSION', '2.1.1');
 
 add_filter('cron_schedules', 'sargapay_cron_hook');
 add_action('sargapay_cron_hook', 'sargapay_check_confirmations_cardano');
