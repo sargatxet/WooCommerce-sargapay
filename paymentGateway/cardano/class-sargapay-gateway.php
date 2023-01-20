@@ -278,8 +278,8 @@ class Sargapay_Cardano_Gateway extends WC_Payment_Gateway
             $result->currency = get_woocommerce_currency();
             $result->symbol = get_woocommerce_currency_symbol();
         } else {
-            $currency = $this->currency;
-            switch ($currency) {
+            $result->currency = $this->currency;
+            switch ($result->currency) {
                 case "ADA":
                     $result->symbol = "₳";
                     break;
@@ -304,7 +304,7 @@ class Sargapay_Cardano_Gateway extends WC_Payment_Gateway
             $request = wp_remote_retrieve_body(wp_remote_get('https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=' . $currency));
             $data = json_decode($request, true);
         }
-        if ($currency === "ADA" || count($data) == 1) {
+        if ($currency === "ADA" || count($data['cardano']) == 1) {
             if ($this->testmode) {
         ?>
                 <h3 style='text-align:center; background:red; color:white; font-weight:bold;'>
@@ -443,7 +443,7 @@ class Sargapay_Cardano_Gateway extends WC_Payment_Gateway
         WC()->cart->empty_cart();
         return array(
             'result'   => 'failure',
-            'redirect' => WC()->cart->get_checkout_url()
+            'redirect' => wc_get_checkout_url()
         );
     }
 

@@ -4,7 +4,7 @@ Donate link: https://sargatxet.cloud/
 Tags: paymentGateway, Crypto, Cardano
 Requires at least: 4.7
 Tested up to: 6.1
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -67,6 +67,9 @@ Finally we have to activate the plugin and verify the network that we are going 
 3. Order Made
 
 == Changelog ==
+
+= 2.1.1 =
+* Fixed issue where the total value displayed as 0 when the default currency was set to ADA
 
 = 2.1 =
 * Add Cardano Currency to WooCommerce
