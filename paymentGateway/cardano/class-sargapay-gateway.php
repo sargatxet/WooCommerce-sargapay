@@ -27,6 +27,27 @@ if (!defined('WPINC')) {
 
 class Sargapay_Cardano_Gateway extends WC_Payment_Gateway
 {
+    /**
+     * Params for the payment request.
+     *
+     * @since    2.2.0
+     */
+    public $id;
+    public $icon;
+    public $has_fields;
+    public $method_title;
+    public $method_description;
+    public $supports;
+    public $blockfrost_key;
+    public $blockfrost_test_key;
+    public $mpk;
+    public $currency;
+    public $confirmations;
+    public $markup;
+    public $time_wait;
+    public $testmode;
+    public $lightWallets;
+
 
     /**
      * Initialize the class and set its properties.
