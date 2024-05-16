@@ -118,8 +118,7 @@ function sargapay_gen() {
                     }
                 }
                 // IF you have less than 20 unused address you will generate a new one
-                if (parseInt(unused) < 20) {
-                    console.log("last index", lastIndex)
+                if (parseInt(unused) < 20) {                    
                     sargapay_add_index(xpub, lastIndex, testnet)
                 }
             },
@@ -133,13 +132,10 @@ function sargapay_add_index(xpub, lastIndex, testnet) {
 
     const url = window.hasOwnProperty('wp_ajax_nopriv_sargapay_save_address') ?
         wp_ajax_nopriv_sargapay_save_address.ajax_url :
-        wp_ajax_sargapay_save_address.ajax_url
-    console.log("add index")
+        wp_ajax_sargapay_save_address.ajax_url    
 
     // Generate New Address
     const address = sargapay_generate_payment_address(xpub, lastIndex, 1, testnet)
-
-    console.dir(address)
 
     // Save New Address on DB
     if (address.length > 0 && !address[0].includes("Error:")) {

@@ -65,12 +65,9 @@ function sargapay_ajax_gen_address() {
 function sargapay_add_index(xpub, lastIndex, testnet) {
 
     const url = wp_ajax_sargapay_save_address.ajax_url
-    console.log("add index")
 
     // Generate New Address
     const address = sargapay_generate_payment_address(xpub, lastIndex, 1, testnet)
-
-    console.dir(address)
 
     // Save New Address on DB
     if (address.length > 0 && !address[0].includes("Error:")) {
