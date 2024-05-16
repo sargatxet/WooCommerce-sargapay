@@ -5,9 +5,27 @@ Wocommerce payment gateway plugin para pagar usando Cardano ADA.
 ## Requisitos
  - PHP v7.4+
  - WooCommerce
- - WASM MIME type
- - PHP ext-gd
-## Instalación
+ - WASM MIME type (browser wallets) Optional
+ - PHP ext-gd (QR)
+
+## Cómo construir
+
+### Instalar dependencias
+```
+npm install 
+```
+
+### Construir el Panel de Administración
+```
+npm run build
+```
+
+### Construir el Bloque
+```
+npm run build-block
+```
+
+## Instalación Wordpress
 
 [Descarga el archivo zip](https://wordpress.org/plugins/sargapay "Sargapay Link de descarga") y usa el panel de administración de Wordpress para instalarlo.
  
