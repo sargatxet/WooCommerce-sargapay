@@ -142,8 +142,37 @@ class Sargapay
 		add_filter('woocommerce_thankyou_order_received_text', 'sargapay_thank_you_text', 20, 2);
 		add_filter('woocommerce_currencies', 'add_sarga_cardano_currency');
 		add_filter('woocommerce_currency_symbol', 'add_sarga_cardano_currency_symbol', 10, 2);
+		// Registers WooCommerce Blocks integration.
+		add_action( 'woocommerce_blocks_loaded', [$this, 'sarga_gateway_block_support' ]);			
+		add_action( 'before_woocommerce_init', [$this,'sarga_cart_checkout_blocks_compatibility'] );
 	}
 
+	function sarga_gateway_block_support() {
+		// here we're including our "gateway block support class"
+		require_once SARGAPAY_PATH . 'includes/blocks/class-wc-sargapay-payments-blocks.php';
+		
+		// registering the PHP class we have just included
+		add_action(
+			'woocommerce_blocks_payment_method_type_registration',
+			function( Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry $payment_method_registry ) {
+				$payment_method_registry->register( new WC_Gateway_Sargapay_Blocks_Support );
+			}
+		);
+		
+	}
+
+	function sarga_cart_checkout_blocks_compatibility() {
+
+		if( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
+					'cart_checkout_blocks',
+					__FILE__,
+					true // true (compatible, default) or false (not compatible)
+				);
+		}
+			
+	}
+	
 
 	function sargapay_init_gateway_class()
 	{
