@@ -30,9 +30,6 @@ const requestToHandle = (request) => {
 module.exports = {
     ...defaultConfig,
     ... {
-        entry: {
-            'frontend/blocks': '/resources/js/frontend/index.js',
-        },
         output: {
             path: path.resolve(__dirname, 'assets/js'),
             filename: '[name].js',

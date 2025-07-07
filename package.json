@@ -25,10 +25,10 @@
         "check-engines": "wp-scripts check-engines"
     },
     "devDependencies": {
-        "@types/wordpress__components": "^19.10.3",
-        "@woocommerce/dependency-extraction-webpack-plugin": "2.2.0",
-        "@wordpress/scripts": "^27.8.0",
-        "cross-env": "7.0.3"
+        "@types/wordpress__components": "^23.8.0",
+        "@woocommerce/dependency-extraction-webpack-plugin": "^4.0.0",
+        "@wordpress/scripts": "^30.19.0",
+        "cross-env": "^7.0.3"
     },
     "dependencies": {
         "@emotion/react": "^11.10.5",
