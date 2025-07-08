@@ -144,7 +144,7 @@ const Keys = () => {
             </p>
             <p className="wp-sargapay-plugin-addrs">
               {payAddresses.testnet && (
-                <span style={{ fontWeight: "bold" }}>Testnet: </span>
+                <span style={{ fontWeight: "bold" }}>Preview: </span>
               )}
               {`${payAddresses.testnet}`}
             </p>
@@ -182,14 +182,14 @@ const Keys = () => {
           />
         </div>
         <TextControl
-          label={__("Blockfrost Testnet Key", "sargapay")}
-          placeholder={__("Blockfrost Testnet Key", "sargapay")}
+          label={__("Blockfrost Preview Key", "sargapay")}
+          placeholder={__("Blockfrost Preview Key", "sargapay")}
           value={useSettings && useSettings["blockfrost_test_key"]}
           type={lock.test_block ? "password" : "text"}
           onChange={newVal =>
             useUpdateStateSettings("blockfrost_test_key", newVal)
           }
-          help={__("Place your Testnet Api Key from Blockfrost", "sargapay")}
+          help={__("Place your Preview Api Key from Blockfrost", "sargapay")}
         />
         <Tip>
           <a href="https://blockfrost.io/" rel="nofollow" target="_blank">

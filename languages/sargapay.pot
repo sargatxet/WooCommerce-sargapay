@@ -192,11 +192,11 @@ msgid "Place the API KEY to use BlockFrost to verify transactions on Mainnet."
 msgstr ""
 
 #: paymentGateway/cardano/class-sargapay-gateway.php:142
-msgid "Blockfrost API Key for Testnet."
+msgid "Blockfrost API Key for Preview."
 msgstr ""
 
 #: paymentGateway/cardano/class-sargapay-gateway.php:144
-msgid "Place the API KEY to use BlockFrost to verify transactions on Testnet."
+msgid "Place the API KEY to use BlockFrost to verify transactions on Preview."
 msgstr ""
 
 #: paymentGateway/cardano/class-sargapay-gateway.php:148
@@ -245,11 +245,11 @@ msgid "Error: You need a BLOCKFROST API KEY for MAINNET to validate transactions
 msgstr ""
 
 #: paymentGateway/cardano/class-sargapay-gateway.php:211
-msgid "Error: Invalid Character in BLOCKFROST API KEY for TESTNET."
+msgid "Error: Invalid Character in BLOCKFROST API KEY for PREVIEW."
 msgstr ""
 
 #: paymentGateway/cardano/class-sargapay-gateway.php:215
-msgid "Error: You need a BLOCKFROST API KEY for TESTNET to validate transactions."
+msgid "Error: You need a BLOCKFROST API KEY for Preview to validate transactions."
 msgstr ""
 
 #: paymentGateway/cardano/class-sargapay-gateway.php:251
@@ -574,7 +574,7 @@ msgstr ""
 
 #: build/admin/settings.js:1
 #: src/admin/settings/pages/Keys.js:192
-msgid "Place your Testnet Api Key from Blockfrost"
+msgid "Place your Preview Api Key from Blockfrost"
 msgstr ""
 
 #: build/admin/settings.js:151

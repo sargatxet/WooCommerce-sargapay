@@ -160,9 +160,9 @@ class Sargapay_Cardano_Gateway extends WC_Payment_Gateway
                 'desc_tip'    => true,
             ),
             'blockfrost_test_key' => array(
-                'title'       => '<a href="https://blockfrost.io/">' . __('Blockfrost API Key for Testnet.', 'sargapay') . '</a>',
+                'title'       => '<a href="https://blockfrost.io/">' . __('Blockfrost API Key for Preview.', 'sargapay') . '</a>',
                 'type'        => 'password',
-                'description' => __('Place the API KEY to use BlockFrost to verify transactions on Testnet.', 'sargapay'),
+                'description' => __('Place the API KEY to use BlockFrost to verify transactions on Preview.', 'sargapay'),
                 'desc_tip'    => true,
             ),
             'currency' => array(
@@ -229,11 +229,11 @@ class Sargapay_Cardano_Gateway extends WC_Payment_Gateway
             $errors = $this->check_API_KEY(0, $_POST['woocommerce_sargapay_blockfrost_key']);
         } else if ($_POST['woocommerce_sargapay_testmode'] == 1) {
             if (!preg_match("/^[A-Za-z0-9]+$/", $_POST['woocommerce_sargapay_blockfrost_test_key'])) {
-                WC_Admin_Settings::add_error(__('Error: Invalid Character in BLOCKFROST API KEY for TESTNET.', 'sargapay'));
+                WC_Admin_Settings::add_error(__('Error: Invalid Character in BLOCKFROST API KEY for Preview.', 'sargapay'));
                 $errors = 1;
             }
             if (empty($_POST['woocommerce_sargapay_blockfrost_test_key'])) {
-                WC_Admin_Settings::add_error(__('Error: You need a BLOCKFROST API KEY for TESTNET to validate transactions.', 'sargapay'));
+                WC_Admin_Settings::add_error(__('Error: You need a BLOCKFROST API KEY for Preview to validate transactions.', 'sargapay'));
                 $errors = 1;
             }
             $errors = $this->check_API_KEY($_POST['woocommerce_sargapay_testmode'], $_POST['woocommerce_sargapay_blockfrost_test_key']);
